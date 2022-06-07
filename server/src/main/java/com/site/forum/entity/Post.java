@@ -1,6 +1,7 @@
 package com.site.forum.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,10 +13,14 @@ import java.time.LocalDateTime;
 @Table(name = "forum")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title")
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "forum_id")
