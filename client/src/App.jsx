@@ -1,17 +1,21 @@
-async function App() {
-  let forums = []
+import {useState, useEffect, useRef} from 'react'
+import ForumService from './services/ForumService'
 
+function App() {
+  const [forums, setForums] = useState([])
 
-  const response = await fetch('/api/v1/forums/all')
-  const body = await response.json()
-  forums=body
+  useEffect(()=>{
+    ForumService.getAllForums().then( res => {
+      setForums(res.data)
+      console.log(res.data)
+    })
+  }, [])
+
   return (
     <div className="App">
-      {forums.map(forum => {
-        <div>
-          {forum.title}
-        </div>
-      })}
+      {forums.map(forum=> (
+        <p>{forum.id}</p>
+      ))}
     </div>
   );
 }
