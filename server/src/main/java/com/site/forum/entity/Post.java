@@ -26,6 +26,10 @@ public class Post {
     @JoinColumn(name = "forum_id")
     private Forum forum;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User creator;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

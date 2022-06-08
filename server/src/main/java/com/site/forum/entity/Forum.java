@@ -3,7 +3,6 @@ package com.site.forum.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -23,10 +22,13 @@ public class Forum {
     @Column(name = "title")
     private String title;
 
-//  for a forum that is a sub-forum
     @ManyToOne
     @JoinColumn(name="forum_id")
     private Forum forum;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User creator;
 
     @CreationTimestamp
     @Column(name = "created_at")
