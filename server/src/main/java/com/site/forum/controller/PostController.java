@@ -31,5 +31,11 @@ public class PostController {
             return ResponseEntity.ok(posts);
     }
 
-
+    @GetMapping("/forum/{id}")
+    public ResponseEntity<List<PostDto>> getPostsByForumId(@PathVariable("id") Long id) {
+        List<PostDto> posts = postService.getByForumId(id).stream()
+                                         .map(postDto::convertToDto)
+                                         .toList();
+        return ResponseEntity.ok(posts);
     }
+}

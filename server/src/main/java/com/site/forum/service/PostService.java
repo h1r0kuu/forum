@@ -8,4 +8,5 @@ public interface PostService {
     Post create(Post post);
     List<Post> getAll();
     Post getById(Long id);
+    List<Post> getByForumId(Long forumId);
 }

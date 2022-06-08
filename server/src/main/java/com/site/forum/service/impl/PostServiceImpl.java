@@ -32,4 +32,10 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Post not founded"));
         return post;
     }
+
+    @Override
+    public List<Post> getByForumId(Long forumId) {
+        List<Post> posts = postRepository.findByForum_Id(forumId);
+        return posts;
+    }
 }
