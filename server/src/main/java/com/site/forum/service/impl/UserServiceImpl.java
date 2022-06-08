@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if(Objects.isNull(user)) throw new UsernameNotFoundException("User with this username does`t exist");
         return user;
     }
+
+    @Override
+    public User registration(User user) {
+        return userRepository.save(user);
+    }
 }
