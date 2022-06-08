@@ -1,23 +1,18 @@
-import {useState, useEffect, useRef} from 'react'
-import ForumService from './services/ForumService'
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
+import Index from "./pages/Index";
+import PostList from "./pages/PostList";
 
 function App() {
-  const [forums, setForums] = useState([])
-
-  useEffect(()=>{
-    ForumService.getAllForums().then( res => {
-      setForums(res.data)
-      console.log(res.data)
-    })
-  }, [])
-
   return (
-    <div className="App">
-      {forums.map(forum=> (
-        <p>{forum.id}</p>
-      ))}
-    </div>
-  );
+    <>
+      <Router>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/forums/:forumId" element={<PostList />} />
+          </Routes>
+      </Router>
+    </>
+  )  
 }
 
 export default App;
