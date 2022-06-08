@@ -2,10 +2,12 @@ package com.site.forum.dto;
 
 import com.site.forum.entity.User;
 import com.site.forum.enums.UserRole;
+import lombok.Data;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
+@Data
 public class UserDto {
     private Long id;
     private String username;
