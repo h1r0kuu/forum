@@ -1,9 +1,11 @@
 package com.site.forum.controller;
 
+import com.site.forum.dto.CommentDto;
 import com.site.forum.dto.ForumDto;
 import com.site.forum.dto.PostDto;
 import com.site.forum.dto.UserDto;
 import com.site.forum.entity.User;
+import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -19,10 +23,12 @@ import java.util.List;
 public class UserController {
 
     private final UserServiceImpl userService;
+    private final CommentServiceImpl commentService;
 
     private final UserDto userDto = new UserDto();
     private final ForumDto forumDto = new ForumDto();
     private final PostDto postDto = new PostDto();
+    private final CommentDto commentDto = new CommentDto();
 
     @PostMapping("/registration")
     public ResponseEntity<UserDto> registration(@RequestBody UserDto userDto,
@@ -51,5 +57,13 @@ public class UserController {
                                          .map(postDto::convertToDto)
                                          .toList();
         return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/{username}/comments")
+    public ResponseEntity<Set<CommentDto>> getUserComments(@PathVariable("username") String username) {
+        Set<CommentDto> comments = commentService.getByUserUsername(username).stream()
+                                                                              .map(commentDto::convertToDto)
+                                                                              .collect(Collectors.toSet());
+        return ResponseEntity.ok(comments);
     }
 }
