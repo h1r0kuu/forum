@@ -1,5 +1,6 @@
 package com.site.forum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "forum")
@@ -29,6 +31,10 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User creator;
+
+    @OneToMany(mappedBy = "post")
+    private Set<Comment> comments;
+
 
     @CreationTimestamp
     @Column(name = "created_at")
