@@ -7,6 +7,7 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,8 @@ public class PostDto {
     private String title;
     private ForumDto forum;
     private Set<CommentDto> comments;
+    private int likes;
+    private int dislikes;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -26,7 +29,8 @@ public class PostDto {
         dto.setComments( post.getComments().stream()
                                            .map(commentDto::convertToDto)
                                            .collect(Collectors.toSet()));
-
+        dto.setLikes(Objects.nonNull(post.getLikes()) ? post.getLikes().size() : 0);
+        dto.setDislikes(Objects.nonNull(post.getDislikes()) ? post.getDislikes().size() : 0);
         return dto;
     }
 

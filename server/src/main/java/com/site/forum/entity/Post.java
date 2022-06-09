@@ -35,6 +35,21 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private Set<Comment> comments;
 
+    @ManyToMany
+    @JoinTable(
+            name = "post_likes",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> likes;
+
+    @ManyToMany
+    @JoinTable(
+            name = "post_dislikes",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> dislikes;
 
     @CreationTimestamp
     @Column(name = "created_at")

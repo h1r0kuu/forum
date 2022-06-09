@@ -4,10 +4,13 @@ import com.site.forum.dto.CommentDto;
 import com.site.forum.dto.PostDto;
 import com.site.forum.entity.Comment;
 import com.site.forum.entity.Post;
+import com.site.forum.entity.User;
 import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.PostServiceImpl;
+import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class PostController {
 
     private final PostServiceImpl postService;
     private final CommentServiceImpl commentService;
+    private final UserServiceImpl userService;
 
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
@@ -47,6 +51,25 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    @PostMapping("/{id}/like")
+    public ResponseEntity<String> likePost(@PathVariable("id") Long id,
+                                           Authentication authentication) {
+        Post post = postService.getById(id);
+        User user = userService.getUserByUsername(authentication.getName());
+        postService.like(post, user);
+        return ResponseEntity.ok("likes");
+    }
+
+    @PostMapping("/{id}/dislike")
+    public ResponseEntity<String> dislikePost(@PathVariable("id") Long id,
+                                           Authentication authentication) {
+        Post post = postService.getById(id);
+        User user = userService.getUserByUsername(authentication.getName());
+        postService.dislike(post, user);
+        return ResponseEntity.ok("disliked");
+    }
+
+//    Comments
     @GetMapping("/{id}/comments")
     public ResponseEntity<Set<CommentDto>> getPostComments(@PathVariable("id") Long id) {
         Set<CommentDto> comments = commentService.getByPostId(id).stream()
@@ -61,5 +84,23 @@ public class PostController {
         Post post = postService.getById(id);
         Comment createdComment = commentService.create( commentDto.convertToEntity(commentDto) );
         return ResponseEntity.ok(commentDto.convertToDto(createdComment));
+    }
+
+    @PostMapping("/{id}/comments/{id}/like")
+    public ResponseEntity<String> likeComment(@PathVariable("id") Long id,
+                                              Authentication authentication) {
+        Comment comment = commentService.getById(id);
+        User user = userService.getUserByUsername(authentication.getName());
+        commentService.like(comment, user);
+        return ResponseEntity.ok("liked");
+    }
+
+    @PostMapping("/{id}/comments/{id}/dislike")
+    public ResponseEntity<String> dislikeComment(@PathVariable("id") Long id,
+                                                 Authentication authentication) {
+        Comment comment = commentService.getById(id);
+        User user = userService.getUserByUsername(authentication.getName());
+        commentService.dislike(comment, user);
+        return ResponseEntity.ok("liked");
     }
 }
