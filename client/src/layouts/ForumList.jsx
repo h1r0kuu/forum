@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import ForumService from '../services/ForumService'
+import "../styles/forum-list.css"
 
 function ForumList() {
     const [forums, setForums] = useState([])
