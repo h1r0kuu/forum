@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Index from "./pages/Index";
-import PostList from "./pages/PostList";
+import PostList from "./components/Post/PostList";
+import "./styles/app.css"
 
 function App() {
   return (
