@@ -1,0 +1,45 @@
+header {
+    background-color: rgba(0,0,0,.3);
+    border-radius: 5px;
+    padding: 10px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+}
+
+ul li {
+    list-style: none;
+    margin-right: 20px;
+    color: #fff;
+    position: relative;
+}
+
+ul > li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 0;
+    background-color: #fff;
+    transition: width .2s linear;
+}
+
+ul > li:hover::after {
+    width: 100%;
+}
+
+.search {
+    margin-right: 30px;
+    color: #fff;
+}
+
+.search-input {
+    margin-right: 5px;
+}
