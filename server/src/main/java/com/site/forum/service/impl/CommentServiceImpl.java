@@ -2,6 +2,7 @@ package com.site.forum.service.impl;
 
 import com.site.forum.dao.CommentRepository;
 import com.site.forum.entity.Comment;
+import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,8 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public Comment create(Comment comment) {
+    public Comment create(Comment comment, Post post) {
+        comment.setPost(post);
         Comment createdComment = commentRepository.save(comment);
         return createdComment;
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    Comment create(Comment comment);
+    Comment create(Comment comment, Post post);
     Comment getById(Long id);
     List<Comment> getByPostId(Long postId);
     List<Comment> getByUserUsername(String username);
