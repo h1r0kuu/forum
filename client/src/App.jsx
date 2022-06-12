@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Index from "./pages/Index";
-import PostList from "./components/Post/PostList";
 import "./styles/app.css"
+import ForumPosts from "./pages/ForumPosts";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Router>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/forums/:forumId" element={<PostList />} />
+            <Route path="/forums/:forumId" element={<ForumPosts />} />
           </Routes>
       </Router>
     </>
