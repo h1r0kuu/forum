@@ -1,13 +1,16 @@
 import ForumList from "../layouts/ForumList";
 import Header from "../layouts/Header";
 import PostList from "../components/Post/PostList";
+import "../styles/index.css"
 
 function Index() {
     return (
         <>
             <Header />
-            <ForumList />
-            <PostList />
+            <div className="main">
+                <ForumList />
+                <PostList />
+            </div>
         </>
     )
 }
