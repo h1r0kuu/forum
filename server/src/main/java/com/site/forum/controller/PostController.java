@@ -82,7 +82,7 @@ public class PostController {
     public ResponseEntity<CommentDto> createComment(@PathVariable("id") Long id,
                                                     @RequestBody CommentDto commentDto) {
         Post post = postService.getById(id);
-        Comment createdComment = commentService.create( commentDto.convertToEntity(commentDto) );
+        Comment createdComment = commentService.create( commentDto.convertToEntity(commentDto), post );
         return ResponseEntity.ok(commentDto.convertToDto(createdComment));
     }
 
