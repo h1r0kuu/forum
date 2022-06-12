@@ -1,5 +1,6 @@
 package com.site.forum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,12 +30,13 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     private Post post;
 
     @ManyToMany
     @JoinTable(
             name = "comment_likes",
-            joinColumns = @JoinColumn(name = "post_id"),
+            joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> likes;
@@ -42,7 +44,7 @@ public class Comment {
     @ManyToMany
     @JoinTable(
             name = "comment_dislikes",
-            joinColumns = @JoinColumn(name = "post_id"),
+            joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> dislikes;
