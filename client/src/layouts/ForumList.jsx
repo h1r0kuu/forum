@@ -16,7 +16,7 @@ function ForumList() {
     return (
         <div className="forums">
             {forums.map(forum=> (
-                <p key={forum.id}><Link to={`/forums/${forum.id}`}>{forum.title}</Link></p>
+                <p key={forum.id}><Link to={`/forums/${forum.id}`} onClick={() => window.location.href(`/forums/${forum.id}`)}>{forum.title}</Link></p>
             ))}
         </div>
     )
