@@ -10,10 +10,12 @@ import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,9 +37,16 @@ public class PostController {
         Post createdPost = postService.create( postDto.convertToEntity(post) );
         return ResponseEntity.ok( postDto.convertToDto(createdPost) );
     }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> deletePost(@PathVariable("id") Long id) {
+        postService.delete(id);
+        return ResponseEntity.ok("Successfuly deleted");
+    }
+
     @GetMapping("/all")
-    public ResponseEntity<List<PostDto>> getAll() {
-            List<PostDto> posts = postService.getAll().stream()
+    public ResponseEntity<List<PostDto>> getAll(@Nullable @RequestParam("order") String orderBy) {
+            List<PostDto> posts = postService.getAll( Objects.nonNull( orderBy ) ? orderBy : "createdAt" ).stream()
                                              .map(postDto::convertToDto)
                                              .toList();
             return ResponseEntity.ok(posts);
@@ -76,6 +85,12 @@ public class PostController {
                                                                  .map(commentDto::convertToDto)
                                                                  .collect(Collectors.toSet());
         return ResponseEntity.ok(comments);
+    }
+
+    @DeleteMapping("/{id}/comments/{commentId}/delete")
+    public ResponseEntity<String> deleteComment(@PathVariable("commentId") Long id) {
+        commentService.delete(id);
+        return ResponseEntity.ok("Successfuly deleted");
     }
 
     @PostMapping("/{id}/comments/create")

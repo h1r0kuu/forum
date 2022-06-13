@@ -5,6 +5,8 @@ import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,14 +25,19 @@ public class PostServiceImpl implements PostService {
         return createdPost;
     }
 
+    @Override
+    public void delete(Long id) {
+        postRepository.deleteById(id);
+    }
+
     public Post update(Post post) {
         Post updatedPost = postRepository.save(post);
         return updatedPost;
     }
 
     @Override
-    public List<Post> getAll() {
-        List<Post> posts = postRepository.findAll();
+    public List<Post> getAll(@Nullable String sortBy) {
+        List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC, sortBy));
         return posts;
     }
 

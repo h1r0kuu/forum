@@ -26,6 +26,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
+    }
+
+    @Override
     public Comment getById(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(()->new NoSuchElementException("Comment not founded"));
         return comment;

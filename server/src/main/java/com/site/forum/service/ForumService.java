@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ForumService {
     Forum create(Forum forum);
+    void delete(Long id);
     List<Forum> getAll();
     Forum getById(Long id);
 }

@@ -24,6 +24,12 @@ public class ForumController {
         return ResponseEntity.ok( forumDto.convertToDto(createdForum) );
     }
 
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> deleteForum(@PathVariable("id") Long id) {
+        forumService.delete(id);
+        return ResponseEntity.ok("Successfuly deleted");
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<ForumDto>> getForums() {
         List<ForumDto> forums = forumService.getAll().stream()

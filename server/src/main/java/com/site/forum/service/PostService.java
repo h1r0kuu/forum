@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface PostService {
     Post create(Post post);
-    List<Post> getAll();
+    void delete(Long id);
+    List<Post> getAll(String sortBy);
     Post getById(Long id);
     List<Post> getByForumId(Long forumId);
     void like(Post post, User user);
