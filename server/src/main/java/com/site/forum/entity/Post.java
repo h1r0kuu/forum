@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "forum")
+@Table(name = "post")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -24,6 +24,9 @@ public class Post {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "text")
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "forum_id")
