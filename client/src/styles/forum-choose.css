@@ -1,0 +1,10 @@
+.forum-list {
+    display: flex;
+    flex-direction: row;
+    background-color: transparent;
+}
+
+p {
+    background-color: transparent;
+    margin-right: 25px;
+}
