@@ -1,6 +1,7 @@
 package com.site.forum.service.impl;
 
 import com.site.forum.dao.PostRepository;
+import com.site.forum.entity.Forum;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.PostService;
@@ -18,9 +19,14 @@ import java.util.Set;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final ForumServiceImpl forumService;
 
     @Override
     public Post create(Post post) {
+        Forum forum = forumService.getById(post.getForum().getId());
+        if(forum == null) {
+            throw new NoSuchElementException("Forum with id " + forum.getId() + " doesn't exist");
+        }
         Post createdPost = postRepository.save(post);
         return createdPost;
     }
