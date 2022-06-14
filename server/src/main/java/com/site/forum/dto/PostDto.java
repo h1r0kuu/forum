@@ -12,6 +12,7 @@ import java.util.Set;
 public class PostDto {
     private Long id;
     private String title;
+    private String text;
     private ForumDto forum;
     private Set<CommentDto> comments;
     private int likesCount;
