@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-p {
+.forum-link {
     width: 95%;
     background-color: rgba(0,0,0,.2);
     border-radius: 5px;
