@@ -9,6 +9,7 @@ import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
@@ -32,10 +33,16 @@ public class PostController {
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<PostDto> create(@RequestBody PostDto post) {
         Post createdPost = postService.create( postDto.convertToEntity(post) );
         return ResponseEntity.ok( postDto.convertToDto(createdPost) );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getOne(@PathVariable("id") Long id) {
+        Post post = postService.getById(id);
+        return ResponseEntity.ok( postDto.convertToDto(post) );
     }
 
     @DeleteMapping("/{id}/delete")
