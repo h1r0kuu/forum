@@ -9,8 +9,8 @@ class PostSevice {
         return axios.get(`${POST_API_RUL}/forum/` + forumId)
     }
 
-    getAll() {
-        return axios.get(`${POST_API_RUL}/all`)
+    getAll(page) {
+        return axios.get(`${POST_API_RUL}/all?page=${page}`)
     }
 
     create(data, callback) {
