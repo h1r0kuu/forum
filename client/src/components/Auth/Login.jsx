@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Context } from "../index";
+import { Context } from "../../index";
 
 function Login() {
     const {store} = useContext(Context);

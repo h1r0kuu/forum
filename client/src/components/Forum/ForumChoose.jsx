@@ -1,5 +1,5 @@
 import ForumListForFC from "./ForumListForFC"
-import "../styles/modal.css"
+import "../../styles/modal.css"
 
 function ForumChoose({openModal, setModal}) {
     return (

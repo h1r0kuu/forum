@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API_URL } from "../utils/axiosConf";
+import { API_URL } from "../utils/authQuery";
 import AuthService from "./AuthService";
 import {makeAutoObservable} from "mobx";
 
-export default class Store {
+class Store {
     user = {};
     isAuth = false;
     isLoading = false;
@@ -32,6 +32,7 @@ export default class Store {
             this.setUser(response.data.user);
             window.location.href = "/"
         } catch (e) {
+            console.log(e)
             console.log(e.response?.data?.message);
         }
     }
@@ -73,3 +74,5 @@ export default class Store {
         }
     }
 }
+
+export default Store

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import PostService from "../services/PostService"
-import Header from "./Header"
+import Header from "../components/Header"
 import CKEditorInput from "../components/CKEditorComponent";
 import "../styles/post-create.css"
 import { useState } from "react";

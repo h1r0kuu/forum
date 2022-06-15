@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
-import PostService from "../services/PostService";
-import "../styles/post-list.css"
-import Post from "../components/Post/Post";
+import PostService from "../../services/PostService";
+import "../../styles/post-list.css"
+import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function PostList() {

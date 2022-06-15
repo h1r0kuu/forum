@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
-import Header from "../layouts/Header"
+import Header from "../components/Header"
 import PostService from "../services/PostService"
 import "../styles/single-post.css"
 

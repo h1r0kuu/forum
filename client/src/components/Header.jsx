@@ -1,21 +1,12 @@
 import { Link } from "react-router-dom"
-import ForumChoose from "./ForumChoose"
-import "../styles/header.css"
-import { useContext, useState } from "react"
-import { Context } from "../index"
-import { useEffect } from "react"
-import Login from "./Login"
+import ForumChoose from "./Forum/ForumChoose"
+import { useState } from "react"
+import Login from "./Auth/Login"
 import {observer} from 'mobx-react-lite'
+import "../styles/header.css"
 
 function Header({store}) {
     const [openModal, setModal] = useState(false)
-    // const {store} = useContext(Context);
-    // useEffect(()=> {
-    //     if(localStorage.getItem("token")) {
-    //         store.checkAuth(localStorage.getItem("token"))
-    //     }
-    // }, [])
-    // console.log(store.user)
     return (
         <>
         <header>
