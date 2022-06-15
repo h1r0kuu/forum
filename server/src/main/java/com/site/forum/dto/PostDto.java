@@ -14,6 +14,7 @@ public class PostDto {
     private String title;
     private String text;
     private ForumDto forum;
+    private UserDto creator;
     private Set<CommentDto> comments;
     private int likesCount;
     private int dislikesCount;
