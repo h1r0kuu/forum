@@ -5,6 +5,11 @@ import "../../styles/post.css"
 function Post({post}) {
     return (
         <div className="post">
+            {post.creator && 
+                <div className='post__creator'>
+                    {post.creator.username}
+                </div>
+            }
             <div className="post__info">
                 <Link to={`/posts/${post.id}`} className="post-link">{post.title}</Link>
                 <div className="post__details">
