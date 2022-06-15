@@ -3,8 +3,9 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import Header from "../layouts/Header"
 import PostService from "../services/PostService"
+import "../styles/single-post.css"
 
-function SinglePost() {
+function SinglePost({store}) {
     const {postId} = useParams()
     const [post, setPost] = useState({})
 
@@ -16,9 +17,16 @@ function SinglePost() {
 
     return (
         <>
-            <Header />
+            <Header store={store}/>
             <div className="post">{post.title}</div>
-            <div className="text">{post.text}</div>
+            <div className="text" dangerouslySetInnerHTML={{__html:post.text}} />
+            <div className="comments"></div>
+            <div className="write-comment">
+                <form>
+                    <input type="text" name="text" id="text" placeholder="text"/>
+                    <button type="submit">send</button>
+                </form>
+            </div>
         </>
     )
 }
