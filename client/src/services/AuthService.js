@@ -1,16 +1,18 @@
-import api from "../utils/axiosConf"
+import api from "../utils/authQuery"
 
-export default class AuthService {
-    static async login(username, password) {
+class AuthService {
+    async login(username, password) {
         return api.post('/auth/login', {username, password})
     }
 
-    static async registration(username, password) {
+    async registration(username, password) {
         return api.post('/auth/registration', {username, password})
     }
 
-    static async logout() {
+    async logout() {
         return api.post('/auth/logout')
     }
 
 }
+
+export default new AuthService()
