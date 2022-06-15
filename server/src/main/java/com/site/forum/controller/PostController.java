@@ -9,14 +9,13 @@ import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,11 +51,18 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostDto>> getAll(@Nullable @RequestParam("order") String orderBy) {
-            List<PostDto> posts = postService.getAll( Objects.nonNull( orderBy ) ? orderBy : "createdAt" ).stream()
-                                             .map(postDto::convertToDto)
-                                             .toList();
-            return ResponseEntity.ok(posts);
+    public ResponseEntity<Page<PostDto>> getAll(@Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
+                                                @RequestParam(defaultValue = "0", value = "page") int page,
+                                                @RequestParam(defaultValue = "10", value = "size") int size) {
+
+        Pageable paging = PageRequest.of(page, size, Sort.by(orderBy));
+        List<PostDto> postList = postService.getAll().stream()
+                                         .map(postDto::convertToDto)
+                                         .toList();
+        final int start = (int)paging.getOffset();
+        final int end = Math.min((start + paging.getPageSize()), postList.size());
+        Page<PostDto> posts = new PageImpl<>(postList.subList(start, end), paging, postList.size());
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/forum/{id}")
