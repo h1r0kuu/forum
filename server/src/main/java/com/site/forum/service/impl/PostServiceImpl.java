@@ -42,8 +42,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAll(@Nullable String sortBy) {
-        List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC, sortBy));
+    public List<Post> getAll() {
+        List<Post> posts = postRepository.findAll();
         return posts;
     }
 
