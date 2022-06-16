@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class PostDto {
@@ -24,6 +25,13 @@ public class PostDto {
     public PostDto convertToDto(Post post) {
         ModelMapper modelMapper = new ModelMapper();
         PostDto dto = modelMapper.map(post, PostDto.class);
+
+        CommentDto commentDto = new CommentDto();
+        dto.setComments( post.getComments()
+                .stream()
+                .map(commentDto::convertToDto)
+                .collect(Collectors.toSet())
+        );
         dto.setLikesCount(Objects.nonNull(post.getLikes()) ? post.getLikes().size() : 0);
         dto.setDislikesCount(Objects.nonNull(post.getDislikes()) ? post.getDislikes().size() : 0);
         return dto;
