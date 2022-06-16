@@ -15,7 +15,7 @@ import java.util.HashMap;
 @RequestMapping("/api/v1/images")
 @RequiredArgsConstructor
 public class ImageController {
-    @Value("${file.upload.path}")
+    @Value("${post.image.upload.path}")
     private String fileUploadPath;
 
     @PostMapping("/upload")
