@@ -57,10 +57,10 @@ public class CommentServiceImpl implements CommentService {
     public void like(Comment comment, User user) {
         Set<User> likes = comment.getLikes();
         Set<User> dislikes = comment.getDislikes();
-        if(dislikes.contains(user)) {
-            dislikes.remove(user);
-        }
+
+        dislikes.remove(user);
         likes.add(user);
+
         comment.setLikes(likes);
         update(comment);
     }
@@ -69,10 +69,10 @@ public class CommentServiceImpl implements CommentService {
     public void dislike(Comment comment, User user) {
         Set<User> likes = comment.getLikes();
         Set<User> dislikes = comment.getDislikes();
-        if(likes.contains(user)) {
-            likes.remove(user);
-        }
+
+        likes.remove(user);
         dislikes.add(user);
+
         comment.setDislikes(dislikes);
         update(comment);
     }
