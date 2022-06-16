@@ -5,8 +5,12 @@ class AuthService {
         return api.post('/auth/login', {username, password})
     }
 
-    async registration(username, password) {
-        return api.post('/auth/registration', {username, password})
+    async registration(data) {
+        return api.post('/auth/registration', data, {
+            headers: {
+                "Content-Type": 'multipart/form-data'
+            }
+        })
     }
 
     async logout() {
