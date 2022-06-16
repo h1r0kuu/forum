@@ -4,10 +4,13 @@ import com.site.forum.dto.UserDto;
 import com.site.forum.entity.User;
 import com.site.forum.enums.UserRole;
 import com.site.forum.model.AuthModel;
+import com.site.forum.model.UserModel;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
+import com.site.forum.utils.FileUpload;
 import com.site.forum.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,10 +21,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -34,18 +40,22 @@ public class AuthController {
 
     private final UserDto userDto = new UserDto();
 
-    @PostMapping("/registration")
-    public ResponseEntity<UserDto> registration(@RequestBody UserDto userDto,
-                                                HttpServletRequest request) {
+    @Value("${user.image.upload.path}")
+    private String fileUploadPath;
 
-        if(!userDto.getPassword().equals(request.getParameter("confirm_password"))) {
+    @PostMapping(value = "/registration", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<UserDto> registration(@ModelAttribute UserModel userModel) throws IOException {
+        userModel.setRole( UserRole.USER );
+        MultipartFile file = userModel.getImage();
+        userModel.setPassword( new BCryptPasswordEncoder().encode(userModel.getPassword()));
 
-        }
+        String filePath = FileUpload.upload(fileUploadPath, file.getOriginalFilename(), file);
+        System.out.println(filePath);
+        UserDto user = userDto.modelToDto(userModel);
+        user.setImagePath("http://localhost:8080/img/" + file.getOriginalFilename());
 
-        userDto.setRole( UserRole.USER );
+        User createdUser = userService.registration(userDto.convertToEntity(user));
 
-        userDto.setPassword( new BCryptPasswordEncoder().encode(userDto.getPassword()));
-        User createdUser = userService.registration(userDto.convertToEntity(userDto));
         return ResponseEntity.ok(userDto.convertToDto(createdUser));
     }
 
@@ -71,7 +81,7 @@ public class AuthController {
         String jwt = jwtUtil.generateToken(user);
 
         HashMap<String, Object> res = new HashMap<>();
-        res.put("token", jwtToken);
+        res.put("token", jwt);
         res.put("user", userDto.convertToDto(user));
         return ResponseEntity.ok(res);
     }
