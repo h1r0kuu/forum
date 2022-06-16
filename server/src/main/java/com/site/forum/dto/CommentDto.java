@@ -21,7 +21,7 @@ public class CommentDto {
         ModelMapper modelMapper = new ModelMapper();
         CommentDto dto = modelMapper.map(comment, CommentDto.class);
         dto.setLikesCount(Objects.nonNull(comment.getLikes()) ? comment.getLikes().size() : 0);
-        dto.setDislikesCount(Objects.nonNull(comment.getLikes()) ? comment.getLikes().size() : 0);
+        dto.setDislikesCount(Objects.nonNull(comment.getDislikes()) ? comment.getDislikes().size() : 0);
         return dto;
     }
 
