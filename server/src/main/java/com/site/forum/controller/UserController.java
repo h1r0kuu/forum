@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -30,19 +31,11 @@ public class UserController {
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
 
-    @PostMapping("/registration")
-    public ResponseEntity<UserDto> registration(@RequestBody UserDto userDto,
-                                                HttpServletRequest request) {
-
-        if(!userDto.getPassword().equals(request.getParameter("confirm_password"))) {
-            System.out.println("Passwords don't match ");
-        }
-
-        userDto.setPassword( new BCryptPasswordEncoder().encode(userDto.getPassword()));
-        User createdUser = userService.registration(userDto.convertToEntity(userDto));
-        return ResponseEntity.ok(userDto.convertToDto(createdUser));
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable("username") String username) {
+        User user = userService.getUserByUsername(username);
+        return ResponseEntity.ok(userDto.convertToDto(user));
     }
-
     @GetMapping("/{username}/forums")
     public ResponseEntity<List<ForumDto>> getUserForums(@PathVariable("username") String username) {
         List<ForumDto> forums = userService.getUserForums(username).stream()
