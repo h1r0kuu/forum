@@ -63,10 +63,10 @@ public class PostServiceImpl implements PostService {
     public void like(Post post, User user) {
         Set<User> likes = post.getLikes();
         Set<User> dislikes = post.getDislikes();
-        if(dislikes.contains(user)) {
-            dislikes.remove(user);
-        }
+
+        dislikes.remove(user);
         likes.add(user);
+
         post.setLikes(likes);
         update(post);
     }
@@ -75,10 +75,10 @@ public class PostServiceImpl implements PostService {
     public void dislike(Post post, User user) {
         Set<User> likes = post.getLikes();
         Set<User> dislikes = post.getDislikes();
-        if(likes.contains(user)) {
-            likes.remove(user);
-        }
+
+        likes.remove(user);
         dislikes.add(user);
+
         post.setDislikes(dislikes);
         update(post);
     }
