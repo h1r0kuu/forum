@@ -13,9 +13,10 @@ import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -75,18 +76,22 @@ public class PostController {
 
     @PostMapping("/{id}/like")
     public ResponseEntity<String> likePost(@PathVariable("id") Long id,
-                                           Authentication authentication) {
+                                           @RequestBody Map<String, String> payload) {
+        String username = payload.get("username");
+
         Post post = postService.getById(id);
-        User user = userService.getUserByUsername(authentication.getName());
+        User user = userService.getUserByUsername(username);
         postService.like(post, user);
         return ResponseEntity.ok("likes");
     }
 
     @PostMapping("/{id}/dislike")
     public ResponseEntity<String> dislikePost(@PathVariable("id") Long id,
-                                           Authentication authentication) {
+                                              @RequestBody Map<String, String> payload) {
+        String username = payload.get("username");
+
         Post post = postService.getById(id);
-        User user = userService.getUserByUsername(authentication.getName());
+        User user = userService.getUserByUsername(username);
         postService.dislike(post, user);
         return ResponseEntity.ok("disliked");
     }
@@ -114,21 +119,25 @@ public class PostController {
         return ResponseEntity.ok(commentDto.convertToDto(createdComment));
     }
 
-    @PostMapping("/{id}/comments/{id}/like")
-    public ResponseEntity<String> likeComment(@PathVariable("id") Long id,
-                                              Authentication authentication) {
+    @PostMapping("/{id}/comments/{commentId}/like")
+    public ResponseEntity<String> likeComment(@PathVariable("commentId") Long id,
+                                              @RequestBody Map<String, String> payload) {
+        String username = payload.get("username");
+
         Comment comment = commentService.getById(id);
-        User user = userService.getUserByUsername(authentication.getName());
+        User user = userService.getUserByUsername(username);
         commentService.like(comment, user);
         return ResponseEntity.ok("liked");
     }
 
-    @PostMapping("/{id}/comments/{id}/dislike")
-    public ResponseEntity<String> dislikeComment(@PathVariable("id") Long id,
-                                                 Authentication authentication) {
+    @PostMapping("/{id}/comments/{commentId}/dislike")
+    public ResponseEntity<String> dislikeComment(@PathVariable("commentId") Long id,
+                                                 @RequestBody Map<String, String> payload) {
+        String username = payload.get("username");
+
         Comment comment = commentService.getById(id);
-        User user = userService.getUserByUsername(authentication.getName());
+        User user = userService.getUserByUsername(username);
         commentService.dislike(comment, user);
-        return ResponseEntity.ok("liked");
+        return ResponseEntity.ok("disliked");
     }
 }
