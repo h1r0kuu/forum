@@ -2,3 +2,4 @@
 client/node_modules
 client/ckeditor5/node_modules
 /server/posts/images
+/server/users/images
