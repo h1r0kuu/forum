@@ -13,7 +13,11 @@ function Post({post}) {
             <div className="post__info">
                 <Link to={`/posts/${post.id}`} className="post-link">{post.title}</Link>
                 <div className="post__details">
-                    <span className="post-creator"></span>
+                    {post.creator &&
+                    <span className="post-creator">
+                        <img src={post.creator.imagePath} alt="" />
+                    </span>
+                    }
                     <span className="post-created_at"><Moment date={post.createdAt} fromNow /></span>
                     <span className="post-comments_count">{post.comments.length}</span>
                 </div>
