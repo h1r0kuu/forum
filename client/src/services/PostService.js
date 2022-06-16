@@ -19,6 +19,14 @@ class PostSevice {
             callback(res)
         })
     }
+
+    like(postId, data) {
+        axios.post(`${POST_API_RUL}/${postId}/like`, data)
+    }
+
+    dislike(postId, data) {
+        axios.post(`${POST_API_RUL}/${postId}/dislike`, data)
+    }
 }
 
 export default new PostSevice()
