@@ -3,41 +3,64 @@ import ForumChoose from "./Forum/ForumChoose"
 import { useState } from "react"
 import Login from "./Auth/Login"
 import {observer} from 'mobx-react-lite'
-import "../styles/header.css"
 import Registration from "./Auth/Registration"
+import ForumListForFC from "./Forum/ForumListForFC"
+import "../styles/style.css"
+import "../styles/forum-choose.css"
 
 function Header({store}) {
     const [openModal, setModal] = useState(false)
     return (
         <>
-        <header>
-            <ul>
-                <li>Logo</li>
-                <li><Link to={'/'}>Home</Link></li>
-                <li>Faq</li>
-                {store.isAuth &&
-                    <li><a href="#" onClick={()=>setModal(true)}>Create post</a></li>
-                }
-            </ul>
-            <div className="search">
-                <input type="text" className="search-input" />
-                <button>Search</button> 
-            </div>
-            {store.isAuth ?
-                <> 
-                    <Link to={"/user/" + store.user.username}>Profile</Link>
-                <div>
-                    <a href="#" onClick={()=> store.logout()}>Logout</a>
+            <header>
+                <div className="navbar">
+                    <nav className="navigation" id="navigation">
+                        <span className="close-icon" id="close-icon" onclick="showIconBar()"><i className="fa fa-close"></i></span>
+                        <ul className="nav-list">
+                            <li className="nav-item">
+                                <Link to={"/"}>Home</Link>
+                            </li>
+                            {store.isAuth 
+                            ?
+                            <>
+                                <li className="nav-item">
+                                    <Link to={"/user/"+store.user.username}>Profile</Link>
+                                </li>
+                                <li className="nav-item" onClick={()=>setModal(true)}>
+                                    <Link to={"#"}>Create post</Link>
+                                </li>
+                                <li className="nav-item" onClick={() => store.logout()}>
+                                    <Link to={"#"}>Logout</Link>
+                                </li>
+                            </>
+                            :
+                            <>
+                                <li className="nav-item">
+                                    <Link to={"/login"}>Login</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to={"/registration"}>Registration</Link>
+                                </li>
+                            </>
+                            }
+                        </ul>
+                    </nav>
                 </div>
-                </>
-                :
-                <>
-                    <Link to={"/login"} element={<Login />}>Login</Link>
-                    <Link to={"/registration"} element={<Registration />}>Reg</Link>
-                </>
+                <div className="search-box">
+                    <div>
+                        <select name="" id="">
+                            <option value="Everything">Everything</option>
+                            <option value="Titles">Titles</option>
+                            <option value="Descriptions">Descriptions</option>
+                        </select>
+                        <input type="text" name="q" placeholder="search ..."/>
+                        <button><i className="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </header>
+            {openModal && 
+                <ForumListForFC setModal={setModal}/>
             }
-        </header>
-        {openModal && <ForumChoose openModal={openModal} setModal={setModal} />}
         </>
     )
 }

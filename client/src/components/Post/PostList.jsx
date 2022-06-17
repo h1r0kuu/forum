@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import PostService from "../../services/PostService";
 import "../../styles/post-list.css"
 import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Header from "../Header"
 
-function PostList() {
+function PostList({store}) {
   const {forumId} = useParams()
   const [posts, setPosts] = useState([])
   const [hasMore, setHasMore] = useState(true);
@@ -34,18 +35,37 @@ function PostList() {
   }, [forumId])
 
   return (
+      <>
+      <Header store={store} />
       <div className="post-list">
-        <InfiniteScroll
-          dataLength={posts.length}
-          next={loadMorePosts}
-          hasMore={hasMore}
-          loader={<h4>Loading</h4>}
-        >
-        {posts.map( post => {
-          return <Post post={post} key={post.id} />;
-        })}
-        </InfiniteScroll>
+        <div className="container">
+          <div className="navigate">
+            <span>
+              <Link to={"/"}>MyForum - Forums</Link> {'>>'} <a href="">random subforum</a>
+            </span>
+          </div>
+          <div className="posts-table">
+            <div className="table-head">
+              <div className="status">Status</div>
+              <div className="subjects">Subjects</div>
+              <div className="replies">Replies/Views</div>
+              <div className="last-reply">Last Reply</div>
+            </div>
+            
+            <InfiniteScroll
+              dataLength={posts.length}
+              next={loadMorePosts}
+              hasMore={hasMore}
+              loader={<h4>Loading</h4>}
+            >
+              {posts.map( post => {
+                return <Post post={post} key={post.id} />;
+              })}
+            </InfiniteScroll>
+          </div>
+        </div>
       </div>
+      </>
   )
 }
 

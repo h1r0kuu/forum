@@ -3,31 +3,30 @@ import { Link } from 'react-router-dom';
 import "../../styles/post.css"
 
 function Post({post}) {
+    const lastComment = post.comments[post.comments.length - 1]
+
     return (
-        <div className="post">
-            {post.creator && 
-                <div className='post__creator'>
-                    {post.creator.username}
-                </div>
-            }
-            <div className="post__info">
-                <Link to={`/posts/${post.id}`} className="post-link">{post.title}</Link>
-                <div className="post__details">
-                    {post.creator &&
-                    <span className="post-creator">
-                        <img src={post.creator.imagePath} alt="" />
-                    </span>
-                    }
-                    <span className="post-created_at"><Moment date={post.createdAt} fromNow /></span>
-                    <span className="post-comments_count">{post.comments.length}</span>
-                </div>
+        <div className="table-row">
+            <div className="status">
+                <i className="fa fa-fire"></i>
             </div>
-            <div className="post__last-comment">
-                {/* <img src="" alt="" className="commentator-image" /> */}
-                <div className="commentator__info">
-                    <span className="commentator-username"></span>
-                    <span className="comment-created_at"></span>
-                </div>
+            <div className="subjects">
+                <Link to={"/posts/" + post.id}>{post.title}</Link>
+                <br />
+                <span>Started by <b>
+                    <Link to={"/"}>{post.creator && post.creator.username}</Link>
+                </b> . </span>
+            </div>
+            <div className="replies"> {post.comments.length} replies <br /> 125 views </div>
+            <div className="last-reply"> 
+                {lastComment &&
+                    <>
+                        <Moment format='MMM DD YYYY'>{lastComment.createdAt}</Moment><br />
+                        By <b>
+                            <Link to={"/user/" + lastComment.user.username}>{lastComment.user.username}</Link>
+                        </b>
+                    </>
+                }
             </div>
         </div>
     )

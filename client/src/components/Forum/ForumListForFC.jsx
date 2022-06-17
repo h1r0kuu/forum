@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import ForumService from '../../services/ForumService'
 import "../../styles/forum-choose.css"
 
-function ForumListForFC() {
+function ForumListForFC({setModal}) {
   const [forums, setForums] = useState([])
   useEffect(()=>{
     ForumService.getAllForums().then( res => {
@@ -13,9 +13,13 @@ function ForumListForFC() {
 
   return (
       <div className="forum-list">
-        {forums.map(forum=> ( 
-          <p key={forum.id}><Link to={`/forums/${forum.id}/posts/create`}>{forum.title}</Link></p>
-        ))}
+        <div className="content">
+          <div className="close" onClick={()=>{setModal(false)}}>X</div>
+
+          {forums.map(forum=> ( 
+            <p key={forum.id}><Link to={`/forums/${forum.id}/posts/create`}>{forum.title}</Link></p>
+          ))}
+        </div>
       </div>
   )
 }
