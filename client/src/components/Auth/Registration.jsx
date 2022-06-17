@@ -26,6 +26,7 @@ function Registration() {
             }
         } catch(e) {
             AuthService.registration(form)
+            window.location.href="/"
         }
     }
 
