@@ -31,11 +31,22 @@ public class UserController {
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDto>> getAll() {
+        List<User> users = userService.getAll();
+        return ResponseEntity.ok(
+                users.stream()
+                     .map(userDto::convertToDto)
+                     .toList()
+        );
+    }
+
     @GetMapping("/{username}")
     public ResponseEntity<UserDto> getUserInfo(@PathVariable("username") String username) {
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok(userDto.convertToDto(user));
     }
+
     @GetMapping("/{username}/forums")
     public ResponseEntity<List<ForumDto>> getUserForums(@PathVariable("username") String username) {
         List<ForumDto> forums = userService.getUserForums(username).stream()
