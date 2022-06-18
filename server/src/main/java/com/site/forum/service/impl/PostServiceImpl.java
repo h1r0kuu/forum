@@ -6,8 +6,6 @@ import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
