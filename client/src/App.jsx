@@ -32,12 +32,13 @@ function App() {
         <Route path="*" element={<Index store={store} />} />
         <Route exact path="/forums/:forumId" element={<PostList store={store}/>} />
         <Route exact path="/forums/:forumId/posts/create" element={<PostCreate store={store} />} />
+
         <Route exact path="/posts/:postId" element={<SinglePost store={store}/>} />
+
+        <Route exact path="/user/:username" element={<Profile store={store} />} />
 
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/registration" element={<Registration />} />
-
-        <Route exact path="/user/:username" element={<Profile store={store} />} />
 
         {store.user.role === "ADMIN" &&
           <>
