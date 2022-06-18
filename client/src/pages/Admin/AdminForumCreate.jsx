@@ -12,7 +12,7 @@ function AdminForumCreate() {
     }, [])
 
     function handleSelect(e) {
-        setParentId( e.target.value )
+        setParentId( isNaN( e.target.value ) ? null : e.target.value )
     }
 
     function onSubmit(e) {
