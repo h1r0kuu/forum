@@ -6,7 +6,7 @@ import "../../styles/forum-choose.css"
 function ForumListForFC({setModal}) {
   const [forums, setForums] = useState([])
   useEffect(()=>{
-    ForumService.getAllForums().then( res => {
+    ForumService.getAllForums(true).then( res => {
       setForums(res.data)
     })
   }, [])

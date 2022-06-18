@@ -7,7 +7,7 @@ import ForumService from "../../services/ForumService"
 function AdminForums() {
     const [forums, setForums] = useState([])
     useEffect(()=>{
-        ForumService.getAllForums().then( res => {
+        ForumService.getAllForums(true).then( res => {
         setForums(res.data)
         })
     }, [])
