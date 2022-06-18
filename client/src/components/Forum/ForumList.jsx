@@ -7,7 +7,7 @@ import "../../styles/style.css"
 function ForumList() {
   const [forums, setForums] = useState([])
   useEffect(()=>{
-    ForumService.getAllForums().then( res => {
+    ForumService.getAllForums(false).then( res => {
       setForums(res.data)
     })
   }, [])
@@ -32,7 +32,7 @@ function ForumList() {
               <div className="subforum-info subforum-column">
                 <b>
                   <a href="">Last post</a>
-                </b> by <a href="">{forum.lastPost.creator.username}</a>
+                </b> by <Link to={`/user/${forum.lastPost.creator.username}`}>{forum.lastPost.creator.username}</Link>
                 <br />on <small><Moment format='MMM DD YYYY'>{forum.lastPost.createdAt}</Moment></small>
               </div>
             }
@@ -57,7 +57,7 @@ function ForumList() {
                 <div className="subforum-info subforum-column">
                   <b>
                     <a href="">Last post</a>
-                  </b> by <a href="">{subforum.lastPost.creator.username}</a>
+                  </b> by <Link to={`/user/${subforum.lastPost.creator.username}`}>{subforum.lastPost.creator.username}</Link>
                   <br />on <small><Moment format='MMM DD YYYY'>{subforum.lastPost.createdAt}</Moment></small>
                 </div>
               }
