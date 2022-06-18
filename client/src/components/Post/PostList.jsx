@@ -51,17 +51,21 @@ function PostList({store}) {
               <div className="replies">Replies/Views</div>
               <div className="last-reply">Last Reply</div>
             </div>
-            
-            <InfiniteScroll
-              dataLength={posts.length}
-              next={loadMorePosts}
-              hasMore={hasMore}
-              loader={<h4>Loading</h4>}
-            >
-              {posts.map( post => {
-                return <Post post={post} key={post.id} />;
-              })}
-            </InfiniteScroll>
+            {posts.length > 0 
+            ? 
+              <InfiniteScroll
+                dataLength={posts.length}
+                next={loadMorePosts}
+                hasMore={hasMore}
+                loader={<h4>Loading</h4>}
+              >
+                {posts.map( post => {
+                  return <Post post={post} key={post.id} />;
+                })}
+              </InfiniteScroll>
+            :
+                <p>There is no posts</p>
+            }
           </div>
         </div>
       </div>
