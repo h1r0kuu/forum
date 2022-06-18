@@ -41,6 +41,16 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
 
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "followed_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id")
+    )
+    private Set<User> followers;
+
+    @ManyToMany(mappedBy = "followers")
+    private Set<User> following;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -84,6 +94,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addFollowing(User followed) {
+        following.add(followed);
+    }
+
+    public void addFollower(User follower) {
+        followers.add(follower);
     }
 
     @Override
