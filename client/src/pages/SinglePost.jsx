@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import Moment from "react-moment"
-import { Link, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 import Comment from "../components/Comment/Comment"
 import Header from "../components/Header"
 import CommentService from "../services/CommentService"
@@ -12,7 +12,7 @@ import "../styles/style.css"
 function SinglePost({store}) {
     const {postId} = useParams()
     const [post, setPost] = useState({})
-   
+
     useEffect(() => {
         PostService.getOne(postId).then((res)=> {
             setPost(res.data)
@@ -64,7 +64,7 @@ function SinglePost({store}) {
                 </div>
                 <div className="topic-container">
                     <div className="head">
-                        <div className="authors">Author</div>
+                        <div className="authors"></div>
                         <div className="content">Topic: random topic (Read 1325 Times)</div>
                     </div>
                     <div className="body">
