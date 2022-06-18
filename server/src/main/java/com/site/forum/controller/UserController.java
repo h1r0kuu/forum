@@ -5,14 +5,13 @@ import com.site.forum.dto.ForumDto;
 import com.site.forum.dto.PostDto;
 import com.site.forum.dto.UserDto;
 import com.site.forum.entity.User;
+import com.site.forum.model.FollowModel;
 import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -69,5 +68,14 @@ public class UserController {
                                                                               .map(commentDto::convertToDto)
                                                                               .collect(Collectors.toSet());
         return ResponseEntity.ok(comments);
+    }
+
+    @PostMapping("/follow")
+    public ResponseEntity<String> follow(@RequestBody FollowModel followModel) {
+        System.out.println(followModel);
+        User following = userService.getUserByUsername(followModel.getFollowingUsername());
+        following.addFollower( userService.getUserByUsername(followModel.getFollowerUsername()) );
+        userService.update(following);
+        return ResponseEntity.ok("Successfuly followed");
     }
 }
