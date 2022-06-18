@@ -25,8 +25,9 @@ function Registration() {
                 setErrors([...errors, "User with this username already exist"])
             }
         } catch(e) {
-            AuthService.registration(form)
-            window.location.href="/"
+            AuthService.registration(form).then(
+                window.location.href = "/"
+            )
         }
     }
 
