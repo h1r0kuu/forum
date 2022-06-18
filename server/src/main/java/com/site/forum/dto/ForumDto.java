@@ -5,13 +5,9 @@ import com.site.forum.model.ForumModel;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
@@ -28,18 +24,19 @@ public class ForumDto {
         ModelMapper modelMapper = new ModelMapper();
         ForumDto dto = modelMapper.map(forum, ForumDto.class);
         PostDto postDto = new PostDto();
-        dto.setPostsCount( Objects.nonNull(forum.getPosts()) ? forum.getPosts().size() : 0 );
-        dto.setSubForums(
-                forum.getSubForums() != null
-                ?
-                   forum.getSubForums()
-                        .stream()
-                        .map(this::convertToDto)
-                        .collect(Collectors.toSet())
-                :
-                   Collections.emptySet()
 
-        );
+        Set<ForumDto> subForums = forum.getSubForums()
+                                    .stream()
+                                    .map(this::convertToDto)
+                                    .collect(Collectors.toSet());
+        int postCount = forum.getPosts().size();
+        if(subForums.size() > 0) {
+            for (ForumDto subforum : subForums) {
+                postCount += subforum.getPostsCount();
+            }
+        }
+        dto.setPostsCount(postCount);
+        dto.setSubForums(subForums);
         dto.setLastPost(
                 forum.getPosts() != null && forum.getPosts().size() > 0
                 ? postDto.convertToDto(new ArrayList<>(forum.getPosts()).get(forum.getPosts().size() - 1))
@@ -50,10 +47,10 @@ public class ForumDto {
 
     public Forum modelToEntity(ForumModel model) {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<Forum, ForumModel>() {
+        modelMapper.addMappings(new PropertyMap<ForumModel, Forum>() {
             @Override
             protected void configure() {
-                skip(destination.getParentId());
+                skip(destination.getId());
             }
         });
         return modelMapper.map(model, Forum.class);

@@ -2,9 +2,9 @@ package com.site.forum.controller;
 
 import com.site.forum.dto.ForumDto;
 import com.site.forum.entity.Forum;
+import com.site.forum.model.ForumModel;
 import com.site.forum.service.impl.ForumServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +19,18 @@ public class ForumController {
     private final ForumDto forumDto = new ForumDto();
 
     @PostMapping(value = "/create")
-    public ResponseEntity<ForumDto> create(@RequestBody ForumDto forumDto) {
-        Forum createdForum = forumService.create( forumDto.convertToEntity(forumDto) );
-        return ResponseEntity.ok( forumDto.convertToDto(createdForum) );
+    public ResponseEntity<ForumDto> create(@RequestBody ForumModel model) {
+        Forum res = null;
+        Forum forum = forumDto.modelToEntity( model);
+        forumService.create(forum);
+        res = forum;
+        if(model.getParentId() != null) {
+            Forum parentForum = forumService.getById(model.getParentId());
+            parentForum.getSubForums().add(forum);
+            forumService.create(parentForum);
+            res = parentForum;
+        }
+        return ResponseEntity.ok( forumDto.convertToDto(res) );
     }
 
     @DeleteMapping("/{id}/delete")
@@ -31,10 +40,18 @@ public class ForumController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ForumDto>> getForums() {
-        List<ForumDto> forums = forumService.getAll().stream()
-                                               .map(forumDto::convertToDto)
-                                               .toList();
+    public ResponseEntity<List<ForumDto>> getForums(@RequestParam(value = "subforums", defaultValue = "false") boolean subforums) {
+        List<ForumDto> forums;
+        if(!subforums) {
+            forums = forumService.getAll().stream()
+                    .filter(f -> !forumService.isForumASubForum(f.getId()))
+                    .map(forumDto::convertToDto)
+                    .toList();
+        } else {
+            forums = forumService.getAll().stream()
+                    .map(forumDto::convertToDto)
+                    .toList();
+        }
         return ResponseEntity.ok(forums);
     }
 }
