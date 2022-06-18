@@ -2,6 +2,8 @@ package com.site.forum.dto;
 
 import com.site.forum.entity.Post;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
+@ToString
+@EqualsAndHashCode(exclude = {"creator"})
 public class PostDto {
     private Long id;
     private String title;
