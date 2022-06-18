@@ -9,4 +9,5 @@ public interface ForumService {
     void delete(Long id);
     List<Forum> getAll();
     Forum getById(Long id);
+    boolean isForumASubForum(Long forumId);
 }

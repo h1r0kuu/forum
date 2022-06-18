@@ -1,12 +1,9 @@
 package com.site.forum.service.impl;
 
 import com.site.forum.dao.ForumRepository;
-import com.site.forum.dto.ForumDto;
 import com.site.forum.entity.Forum;
 import com.site.forum.service.ForumService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.NotFound;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +36,10 @@ public class ForumServiceImpl implements ForumService {
     public Forum getById(Long id) {
         Forum forum = forumRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Forum not founded"));
         return forum;
+    }
+
+    @Override
+    public boolean isForumASubForum(Long forumId) {
+        return forumRepository.isForumASubForum(forumId);
     }
 }
