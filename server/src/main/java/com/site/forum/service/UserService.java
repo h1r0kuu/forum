@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 public interface UserService {
+    User update(User user);
     List<User> getAll();
     User getUserByUsername(String username) throws UsernameNotFoundException;
     User registration(User user);

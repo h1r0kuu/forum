@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User update(User user) {
+        return registration(user);
+    }
+
+    @Override
     public List<User> getAll() {
         return userRepository.findAll();
     }
