@@ -7,8 +7,8 @@ class ForumService {
         return axios.post(`${API_URL}/create`, data)
     }
 
-    getAllForums() {
-        return axios.get(`${API_URL}/all`)
+    getAllForums(subforums) {
+        return axios.get(`${API_URL}/all?subforums=${subforums}`)
     }
 }
 
