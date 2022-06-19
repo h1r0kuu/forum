@@ -35,26 +35,24 @@ public class PostServiceImpl implements PostService {
     }
 
     public Post update(Post post) {
-        Post updatedPost = postRepository.save(post);
-        return updatedPost;
+        return postRepository.save(post);
     }
 
     @Override
     public List<Post> getAll() {
-        List<Post> posts = postRepository.findAll();
-        return posts;
+        return postRepository.findAll();
     }
 
     @Override
     public Post getById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Post not founded"));
-        return post;
+        return postRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Post not founded")
+        );
     }
 
     @Override
     public List<Post> getByForumId(Long forumId) {
-        List<Post> posts = postRepository.findByForum_Id(forumId);
-        return posts;
+        return postRepository.findByForum_Id(forumId);
     }
 
     @Override

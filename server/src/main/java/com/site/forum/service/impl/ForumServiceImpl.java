@@ -17,8 +17,7 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public Forum create(Forum forum) {
-        Forum createdForum = forumRepository.save(forum);
-        return createdForum;
+        return forumRepository.save(forum);
     }
 
     @Override
@@ -28,14 +27,14 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public List<Forum> getAll() {
-        List<Forum> forums = forumRepository.findAll();
-        return forums;
+        return forumRepository.findAll();
     }
 
     @Override
     public Forum getById(Long id) {
-        Forum forum = forumRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Forum not founded"));
-        return forum;
+        return forumRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Forum not founded")
+        );
     }
 
     @Override

@@ -53,13 +53,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<Forum> getUserForums(String username) {
-        List<Forum> forums = forumRepository.findByCreator_Username(username);
-        return forums;
+        return forumRepository.findByCreator_Username(username);
     }
 
     @Override
     public List<Post> getUserPosts(String username) {
-        List<Post> posts = postRepository.findByCreator_Username(username);
-        return posts;
+        return postRepository.findByCreator_Username(username);
     }
 }

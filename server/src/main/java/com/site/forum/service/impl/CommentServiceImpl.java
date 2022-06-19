@@ -21,8 +21,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment create(Comment comment, Post post) {
         comment.setPost(post);
-        Comment createdComment = commentRepository.save(comment);
-        return createdComment;
+        return commentRepository.save(comment);
     }
 
     @Override
@@ -32,25 +31,23 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getById(Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow(()->new NoSuchElementException("Comment not founded"));
-        return comment;
+        return commentRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("Comment not founded")
+        );
     }
 
     public Comment update(Comment comment) {
-        Comment updatedComment = commentRepository.save(comment);
-        return updatedComment;
+        return commentRepository.save(comment);
     }
 
     @Override
     public List<Comment> getByPostId(Long postId) {
-        List<Comment> comments = commentRepository.findByPost_Id(postId);
-        return comments;
+        return commentRepository.findByPost_Id(postId);
     }
 
     @Override
     public List<Comment> getByUserUsername(String username) {
-        List<Comment> comments = commentRepository.findByUser_Username(username);
-        return comments;
+        return commentRepository.findByUser_Username(username);
     }
 
     @Override
