@@ -23,10 +23,9 @@ public class PostServiceImpl implements PostService {
     public Post create(Post post) {
         Forum forum = forumService.getById(post.getForum().getId());
         if(forum == null) {
-            throw new NoSuchElementException("Forum with id " + forum.getId() + " doesn't exist");
+            throw new NoSuchElementException("Forum doesn't exist");
         }
-        Post createdPost = postRepository.save(post);
-        return createdPost;
+        return postRepository.save(post);
     }
 
     @Override

@@ -25,12 +25,12 @@ public class ForumDto {
         ForumDto dto = modelMapper.map(forum, ForumDto.class);
         PostDto postDto = new PostDto();
 
-        Set<ForumDto> subForums = forum.getSubForums()
+        Set<ForumDto> entitySubForums = forum.getSubForums()
                                     .stream()
                                     .map(this::convertToDto)
                                     .collect(Collectors.toSet());
         int postCount = forum.getPosts().size();
-        if(subForums.size() > 0) {
+        if(!entitySubForums.isEmpty()) {
             for (ForumDto subforum : subForums) {
                 postCount += subforum.getPostsCount();
             }
