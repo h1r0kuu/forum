@@ -34,4 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean deploy sonar:sonar "-Dsonar.projectKey=h1r0kuu_forum"
+        run: mvn clean deploy sonar:sonar -X
