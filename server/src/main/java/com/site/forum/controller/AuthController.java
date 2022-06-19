@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -46,8 +46,8 @@ public class AuthController {
         MultipartFile file = userModel.getImage();
         userModel.setPassword( new BCryptPasswordEncoder().encode(userModel.getPassword()));
 
-        String filePath = FileUpload.upload(fileUploadPath, file.getOriginalFilename(), file);
-        System.out.println(filePath);
+        FileUpload.upload(fileUploadPath, file.getOriginalFilename(), file);
+
         UserDto user = userDto.modelToDto(userModel);
         user.setImagePath("http://localhost:8080/img/" + file.getOriginalFilename());
 
