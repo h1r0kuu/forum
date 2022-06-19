@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -72,7 +72,6 @@ public class UserController {
 
     @PostMapping("/follow")
     public ResponseEntity<String> follow(@RequestBody FollowModel followModel) {
-        System.out.println(followModel);
         User following = userService.getUserByUsername(followModel.getFollowingUsername());
         following.addFollower( userService.getUserByUsername(followModel.getFollowerUsername()) );
         userService.update(following);
