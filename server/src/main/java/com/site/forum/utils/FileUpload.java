@@ -1,5 +1,6 @@
 package com.site.forum.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+@Slf4j
 public class FileUpload {
     public static String upload(String uploadDir,
                               String fileName,
@@ -24,7 +26,7 @@ public class FileUpload {
             filePath = uploadPath.resolve(fileName);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch(IOException exception) {
-
+            log.error(exception.getMessage());
         }
         return filePath.toString().replace("\\","/");
     }
