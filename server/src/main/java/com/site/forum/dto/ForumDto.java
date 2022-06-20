@@ -31,12 +31,12 @@ public class ForumDto {
                                     .collect(Collectors.toSet());
         int postCount = forum.getPosts().size();
         if(!entitySubForums.isEmpty()) {
-            for (ForumDto subforum : subForums) {
+            for (ForumDto subforum : entitySubForums) {
                 postCount += subforum.getPostsCount();
             }
         }
         dto.setPostsCount(postCount);
-        dto.setSubForums(subForums);
+        dto.setSubForums(entitySubForums);
         dto.setLastPost(
                 forum.getPosts() != null && forum.getPosts().size() > 0
                 ? postDto.convertToDto(new ArrayList<>(forum.getPosts()).get(forum.getPosts().size() - 1))
