@@ -119,7 +119,7 @@ public class PostController {
         return ResponseEntity.ok(commentDto.convertToDto(createdComment));
     }
 
-    @PostMapping("/{id}/comments/{commentId}/like")
+    @PostMapping("/comments/{commentId}/like")
     public ResponseEntity<String> likeComment(@PathVariable("commentId") Long id,
                                               @RequestBody Map<String, String> payload) {
         String username = payload.get("username");
@@ -130,7 +130,7 @@ public class PostController {
         return ResponseEntity.ok("liked");
     }
 
-    @PostMapping("/{id}/comments/{commentId}/dislike")
+    @PostMapping("/comments/{commentId}/dislike")
     public ResponseEntity<String> dislikeComment(@PathVariable("commentId") Long id,
                                                  @RequestBody Map<String, String> payload) {
         String username = payload.get("username");
