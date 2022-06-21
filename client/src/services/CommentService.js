@@ -7,12 +7,12 @@ class CommentService {
         return axios.post(`${POST_API_RUL}/${postId}/comments/create`, data)
     }
 
-    like(postId, commentId, data) {
-        axios.post(`${POST_API_RUL}/${postId}/comments/${commentId}/like`, data)
+    like(commentId, data) {
+        return axios.post(`${POST_API_RUL}/comments/${commentId}/like`, data)
     }
 
-    dislike(postId, commentId, data) {
-        axios.post(`${POST_API_RUL}/${postId}/comments/${commentId}/dislike`, data)
+    dislike(commentId, data) {
+        return axios.post(`${POST_API_RUL}/comments/${commentId}/dislike`, data)
     }
 }
 

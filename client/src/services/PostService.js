@@ -5,13 +5,14 @@ class PostSevice {
         return axios.get(`${POST_API_RUL}/` + postId)
     }
 
-    getPostsByForumId(forumId) {
-        return axios.get(`${POST_API_RUL}/forum/` + forumId)
+    getPostsByForumId(forumId, page=0, order="createdAt") {
+        return axios.get(`${POST_API_RUL}/forum/${forumId}/?page=${page}&order=${order}`)
     }
 
     getAll(page) {
         return axios.get(`${POST_API_RUL}/all?page=${page}`)
     }
+    
 
     create(data, callback) {
         axios.post(`${POST_API_RUL}/create`, data)

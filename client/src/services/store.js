@@ -26,11 +26,12 @@ class Store {
 
     async login(username, password) {
         try {
-            const response = await AuthService.login(username, password);
-            localStorage.setItem('token', response.data.token);
-            this.setAuth(true);
-            this.setUser(response.data.user);
-            window.location.href = "/"
+            AuthService.login(username, password).then(response => {
+                localStorage.setItem('token', response.data.token);
+                this.setAuth(true);
+                this.setUser(response.data.user);
+                window.location.href = "/"
+            })
         } catch (e) {
             console.log(e)
             console.log(e.response?.data?.message);

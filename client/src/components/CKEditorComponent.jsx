@@ -21,7 +21,7 @@ const editorConfiguration = {
     //         'outdent',
     //         'indent',
     //     ]
-    // }
+    // },
     ckfinder: {
         uploadUrl: "/api/v1/images/upload",
         headers: {
@@ -38,7 +38,6 @@ function CKEditorInput({postText, setPostText}) {
             editor= {ClassicEditor}
             config={ editorConfiguration }
             onReady={ editor => {
-                // You can store the "editor" and use when it is needed.
                 console.log( 'Editor is ready to use!', editor );
             } }
             onChange={ (event, editor ) => {
@@ -52,7 +51,6 @@ function CKEditorInput({postText, setPostText}) {
             } }
         />
     )
-    // }
 }
 
 export default CKEditorInput
