@@ -58,15 +58,12 @@ public class PostController {
                                                 @RequestParam(defaultValue = "0", value = "page") int page,
                                                 @RequestParam(defaultValue = "10", value = "size") int size) {
 
-        Pageable paging = PageRequest.of(page, size, Sort.by(orderBy));
-        List<PostDto> postList = postService.getAll().stream()
-                                         .map(postDto::convertToDto)
-                                         .toList();
-        final int start = (int)paging.getOffset();
-        final int end = Math.min((start + paging.getPageSize()), postList.size());
+        Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
 
-        Page<PostDto> posts = new PageImpl<>(postList.subList(start, end), paging, postList.size());
-        return ResponseEntity.ok(posts);
+        Page<Post> postList = postService.getAll(paging);
+        Page<PostDto> posts = postList.map(postDto::convertToDto);
+
+        return   ResponseEntity.ok(posts);
     }
 
     @GetMapping("/forum/{id}")

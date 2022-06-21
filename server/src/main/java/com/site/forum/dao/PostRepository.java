@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+
+    Page<Post> findAll(Pageable pageable);
+
     List<Post> findByForum_Id(Long id);
     Page<Post> findByForum_Id(Long id, Pageable pageable);
 

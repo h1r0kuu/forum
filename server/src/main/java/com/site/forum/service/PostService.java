@@ -11,6 +11,7 @@ public interface PostService {
     Post create(Post post);
     void delete(Long id);
     List<Post> getAll();
+    Page<Post> getAll(Pageable pageable);
     Post getById(Long id);
     List<Post> getByForumId(Long forumId);
     Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable);

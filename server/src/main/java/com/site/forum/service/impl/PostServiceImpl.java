@@ -40,6 +40,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<Post> getAll(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    @Override
     public List<Post> getAll() {
         return postRepository.findAll();
     }
