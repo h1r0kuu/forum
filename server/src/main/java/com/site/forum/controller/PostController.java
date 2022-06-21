@@ -9,6 +9,8 @@ import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.Converter;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -62,16 +64,22 @@ public class PostController {
                                          .toList();
         final int start = (int)paging.getOffset();
         final int end = Math.min((start + paging.getPageSize()), postList.size());
+
         Page<PostDto> posts = new PageImpl<>(postList.subList(start, end), paging, postList.size());
         return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/forum/{id}")
-    public ResponseEntity<List<PostDto>> getPostsByForumId(@PathVariable("id") Long id) {
-        List<PostDto> posts = postService.getByForumId(id).stream()
-                                         .map(postDto::convertToDto)
-                                         .toList();
-        return ResponseEntity.ok(posts);
+    public ResponseEntity<Page<PostDto>> getPostsByForumId(@PathVariable("id") Long id,
+                                                           @Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
+                                                           @RequestParam(defaultValue = "0", value = "page") int page,
+                                                           @RequestParam(defaultValue = "5", value = "size") int size) {
+        Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
+
+        Page<Post> postList = postService.getByForumIdAndPage(id, paging);
+        Page<PostDto> posts = postList.map(postDto::convertToDto);
+
+        return   ResponseEntity.ok(posts);
     }
 
     @PostMapping("/{id}/like")

@@ -6,6 +6,8 @@ import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +54,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getByForumId(Long forumId) {
         return postRepository.findByForum_Id(forumId);
+    }
+
+    @Override
+    public Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable) {
+        return postRepository.findByForum_Id(forumId, pageable);
     }
 
     @Override
