@@ -1,12 +1,11 @@
 package com.site.forum.controller;
 
-import com.site.forum.dto.CommentDto;
-import com.site.forum.dto.ForumDto;
-import com.site.forum.dto.PostDto;
-import com.site.forum.dto.UserDto;
+import com.site.forum.dto.*;
+import com.site.forum.entity.ProfileComment;
 import com.site.forum.entity.User;
 import com.site.forum.model.FollowModel;
 import com.site.forum.service.impl.CommentServiceImpl;
+import com.site.forum.service.impl.ProfileCommentImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +23,13 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final CommentServiceImpl commentService;
+    private final ProfileCommentImpl profileCommentService;
 
     private final UserDto userDto = new UserDto();
     private final ForumDto forumDto = new ForumDto();
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
+    private final ProfileCommentDto profileCommentDto = new ProfileCommentDto();
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAll() {
@@ -68,6 +69,14 @@ public class UserController {
                                                                               .map(commentDto::convertToDto)
                                                                               .collect(Collectors.toSet());
         return ResponseEntity.ok(comments);
+    }
+
+    @GetMapping("/{username}/profile_comments")
+    public ResponseEntity<Set<ProfileCommentDto>> profileComments(@PathVariable("username") String username) {
+        Set<ProfileCommentDto> profileComments = profileCommentService.getAllByUserUsername(username).stream()
+                                                                      .map(profileCommentDto::convertToDto)
+                                                                      .collect(Collectors.toSet());
+        return ResponseEntity.ok(profileComments);
     }
 
     @PostMapping("/follow")
