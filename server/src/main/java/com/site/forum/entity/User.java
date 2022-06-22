@@ -51,6 +51,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "followers")
     private Set<User> following;
 
+    @OneToMany(mappedBy = "user")
+    private Set<ProfileComment> profileComments;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
