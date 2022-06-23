@@ -4,6 +4,7 @@ import com.site.forum.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,10 +13,10 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAll(Pageable pageable);
-
     List<Post> findByForum_Id(Long id);
     Page<Post> findByForum_Id(Long id, Pageable pageable);
-
     List<Post> findByCreator_Username(String username);
+    @Query("SELECT p FROM Post p WHERE p.title LIKE %?1%")
+    Page<Post> searchPostByTitleLike(String title, Pageable pageable);
 }
 

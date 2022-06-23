@@ -89,4 +89,9 @@ public class PostServiceImpl implements PostService {
         post.setDislikes(dislikes);
         update(post);
     }
+
+    @Override
+    public Page<Post> searchPostByTitleLike(String title, Pageable pageable) {
+        return postRepository.searchPostByTitleLike(title, pageable);
+    }
 }

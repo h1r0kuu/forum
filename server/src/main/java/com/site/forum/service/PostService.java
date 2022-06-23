@@ -18,4 +18,6 @@ public interface PostService {
 
     void like(Post post, User user);
     void dislike(Post post, User user);
+
+    Page<Post> searchPostByTitleLike(String title, Pageable pageable);
 }
