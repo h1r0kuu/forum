@@ -31,40 +31,10 @@ function Profile({user, store}) {
                         <i className="fa fa-plus" aria-hidden="true"></i>
                         <strong>Registered:</strong> <Moment format='MMM DD, YYYY'>{user.createdAt}</Moment>
                     </li>
-                    <li>
-                        <i className="fa fa-map-marker" aria-hidden="true"></i>
-                        <strong>Country:</strong> Egypt
-                    </li>
-                    <li>
-                        <i className="fa fa-heart" aria-hidden="true"></i>
-                        <strong>Age:</strong> 27
-                    </li>
-                    <li>
-                    <i className="fa fa-globe" aria-hidden="true"></i>
-                        <strong>Website:</strong>
-                        <a href="#">view</a>
-                    </li>
-                </ul>
-                </div>
-                <div className="ul-list-user-right29">
-                <ul>
-                    <li>
-                        <i className="fa fa-phone" aria-hidden="true"></i>
-                        <strong>Phone:</strong> 01111111110
-                    </li>
-                    <li>
-                        <i className="fa fa-globe" aria-hidden="true"></i>
-                        <strong>City:</strong> Cairo
-                    </li>
-                    <li>
-                        <i className="fa fa-user" aria-hidden="true"></i>
-                        <strong>Sex: </strong>Male
-                    </li>
                 </ul>
                 </div>
             </div>
             <div className="user-description303">
-                <p>Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur vitae velit in neque dictum blandit.</p>
                 {user.username !== store.user.username &&
                 <>
                     <a href="#">Follow</a>
