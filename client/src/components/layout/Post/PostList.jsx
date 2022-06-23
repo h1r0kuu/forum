@@ -7,6 +7,7 @@ import PostService from "../../../services/PostService"
 import Navbar from "../Navigation/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import Pagination from "../../Pagination";
+import PostListTemplate from "./PostListTemplate";
 
 function PostList({store}) {
     const {forumId} = useParams()
@@ -28,7 +29,7 @@ function PostList({store}) {
         })
     }
     console.log(pagination)
-
+    
     useEffect(()=>{
         loadMorePosts()
     }, [forumId, page, order])
@@ -36,27 +37,7 @@ function PostList({store}) {
     return (
         <>
         <Navbar store={store}/>
-        <div className="container">
-            <div className="row">
-                <div className="col-md-9">
-                    <div id="main">
-                        <Link to={`?page=0&order=comments`} className="tab">Most Response</Link>
-                        {/* <Link to={"?order=created_at"}>Recently Answered</Link> */}
-                        <Link to={`?page=0&order=no_comments`} className="tab">No Answer</Link>
-                        <Link to={`?page=0&order=createdAt`} className="tab">Recent Post</Link>
-                        <section id="content">
-                            {posts.map(post=>(
-                                <Post post={post} key={post.id}/>
-                            ))}
-                            {pagination && pagination.pageable &&
-                                <Pagination pagination={pagination} order={order} />
-                            }
-                        </section>
-                    </div>
-                </div>
-                <Sidebar store={store} />
-            </div>
-        </div>
+        <PostListTemplate posts={posts} pagination={pagination} store={store} order={order}/>
         </>
     )
 }
