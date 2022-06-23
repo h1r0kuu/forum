@@ -8,6 +8,8 @@ import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -59,5 +61,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<Post> getUserPosts(String username) {
         return postRepository.findByCreator_Username(username);
+    }
+
+    @Override
+    public Page<User> searchUserByUsernameLike(String username, Pageable pageable) {
+        return userRepository.searchUserByUsernameLike(username, pageable);
     }
 }
