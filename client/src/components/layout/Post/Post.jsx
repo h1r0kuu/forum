@@ -13,26 +13,17 @@ function Post({post}) {
                             <Link to={"/posts/" + post.id}>{post.title}</Link>
                         </h3>
                         </div>
-                        <div className="ques-details10018">
-                        <p>Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.</p>
-                        </div>
                         <hr/>
                         <div className="ques-icon-info3293">
-                        <a href="#">
-                            <i className="fa fa-star" aria-hidden="true"> 5 </i>
-                        </a>
-                        <a href="#">
-                            <i className="fa fa-folder" aria-hidden="true"> wordpress</i>
-                        </a>
-                        <a href="#">
-                            <i className="fa fa-clock-o" aria-hidden="true"> <Moment fromNow>{post.createdAt}</Moment></i>
-                        </a>
-                        <a href="#">
-                            <i className="fa fa-question-circle-o" aria-hidden="true"> Question</i>
-                        </a>
-                        <a href="#">
-                            <i className="fa fa-bug" aria-hidden="true"> Report</i>
-                        </a>
+                            <Link to={"/user/" + post.creator.username}>
+                                <i className="fa fa-user" aria-hidden="true"> {post.creator.username}</i>
+                            </Link>
+                            <a href="#">
+                                <i className="fa fa-clock-o" aria-hidden="true"> <Moment fromNow>{post.createdAt}</Moment></i>
+                            </a>
+                            <a href="#">
+                                <i className="fa fa-bug" aria-hidden="true"> Report</i>
+                            </a>
                         </div>
                     </div>
                 </div>
