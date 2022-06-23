@@ -9,8 +9,8 @@ class PostSevice {
         return axios.get(`${POST_API_RUL}/forum/${forumId}/?page=${page}&order=${order}`)
     }
 
-    getAll(page) {
-        return axios.get(`${POST_API_RUL}/all?page=${page}`)
+    getAll(page, order) {
+        return axios.get(`${POST_API_RUL}/all?page=${page}&order=${order}`)
     }
     
 
