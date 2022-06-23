@@ -15,6 +15,7 @@ import PostInfo from "./views/Posts/PostInfo";
 import ProfilePage from "./views/User/ProfilePage";
 import ForumList from "./views/Forums/ForumList";
 import PostList from "./components/layout/Post/PostList";
+import SearchResult from "./views/SearchResult";
 function App() {
   const {store} = useContext(Context);
   
@@ -40,6 +41,8 @@ function App() {
       <Route exact path="/login" element={<Login store={store} />} />
       <Route exact path="/registration" element={<Registration store={store} />} />
 
+      <Route exact path="/search" element={<SearchResult store={store} />} />
+      
       {/* {store.user.role === "ADMIN" &&
         <>
           <Route exact path="/admin" element={<AdminIndex store={store} />} />
