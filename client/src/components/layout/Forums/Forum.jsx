@@ -8,27 +8,9 @@ function Forum({forum}) {
                     <div className="col-md-9">
                         <div className="right-description893">
                             <div id="que-hedder2983">
-                            <h3>
-                                <Link to={"/forums/" + forum.id}>{forum.title}</Link>
-                            </h3>
-                            </div>
-                            <hr/>
-                            <div className="ques-icon-info3293">
-                            <a href="#">
-                                <i className="fa fa-star" aria-hidden="true"> 5 </i>
-                            </a>
-                            <a href="#">
-                                <i className="fa fa-folder" aria-hidden="true"> wordpress</i>
-                            </a>
-                            <a href="#">
-                                <i className="fa fa-clock-o" aria-hidden="true"> 4 min ago</i>
-                            </a>
-                            <a href="#">
-                                <i className="fa fa-question-circle-o" aria-hidden="true"> Question</i>
-                            </a>
-                            <a href="#">
-                                <i className="fa fa-bug" aria-hidden="true"> Report</i>
-                            </a>
+                                <h3>
+                                    <Link to={"/forums/" + forum.id}>{forum.title}</Link>
+                                </h3>
                             </div>
                         </div>
                     </div>
@@ -59,24 +41,6 @@ function Forum({forum}) {
                                     <h3>
                                         <Link to={"/forums/" + subForum.id}>{subForum.title}</Link>
                                     </h3>
-                                    </div>
-                                    <hr/>
-                                    <div className="ques-icon-info3293">
-                                    <a href="#">
-                                        <i className="fa fa-star" aria-hidden="true"> 5 </i>
-                                    </a>
-                                    <a href="#">
-                                        <i className="fa fa-folder" aria-hidden="true"> wordpress</i>
-                                    </a>
-                                    <a href="#">
-                                        <i className="fa fa-clock-o" aria-hidden="true"> 4 min ago</i>
-                                    </a>
-                                    <a href="#">
-                                        <i className="fa fa-question-circle-o" aria-hidden="true"> Question</i>
-                                    </a>
-                                    <a href="#">
-                                        <i className="fa fa-bug" aria-hidden="true"> Report</i>
-                                    </a>
                                     </div>
                                 </div>
                             </div>
