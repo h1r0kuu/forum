@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
+import ENTITY_TYPE from '../../../utils/enums';
+import ReportModal from '../../ReportModal';
 
-function Post({post}) {
+function Post({post, store}) {
+    const [modal, setModal] = useState(false)
+
     return (
+        <>
         <div className="question-type2033">
             <div className="row">
 
@@ -22,7 +28,7 @@ function Post({post}) {
                                 <i className="fa fa-clock-o" aria-hidden="true"> <Moment fromNow>{post.createdAt}</Moment></i>
                             </a>
                             <a href="#">
-                                <i className="fa fa-bug" aria-hidden="true"> Report</i>
+                                <i className="fa fa-bug" aria-hidden="true" onClick={()=>setModal(true)}>Report</i>
                             </a>
                         </div>
                     </div>
@@ -43,6 +49,10 @@ function Post({post}) {
                 </div>
             </div>
         </div>
+        {modal &&
+            <ReportModal objId = {post.id} objType = {ENTITY_TYPE.POST} setModal={setModal} store={store}/>
+        }
+        </>
     )
 }
 
