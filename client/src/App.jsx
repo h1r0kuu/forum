@@ -16,6 +16,13 @@ import ProfilePage from "./views/User/ProfilePage";
 import ForumList from "./views/Forums/ForumList";
 import PostList from "./components/layout/Post/PostList";
 import SearchResult from "./views/SearchResult";
+
+import AdminIndex from "./views/Admin/AdminIndex";
+import AdminForumList from "./views/Admin/AdminForumList";
+import AdminPostList from "./views/Admin/AdminPostList";
+import AdminUserList from "./views/Admin/AdminUserList";
+import AdminReports from "./views/Admin/AdminReports";
+
 function App() {
   const {store} = useContext(Context);
   
@@ -43,15 +50,15 @@ function App() {
 
       <Route exact path="/search" element={<SearchResult store={store} />} />
       
-      {/* {store.user.role === "ADMIN" &&
+      {store.user.role === "ADMIN" &&
         <>
           <Route exact path="/admin" element={<AdminIndex store={store} />} />
-          <Route exact path="/admin/forums" element={<AdminForums store={store} />} />
-          <Route exact path="/admin/posts" element={<AdminPosts store={store} />} />
-          <Route exact path="/admin/users" element={<AdminUsers store={store} />} />
-          <Route exact path="/admin/forums/create" element={<AdminForumCreate store={store} />} />
+          <Route exact path="/admin/forums" element={<AdminForumList store={store} />} />
+          <Route exact path="/admin/posts" element={<AdminPostList store={store} />} />
+          <Route exact path="/admin/users" element={<AdminUserList store={store} />} />
+          <Route exact path="/admin/reports" element={<AdminReports store={store} />} />
         </>
-      } */}
+      }
       </Routes>
     </>
   )  
