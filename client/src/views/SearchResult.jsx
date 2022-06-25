@@ -14,25 +14,25 @@ function SearchResult({store}) {
 
     const q = searchParams.get("query")
     const order = searchParams.get("order") || "createdAt"
-    let page = 0
+    const page = searchParams.get("page") || 0
     const field = searchParams.get("field") || "posts"
 
-    const searchParam = `?query=${q}&page=${page}&order=${order}`
+    const searchParam = `?page=${page}&order=${order}&query=${q}`
 
     function loadMoreData() {
         SearchService.search(q, page, order).then( res => {
-            const newContent = res.data[field].content
-            setSearchRes((oldContent) => [...oldContent, ...newContent])
-            if(newContent.length === 0 || newContent.length < 10) {
+            const {content, ...pagin} = res.data[field]
+            setSearchRes(content)
+            setPagination(pagin)
+            if(content.length === 0 || content.length < 10) {
                 setHasMore(false)
             }
         })
-        page += 1
     }
 
     useEffect(()=>{
         loadMoreData()
-    }, [q, order, field])
+    }, [q, order, field, page])
     return (
         <>
             <Navbar store={store}/>
@@ -50,16 +50,14 @@ function SearchResult({store}) {
                             <PostListTemplate posts={searchRes}
                                               pagination={pagination} 
                                               order={order} 
-                                              store={store} 
-                                              hasMore={hasMore} 
-                                              loadMoreData={loadMoreData}/>
+                                              store={store}
+                                              additionalParams={"&query=" + q}/>
                         :
                             <UserListTemplate users={searchRes} 
                                               pagination={pagination} 
                                               order={order} 
-                                              store={store} 
-                                              hasMore={hasMore} 
-                                              loadMoreData={loadMoreData}/>
+                                              store={store}
+                                              additionalParams={"&query=" + q}/>
                     }
                 </div>
             </>
