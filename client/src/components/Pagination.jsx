@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
-function Pagination({pagination, order}) {
-    
+function Pagination({pagination, order, additionalParams}) {
+    console.log(pagination)
     function hasNext() {
         return pagination.pageable.pageNumber + 1 < pagination.totalPages
     }
@@ -19,7 +19,7 @@ function Pagination({pagination, order}) {
             <ul className="pagination">
                 {hasPrevious() && 
                 <li>
-                    <Link to={"?page=" + (currentPage() - 1) + "&order=" + order}><span aria-hidden="true">«</span></Link>
+                    <Link to={"?page=" + (currentPage() - 1) + "&order=" + order + (additionalParams || '')}><span aria-hidden="true">«</span></Link>
                 </li>
                 }
                 {Array.from(Array(pagination.totalPages), (e, i) => (
@@ -33,7 +33,7 @@ function Pagination({pagination, order}) {
                                 </li>
                             :
                                 <li>
-                                    <Link to={"?page="+i + "&order=" + order}>{i + 1}</Link>
+                                    <Link to={"?page="+i + "&order=" + order + (additionalParams || '')}>{i + 1}</Link>
 
                                 </li>
                             }
@@ -43,7 +43,7 @@ function Pagination({pagination, order}) {
                 ))}
                 {hasNext() &&
                 <li>
-                    <Link to={"?page=" + (currentPage() + 1) + "&order=" + order}><span aria-hidden="true">»</span></Link>
+                    <Link to={"?page=" + (currentPage() + 1) + "&order=" + order + (additionalParams || '')}><span aria-hidden="true">»</span></Link>
                 </li>
                 }
             </ul>
