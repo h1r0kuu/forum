@@ -28,6 +28,9 @@ public class Post {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "closed", columnDefinition = "boolean default false")
+    private Boolean closed;
+
     @ManyToOne
     @JoinColumn(name = "forum_id")
     private Forum forum;
