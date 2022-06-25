@@ -5,7 +5,7 @@ import Navbar from "../Navigation/Navbar"
 import Sidebar from "../Sidebar/Sidebar"
 import Post from "./Post"
 
-function PostListTemplate({posts, pagination, order, store, hasMore, loadMoreData}) {
+function PostListTemplate({posts, pagination, order, store, additionalParams}) {
     return (
         <>
         <div className="container">
@@ -16,16 +16,12 @@ function PostListTemplate({posts, pagination, order, store, hasMore, loadMoreDat
                         <Link to={`?page=0&order=no_comments`} className="tab">No Answer</Link>
                         <Link to={`?page=0&order=createdAt`} className="tab">Recent Post</Link>
                         <section id="content">
-                            <InfiniteScroll
-                                dataLength={posts.length}
-                                next={loadMoreData}
-                                hasMore={hasMore}
-                                loader={<h4>Loading</h4>}
-                            >
-                            {posts.map( post => {
-                                return <Post post={post} key={post.id} />;
-                                })}
-                            </InfiniteScroll>
+                            {posts.map( post => (
+                                <Post post={post} key={post.id} store={store}/>
+                            ))}
+                            {pagination && pagination.pageable && 
+                                <Pagination pagination={pagination} order={order} additionalParams={additionalParams}/>
+                            }
                         </section>
                     </div>
                 </div>
