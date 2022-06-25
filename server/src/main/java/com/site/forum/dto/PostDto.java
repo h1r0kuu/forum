@@ -19,6 +19,7 @@ public class PostDto {
     private Long id;
     private String title;
     private String text;
+    private Boolean closed;
     private ForumDto forum;
     private UserDto creator;
     private Set<CommentDto> comments;
