@@ -71,7 +71,9 @@ function PostDetail({post, store}) {
             {post.comments && post.comments.length > 0 &&
                 <CommentList comments={post.comments} store={store}/>
             }
-            <LeaveCommentForm postId={post.id} store={store} />
+            {!post.closed &&
+                <LeaveCommentForm postId={post.id} store={store} />
+            }
         </>
     )
 }
