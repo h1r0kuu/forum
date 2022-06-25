@@ -13,6 +13,15 @@ li {
     list-style: none;
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border-bottom: 1px solid #000;
+}
+
 hr {
     border: none;
     border-top: 1px solid #DEDEDE;
@@ -2283,4 +2292,32 @@ h5:hover {
     color: #555;
     border: 1px solid #FF7361;
     background-color: #FF7361;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, 0.85);
+    text-align: center;
+}
+
+.modal > .close-modal {
+    position: absolute;
+    color: #fff;
+    font-size: 120px;
+    right: 60px;
+    top: 0;
+}
+
+.modal > .close-modal:hover {
+    cursor: pointer;
+}
+
+.modal > .content {
+    margin-top: 10%;
 }
