@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Data
 @ToString
-@EqualsAndHashCode(exclude = {"creator"})
+@EqualsAndHashCode(exclude = {"creator", "views"})
 public class PostDto {
     private Long id;
     private String title;
@@ -25,6 +25,7 @@ public class PostDto {
     private Set<CommentDto> comments;
     private int likesCount;
     private int dislikesCount;
+    private int viewsCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -38,6 +39,7 @@ public class PostDto {
                 ?
                     post.getComments()
                         .stream()
+                        .filter(comment -> comment.getParentComment()==null)
                         .map(commentDto::convertToDto)
                         .collect(Collectors.toSet())
                 :
@@ -45,6 +47,7 @@ public class PostDto {
         );
         dto.setLikesCount(Objects.nonNull(post.getLikes()) ? post.getLikes().size() : 0);
         dto.setDislikesCount(Objects.nonNull(post.getDislikes()) ? post.getDislikes().size() : 0);
+        dto.setViewsCount( Objects.nonNull(post.getViews()) ? post.getViews().size() : 0 );
         return dto;
     }
 

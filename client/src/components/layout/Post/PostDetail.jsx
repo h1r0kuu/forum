@@ -51,7 +51,7 @@ function PostDetail({post, store}) {
                             <a href="#">
                                 <i className="fa fa-commenting commenting2" aria-hidden="true"> {post.comments ? post.comments.length : 0} answer</i>
                             </a>
-                                <i className="fa fa-user user2" aria-hidden="true"> 70 views</i>
+                                <i className="fa fa-user user2" aria-hidden="true"> {post.viewsCount} views</i>
                         </div>
                         <div className="l-rightside39">
                             <button type="button" className="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like" onClick={like}>
@@ -69,7 +69,7 @@ function PostDetail({post, store}) {
             <AuthorDetails author={post.creator}/>
             }
             {post.comments && post.comments.length > 0 &&
-                <CommentList comments={post.comments} store={store}/>
+                <CommentList comments={post.comments} store={store} postId={post.id}/>
             }
             {!post.closed &&
                 <LeaveCommentForm postId={post.id} store={store} />
