@@ -1,7 +1,6 @@
 package com.site.forum.controller;
 
 import com.site.forum.dto.*;
-import com.site.forum.entity.ProfileComment;
 import com.site.forum.entity.User;
 import com.site.forum.model.FollowModel;
 import com.site.forum.service.impl.CommentServiceImpl;
@@ -9,8 +8,11 @@ import com.site.forum.service.impl.ProfileCommentImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
+
+    private final SessionRegistry sessionRegistry;
 
     private final UserServiceImpl userService;
     private final CommentServiceImpl commentService;
@@ -34,11 +38,30 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAll() {
         List<User> users = userService.getAll();
+
         return ResponseEntity.ok(
                 users.stream()
                      .map(userDto::convertToDto)
                      .toList()
         );
+    }
+
+    @GetMapping("/online")
+    public ResponseEntity<List<UserDto>> getOnlineUsers() {
+        List<UserDto> onlineUsers = new ArrayList<>();
+        List<Object> principals = sessionRegistry.getAllPrincipals();
+        for(Object principal : principals) {
+            if(principal instanceof User) {
+                List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions(principal, false);
+                for(SessionInformation sesInfo : activeUserSession) {
+                    if(!sesInfo.isExpired()) {
+                        onlineUsers.add(userDto.convertToDto((User)principal));
+                    }
+                }
+            }
+        }
+
+        return ResponseEntity.ok(onlineUsers);
     }
 
     @GetMapping("/{username}")
@@ -60,6 +83,15 @@ public class UserController {
         List<PostDto> posts = userService.getUserPosts(username).stream()
                                          .map(postDto::convertToDto)
                                          .toList();
+        return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/{username}/hidden_posts")
+    public ResponseEntity<List<PostDto>> getHiddenPosts(@PathVariable("username") String username) {
+        List<PostDto> posts = userService.getHiddenPosts(username)
+                .stream()
+                .map(postDto::convertToDto)
+                .toList();
         return ResponseEntity.ok(posts);
     }
 
