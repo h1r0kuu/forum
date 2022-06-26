@@ -1,19 +1,29 @@
 package com.site.forum.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.site.forum.entity.Comment;
+import com.site.forum.serializers.CommentDtoSerializer;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
+@EqualsAndHashCode(exclude = {"replies", "parentComment", "user"})
+@JsonSerialize(using = CommentDtoSerializer.class)
 public class CommentDto {
     private Long id;
     private String text;
     private UserDto user;
     private int likesCount;
     private int dislikesCount;
+    private CommentDto parentComment;
+    private Set<CommentDto> replies;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -22,6 +32,10 @@ public class CommentDto {
         CommentDto dto = modelMapper.map(comment, CommentDto.class);
         dto.setLikesCount(Objects.nonNull(comment.getLikes()) ? comment.getLikes().size() : 0);
         dto.setDislikesCount(Objects.nonNull(comment.getDislikes()) ? comment.getDislikes().size() : 0);
+        dto.setReplies( Objects.nonNull(comment.getReplies())
+                ? comment.getReplies().stream().map(this::convertToDto).collect(Collectors.toSet())
+                : Collections.emptySet()
+        );
         return dto;
     }
 
