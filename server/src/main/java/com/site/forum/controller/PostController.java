@@ -5,19 +5,19 @@ import com.site.forum.dto.PostDto;
 import com.site.forum.entity.Comment;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
+import com.site.forum.exception.UserNotAuthorized;
 import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
+import com.site.forum.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.Converter;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,6 +35,7 @@ public class PostController {
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
 
+    private final JWTUtil jwtUtil;
     @PostMapping(value = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<PostDto> create(@RequestBody PostDto post) {
         Post createdPost = postService.create( postDto.convertToEntity(post) );
@@ -42,8 +43,15 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> getOne(@PathVariable("id") Long id) {
+    public ResponseEntity<PostDto> getOne(@PathVariable("id") Long id,
+                                          HttpServletRequest request) throws UserNotAuthorized {
         Post post = postService.getById(id);
+        String token = jwtUtil.extractTokenFromRequest(request);
+        if(jwtUtil.validateToken(token)) {
+            User user = jwtUtil.extractUserFromToken(token);
+            postService.addView(post, user);
+        }
+
         return ResponseEntity.ok( postDto.convertToDto(post) );
     }
 
@@ -56,11 +64,17 @@ public class PostController {
     @GetMapping("/all")
     public ResponseEntity<Page<PostDto>> getAll(@Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
                                                 @RequestParam(defaultValue = "0", value = "page") int page,
-                                                @RequestParam(defaultValue = "10", value = "size") int size) {
-
+                                                @RequestParam(defaultValue = "10", value = "size") int size,
+                                                HttpServletRequest request) throws UserNotAuthorized {
         Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
 
-        Page<Post> postList = postService.getAll(paging);
+        String token = jwtUtil.extractTokenFromRequest(request);
+        Page<Post> postList;
+        if (!token.equals("null") && jwtUtil.validateToken(token)) {
+            postList = postService.getAll(paging, jwtUtil.extractUserFromToken(token).getUsername());
+        } else {
+            postList = postService.getAll(paging);
+        }
         Page<PostDto> posts = postList.map(postDto::convertToDto);
 
         return   ResponseEntity.ok(posts);
@@ -72,7 +86,7 @@ public class PostController {
                                                            @RequestParam(defaultValue = "0", value = "page") int page,
                                                            @RequestParam(defaultValue = "5", value = "size") int size) {
         Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
-
+    
         Page<Post> postList = postService.getByForumIdAndPage(id, paging);
         Page<PostDto> posts = postList.map(postDto::convertToDto);
 
@@ -101,6 +115,26 @@ public class PostController {
         return ResponseEntity.ok("disliked");
     }
 
+    @PostMapping("/{id}/hide")
+    public ResponseEntity<String> hidePostForUser(@PathVariable("id") Long id, HttpServletRequest request) throws UserNotAuthorized {
+        String token = jwtUtil.extractTokenFromRequest(request);
+        User user = jwtUtil.extractUserFromToken(token);
+        Post post = postService.getById(id);
+
+        userService.hidePost(user, post);
+
+        return ResponseEntity.ok("Success");
+    }
+    @PostMapping("/{id}/unhide")
+    public ResponseEntity<String> unHidePostForUser(@PathVariable("id") Long id, HttpServletRequest request) throws UserNotAuthorized {
+        String token = jwtUtil.extractTokenFromRequest(request);
+        User user = jwtUtil.extractUserFromToken(token);
+        Post post = postService.getById(id);
+
+        userService.unHidePost(user, post);
+
+        return ResponseEntity.ok("Success");
+    }
 //    Comments
     @GetMapping("/{id}/comments")
     public ResponseEntity<Set<CommentDto>> getPostComments(@PathVariable("id") Long id) {

@@ -4,8 +4,19 @@ import { Link } from 'react-router-dom';
 import ENTITY_TYPE from '../../../utils/enums';
 import ReportModal from '../../ReportModal';
 
-function Post({post, store}) {
+import PostService from "../../../services/PostService"
+
+function Post({post, store, deletePost}) {
     const [modal, setModal] = useState(false)
+
+    function hidePost(e) {
+        e.preventDefault()
+        PostService.hidePost(post.id).then(res => {
+            console.log(res)
+        }).finally(() => {
+            // remove post
+        })
+    }
 
     return (
         <>
@@ -30,6 +41,9 @@ function Post({post, store}) {
                             <a href="#">
                                 <i className="fa fa-bug" aria-hidden="true" onClick={()=>setModal(true)}>Report</i>
                             </a>
+                            <a href="#">
+                                <i className="fa fa-eye" aria-hidden="true" onClick={hidePost}>Hide</i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +56,7 @@ function Post({post, store}) {
                         </a>
                         <a href="#">
                         <button type="button" className="q-type23 button-ques2973">
-                            <i className="fa fa-user-circle-o" aria-hidden="true"> 70 view</i>
+                            <i className="fa fa-user-circle-o" aria-hidden="true"> {post.viewsCount} view</i>
                         </button>
                         </a>
                     </div>
