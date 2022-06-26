@@ -16,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -32,6 +35,8 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authManager;
+    private final SessionRegistry sessionRegistry;
+
     private final UserServiceImpl userService;
     private final JWTUtil jwtUtil;
 
@@ -57,16 +62,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<HashMap<String, Object>> createAuthToken(@RequestBody AuthModel authModel) {
+    public ResponseEntity<HashMap<String, Object>> createAuthToken(@RequestBody AuthModel authModel,
+                                                                   HttpServletRequest request) {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authModel.getUsername(), authModel.getPassword())
         );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         User user = userService.getUserByUsername(authModel.getUsername());
         String jwt = jwtUtil.generateToken(user);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         HashMap<String, Object> res = new HashMap<>();
         res.put("token", jwt);
         res.put("user", userDto.convertToDto(user));
+
+        sessionRegistry.registerNewSession(request.getSession().getId(), authentication.getPrincipal());
         return ResponseEntity.ok(res);
     }
 
@@ -74,7 +84,6 @@ public class AuthController {
     public ResponseEntity<HashMap<String, Object>> refreshToken(@RequestParam("token") String jwtToken) {
         String username = jwtUtil.getUsernameFromToken(jwtToken);
         User user = userService.getUserByUsername(username);
-
         String jwt = jwtUtil.generateToken(user);
 
         HashMap<String, Object> res = new HashMap<>();
@@ -84,11 +93,19 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
+        SessionInformation sessionInformation = sessionRegistry.getSessionInformation(request.getSession().getId());
+        List<SessionInformation> sessions = sessionRegistry.getAllSessions(auth.getPrincipal(),false);
+
+        for(SessionInformation sess : sessions) {
+            if(!sess.isExpired()) {
+                sessionRegistry.removeSessionInformation(sess.getSessionId());
+            }
         }
+
+        new SecurityContextLogoutHandler().logout(request, response, auth);
+
         return ResponseEntity.ok("logout");
     }
 }
