@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import PostService from "../../services/PostService"
 
@@ -36,16 +36,16 @@ function AdminPostList() {
             <table>
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>title</th>
-                        <th>closed</th>
-                        <th>forum</th>
-                        <th>creator</th>
-                        <th>comments count</th>
-                        <th>likes count</th>
-                        <th>dislikes count</th>
-                        <th>Created at</th>
-                        <th>Updated at</th>
+                        <th><Link to={"?page=0&order=id"}>id</Link></th>
+                        <th><Link to={"?page=0&order=title"}>title</Link></th>
+                        <th><Link to={"?page=0&order=closed"}>closed</Link></th>
+                        <th><Link to={"?page=0&order=forum.title"}>forum</Link></th>
+                        <th><Link to={"?page=0&order=creator.username"}>creator</Link></th>
+                        <th><Link to={"?page=0&order=comments"}>comments count</Link></th>
+                        <th><Link to={"?page=0&order=likesCount"}>likes count</Link></th>
+                        <th><Link to={"?page=0&order=dislikesCount"}>dislikes count</Link></th>
+                        <th><Link to={"?page=0&order=createdAt"}>Created at</Link></th>
+                        <th><Link to={"?page=0&order=updatedAt"}>Updated at</Link></th>
                     </tr>
                 </thead>
                 <tbody>
