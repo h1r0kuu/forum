@@ -950,9 +950,16 @@ hr {
     margin-right: 30px;
 }
 
-.designetion439 {
+.designetion1 {
     padding: 3px;
     background-color: #DD9933;
+    color: #fff;
+    font-family: fontawesome;
+    border-radius: 2px;
+}
+.designetion2 {
+    padding: 3px;
+    background-color: green;
     color: #fff;
     font-family: fontawesome;
     border-radius: 2px;
@@ -2320,4 +2327,12 @@ h5:hover {
 
 .modal > .content {
     margin-top: 10%;
+}
+
+.reply {
+    display: flex;
+}
+
+.reply > input {
+    margin-bottom: 0 !important;
 }
