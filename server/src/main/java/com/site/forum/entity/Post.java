@@ -58,6 +58,14 @@ public class Post {
     )
     private Set<User> dislikes;
 
+    @ManyToMany
+    @JoinTable(
+            name = "post_views",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> views;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
