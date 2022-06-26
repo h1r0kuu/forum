@@ -11,12 +11,13 @@ public class UserDtoSerializer extends StdSerializer<UserDto> {
         super(UserDto.class);
     }
 
-    private void defaultSerialize(UserDto user, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void defaultSerialize(UserDto user, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeNumberField("id", user.getId());
         jsonGenerator.writeStringField("username", user.getUsername());
         jsonGenerator.writeStringField("password", user.getPassword());
         jsonGenerator.writeStringField("imagePath", user.getImagePath());
         jsonGenerator.writeNumberField("commentsCount", user.getCommentsCount());
+        jsonGenerator.writeNumberField("hiddenPostsCount", user.getHiddenPostsCount());
         jsonGenerator.writeStringField("role", user.getRole().name());
         jsonGenerator.writeStringField("createdAt", user.getCreatedAt().toString());
         jsonGenerator.writeStringField("updatedAt", user.getUpdatedAt().toString());

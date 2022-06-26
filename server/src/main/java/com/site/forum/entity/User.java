@@ -54,6 +54,17 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<ProfileComment> profileComments;
 
+    @ManyToMany(mappedBy = "views")
+    private Set<Post> posts;
+
+    @ManyToMany
+    @JoinTable(
+            name = "hidden_posts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private Set<Post> hiddenPosts;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

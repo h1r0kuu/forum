@@ -1,4 +1,5 @@
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 import UserService from '../../../services/UserService';
 
@@ -22,7 +23,7 @@ function Profile({user, store}) {
                 <hr/>
             </div>
             <div className="user-image293">
-                <img src="image/images.png" alt="Image"/>
+                <img src={user.imagePath} alt="Image"/>
             </div>
             <div className="user-list10039">
                 <div className="ul-list-user-left29">
@@ -89,6 +90,9 @@ function Profile({user, store}) {
                                 <a href="#">Following ( {user.following.length} )</a>
                             </li>
                         }
+                        <li>
+                            <Link to={`/user/${user.username}/hidden_posts`}>Hidden posts ( {user.hiddenPostsCount} )</Link>
+                        </li>
                     </ul>
                 </div>
                 </div>

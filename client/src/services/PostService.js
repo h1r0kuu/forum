@@ -1,8 +1,11 @@
 import axios from "axios"
+import api from "../utils/authQuery"
+
 const POST_API_RUL = "http://localhost:8080/api/v1/posts"
+
 class PostSevice {
     getOne(postId) {
-        return axios.get(`${POST_API_RUL}/` + postId)
+        return api.get(`${POST_API_RUL}/` + postId)
     }
 
     getPostsByForumId(forumId, page=0, order="createdAt") {
@@ -10,10 +13,9 @@ class PostSevice {
     }
 
     getAll(page, order) {
-        return axios.get(`${POST_API_RUL}/all?page=${page}&order=${order}`)
+        return api.get(`${POST_API_RUL}/all?page=${page}&order=${order}`)
     }
     
-
     create(data, callback) {
         axios.post(`${POST_API_RUL}/create`, data)
         .then((res) => {
@@ -27,6 +29,14 @@ class PostSevice {
 
     dislike(postId, data) {
         axios.post(`${POST_API_RUL}/${postId}/dislike`, data)
+    }
+
+    hidePost(postId) {
+        return api.post(`${POST_API_RUL}/${postId}/hide`)
+    }
+
+    unHidePost(postId) {
+        return api.post(`${POST_API_RUL}/${postId}/unhide`)
     }
 }
 

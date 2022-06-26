@@ -22,6 +22,7 @@ public class UserDto {
     private UserRole role;
     private String imagePath;
     private int commentsCount;
+    private int hiddenPostsCount;
     private Set<UserDto> followers;
     private Set<UserDto> following;
     private LocalDateTime createdAt;
@@ -31,6 +32,7 @@ public class UserDto {
         ModelMapper modelMapper = new ModelMapper();
         UserDto userDto = modelMapper.map(user, UserDto.class);
         userDto.setCommentsCount(  Objects.nonNull(user.getComments()) ? user.getComments().size() : 0 );
+        userDto.setHiddenPostsCount( Objects.nonNull(user.getHiddenPosts()) ? user.getHiddenPosts().size() : 0 );
         return userDto;
     }
 

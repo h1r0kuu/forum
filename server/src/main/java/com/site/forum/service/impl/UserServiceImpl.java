@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +65,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public List<Post> getHiddenPosts(String username) {
+        return userRepository.getHiddenPosts(username);
+    }
+
+    @Override
     public Page<User> searchUserByUsernameLike(String username, Pageable pageable) {
         return userRepository.searchUserByUsernameLike(username, pageable);
+    }
+
+    @Override
+    public void hidePost(User user, Post post) {
+        Set<Post> posts = user.getHiddenPosts();
+        posts.add(post);
+
+        user.setHiddenPosts(posts);
+        update(user);
+    }
+
+    @Override
+    public void unHidePost(User user, Post post) {
+        Set<Post> posts = user.getHiddenPosts();
+        posts.remove(post);
+
+        user.setHiddenPosts(posts);
+        update(user);
     }
 }
