@@ -18,6 +18,14 @@ class UserService {
     async getUserPosts(username) {
         return axios.get(`${API_URL}/${username}/posts`)
     }
+
+    async getOnlineUsers() {
+        return axios.get(`${API_URL}/online`)
+    }
+
+    async getUserHiddenPosts(username) {
+        return axios.get(`${API_URL}/${username}/hidden_posts`)
+    }
 }
 
 export default new UserService()
