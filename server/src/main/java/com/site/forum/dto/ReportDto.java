@@ -1,6 +1,5 @@
 package com.site.forum.dto;
 
-import com.site.forum.entity.ProfileComment;
 import com.site.forum.entity.Report;
 import com.site.forum.entity.User;
 import com.site.forum.enums.ReportEntity;
