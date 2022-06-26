@@ -13,6 +13,7 @@ import Registration from "./views/Auth/Registration";
 import CreatePost from "./views/Posts/CreatePost";
 import PostInfo from "./views/Posts/PostInfo";
 import ProfilePage from "./views/User/ProfilePage";
+import HiddenPosts from "./views/User/HiddenPosts";
 import ForumList from "./views/Forums/ForumList";
 import PostList from "./components/layout/Post/PostList";
 import SearchResult from "./views/SearchResult";
@@ -44,7 +45,8 @@ function App() {
       <Route exact path="/posts/:postId" element={<PostInfo store={store} />} />
 
       <Route exact path="/user/:username" element={<ProfilePage store={store} />} />
-
+      <Route exact path="/user/:username/hidden_posts" element={<HiddenPosts store={store} />} />
+     
       <Route exact path="/login" element={<Login store={store} />} />
       <Route exact path="/registration" element={<Registration store={store} />} />
 
