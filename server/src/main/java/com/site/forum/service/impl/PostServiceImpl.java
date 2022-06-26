@@ -45,6 +45,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<Post> getAll(Pageable pageable, String username) {
+        return postRepository.findAll(pageable, username);
+    }
+
+    @Override
     public List<Post> getAll() {
         return postRepository.findAll();
     }
@@ -87,6 +92,15 @@ public class PostServiceImpl implements PostService {
         dislikes.add(user);
 
         post.setDislikes(dislikes);
+        update(post);
+    }
+
+    @Override
+    public void addView(Post post, User user) {
+        Set<User> views = post.getViews();
+        views.add(user);
+
+        post.setViews(views);
         update(post);
     }
 

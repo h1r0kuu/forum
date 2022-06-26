@@ -12,12 +12,14 @@ public interface PostService {
     void delete(Long id);
     List<Post> getAll();
     Page<Post> getAll(Pageable pageable);
+    Page<Post> getAll(Pageable pageable, String username);
     Post getById(Long id);
     List<Post> getByForumId(Long forumId);
     Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable);
 
     void like(Post post, User user);
     void dislike(Post post, User user);
+    void addView(Post post, User user);
 
     Page<Post> searchPostByTitleLike(String title, Pageable pageable);
 }
