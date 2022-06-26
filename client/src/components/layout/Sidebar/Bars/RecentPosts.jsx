@@ -1,5 +1,7 @@
 import Moment from 'react-moment';
 import { useEffect, useState } from "react"
+import {Link} from "react-router-dom"
+
 import PostService from "../../../../services/PostService"
 
 function RecentPosts() {
@@ -9,7 +11,6 @@ function RecentPosts() {
             setPosts(res.data.content.slice(0,3))
         })
     }, [])
-    console.log(posts)
 
     return (
         <div className="recent-post3290">
@@ -17,9 +18,7 @@ function RecentPosts() {
             {posts.map(post=>(
                 <>
                 <div className="post-details021">
-                <a href="#">
-                    <h5>{post.title}</h5>
-                </a>
+                <Link to={"/posts/" + post.id}><h5>{post.title}</h5></Link>
                 <small style={{color: "#848991"}}><Moment fromNow>{post.createdAt}</Moment></small>
             </div>
             <hr/> 
