@@ -4,6 +4,7 @@ import com.site.forum.dao.CommentRepository;
 import com.site.forum.entity.Comment;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
+import com.site.forum.exception.PostIsClosedException;
 import com.site.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment create(Comment comment, Post post) {
+        if(!post.getClosed()) {
+            throw new PostIsClosedException("Post is closed");
+        }
         comment.setPost(post);
         return commentRepository.save(comment);
     }
@@ -32,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment getById(Long id) {
         return commentRepository.findById(id).orElseThrow(
-                ()->new NoSuchElementException("Comment not founded")
+                () -> new NoSuchElementException("Comment not found")
         );
     }
 
