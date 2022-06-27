@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment create(Comment comment, Post post) {
-        if(!post.getClosed()) {
+        if(post.getClosed()) {
             throw new PostIsClosedException("Post is closed");
         }
         comment.setPost(post);

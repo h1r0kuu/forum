@@ -37,19 +37,18 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAll() {
-        List<User> users = userService.getAll();
-
-        return ResponseEntity.ok(
-                users.stream()
-                     .map(userDto::convertToDto)
-                     .toList()
-        );
+        List<UserDto> users = userService.getAll()
+                .stream()
+                .map(userDto::convertToDto)
+                .toList();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/online")
     public ResponseEntity<List<UserDto>> getOnlineUsers() {
         List<UserDto> onlineUsers = new ArrayList<>();
         List<Object> principals = sessionRegistry.getAllPrincipals();
+
         for(Object principal : principals) {
             if(principal instanceof User) {
                 List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions(principal, false);

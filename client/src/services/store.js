@@ -69,7 +69,11 @@ class Store {
             this.setAuth(true);
             this.setUser(response.data.user);
         } catch (e) {
-            console.log(e.response?.data?.message);
+            if(e.response.data.status_code === 401) {
+                localStorage.removeItem('token')
+                this.setAuth(false)
+                this.setUser({})
+            }
         } finally {
             this.setLoading(false);
         }
