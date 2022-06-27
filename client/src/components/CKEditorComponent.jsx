@@ -45,7 +45,6 @@ function CKEditorInput({postText, setPostText}) {
                 setPostText(data)
             } }
             onBlur={ ( event, editor ) => {
-                console.log(editor.getData())
             } }
             onFocus={ ( event, editor ) => {
             } }

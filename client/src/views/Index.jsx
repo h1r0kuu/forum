@@ -22,7 +22,6 @@ function Index({store}) {
             setPagination(pagin)
         })
     }
-    console.log(pagination)
 
     useEffect(()=>{
         loadMorePosts()
