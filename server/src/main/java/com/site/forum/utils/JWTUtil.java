@@ -3,11 +3,10 @@ package com.site.forum.utils;
 import com.site.forum.entity.User;
 import com.site.forum.exception.UserNotAuthorized;
 import com.site.forum.service.impl.UserServiceImpl;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +16,7 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JWTUtil {
 
     private final UserServiceImpl userService;
@@ -60,7 +60,13 @@ public class JWTUtil {
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        boolean res = true;
+        try {
+            res = extractExpiration(token).before(new Date());
+        } catch (MalformedJwtException | ExpiredJwtException e) {
+            log.info(e.getMessage());
+        }
+        return res;
     }
 
     public boolean validateToken(String token) {
