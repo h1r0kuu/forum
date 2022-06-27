@@ -46,6 +46,12 @@ function Navbar({store}) {
                     <Link to={"/user/"+store.user.username}>Profile</Link>
                   </li>
                   <li>
+                    <Link to={"#"} className="notification">
+                      <i className="fa fa-bell" aria-hidden="true"></i>
+                      <span className="notification-count">{store.user.notifications.length}</span>
+                    </Link>
+                  </li>
+                  <li>
                     <Link to={"/"} onClick={()=>store.logout()}>Logout</Link>
                   </li>
                 </>
