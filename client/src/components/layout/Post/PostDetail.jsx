@@ -72,7 +72,7 @@ function PostDetail({post, store}) {
                 <CommentList comments={post.comments} store={store} postId={post.id}/>
             }
             {!post.closed &&
-                <LeaveCommentForm postId={post.id} store={store} />
+                <LeaveCommentForm post={post} store={store} />
             }
         </>
     )
