@@ -2336,3 +2336,24 @@ h5:hover {
 .reply > input {
     margin-bottom: 0 !important;
 }
+
+/* Notificataion */
+
+.notification {
+    position: relative;
+    text-align: center;
+}
+
+.notification-count {
+    position: absolute;
+    right: 20%;
+    top: 5%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: orange;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
