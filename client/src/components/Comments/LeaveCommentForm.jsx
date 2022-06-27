@@ -1,15 +1,22 @@
 import CommentService from "../../services/CommentService"
+import NotificationServicre from "../../services/NotificationServicre"
 
-function LeaveCommentForm({postId, store}) {
+function LeaveCommentForm({post, store}) {
     function onSubmit(e) {
         e.preventDefault()
         let form = new FormData(e.target)
         
         let text = form.get("text")
 
-        CommentService.create(postId, {
+        CommentService.create(post.id, {
             "text": text,
             "user": store.user
+        })
+
+        NotificationServicre.notify({
+            text: "There is new comment in your post",
+            isRead: false,
+            user: post.creator
         })
     }
     return (
