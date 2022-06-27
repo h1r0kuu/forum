@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @JsonSerialize(using = UserDtoSerializer.class)
@@ -25,14 +26,20 @@ public class UserDto {
     private int hiddenPostsCount;
     private Set<UserDto> followers;
     private Set<UserDto> following;
+    private Set<NotificationDto> notifications;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public UserDto convertToDto(User user) {
         ModelMapper modelMapper = new ModelMapper();
         UserDto userDto = modelMapper.map(user, UserDto.class);
+        NotificationDto notificationDto = new NotificationDto();
         userDto.setCommentsCount(  Objects.nonNull(user.getComments()) ? user.getComments().size() : 0 );
         userDto.setHiddenPostsCount( Objects.nonNull(user.getHiddenPosts()) ? user.getHiddenPosts().size() : 0 );
+        userDto.setNotifications(user.getNotifications().stream()
+                .map(notificationDto::convertToDto)
+                .collect(Collectors.toSet())
+        );
         return userDto;
     }
 

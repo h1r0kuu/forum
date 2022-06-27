@@ -65,6 +65,9 @@ public class User implements UserDetails {
     )
     private Set<Post> hiddenPosts;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Notification> notifications;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

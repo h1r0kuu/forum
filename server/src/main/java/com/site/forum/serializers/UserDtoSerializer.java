@@ -3,6 +3,7 @@ package com.site.forum.serializers;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.site.forum.dto.NotificationDto;
 import com.site.forum.dto.UserDto;
 import java.io.IOException;
 
@@ -44,6 +45,17 @@ public class UserDtoSerializer extends StdSerializer<UserDto> {
             for(UserDto following : user.getFollowing()) {
                 jsonGenerator.writeStartObject();
                 defaultSerialize(following, jsonGenerator, serializerProvider);
+                jsonGenerator.writeEndObject();
+            }
+        }
+        jsonGenerator.writeEndArray();
+
+        jsonGenerator.writeArrayFieldStart("notifications");
+        NotificationDtoSerializer notificationDtoSerializer = new NotificationDtoSerializer();
+        if(user.getNotifications().size() > 0 && user.getNotifications() != null) {
+            for(NotificationDto notification : user.getNotifications()) {
+                jsonGenerator.writeStartObject();
+                notificationDtoSerializer.defaultSerialize(notification,jsonGenerator,serializerProvider);
                 jsonGenerator.writeEndObject();
             }
         }
