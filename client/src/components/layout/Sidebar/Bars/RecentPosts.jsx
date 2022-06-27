@@ -16,13 +16,11 @@ function RecentPosts() {
         <div className="recent-post3290">
             <h4>Recent Post</h4>
             {posts.map(post=>(
-                <>
-                <div className="post-details021">
-                <Link to={"/posts/" + post.id}><h5>{post.title}</h5></Link>
-                <small style={{color: "#848991"}}><Moment fromNow>{post.createdAt}</Moment></small>
-            </div>
-            <hr/> 
-                </>
+                <div className="post-details021" key={post.id}>
+                    <Link to={"/posts/" + post.id}><h5>{post.title}</h5></Link>
+                    <small style={{color: "#848991"}}><Moment fromNow>{post.createdAt}</Moment></small>
+                    <hr/> 
+                </div>
             ))}
         </div>
     )

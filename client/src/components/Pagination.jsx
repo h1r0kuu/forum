@@ -1,7 +1,7 @@
+import React from "react"
 import { Link } from "react-router-dom"
 
 function Pagination({pagination, order, additionalParams}) {
-    console.log(pagination)
     function hasNext() {
         return pagination.pageable.pageNumber + 1 < pagination.totalPages
     }
@@ -23,23 +23,23 @@ function Pagination({pagination, order, additionalParams}) {
                 </li>
                 }
                 {Array.from(Array(pagination.totalPages), (e, i) => (
-                    <>
+                    <React.Fragment key={i}>
                         {(i > currentPage() - 2 && i < currentPage() + 2) &&
                             <>
-                            {currentPage() === i
-                            ?
-                                <li>
-                                    <Link to={"#"} className={"current-page"}>{i + 1}</Link>
-                                </li>
-                            :
-                                <li>
-                                    <Link to={"?page="+i + "&order=" + order + (additionalParams || '')}>{i + 1}</Link>
+                                {currentPage() === i
+                                ?
+                                    <li>
+                                        <Link to={"#"} className={"current-page"}>{i + 1}</Link>
+                                    </li>
+                                :
+                                    <li>
+                                        <Link to={"?page="+i + "&order=" + order + (additionalParams || '')}>{i + 1}</Link>
 
-                                </li>
-                            }
+                                    </li>
+                                }
                             </>
                         }
-                    </>
+                    </React.Fragment>
                 ))}
                 {hasNext() &&
                 <li>

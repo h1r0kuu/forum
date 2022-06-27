@@ -17,7 +17,7 @@ function OnlineUsers() {
         <div className="highest-part302">
             <h4>Online users</h4>
             {users.map(user => (
-                <div className="pints-wrapper">
+                <div className="pints-wrapper" key={user.id}>
                     <div className="left-user3898">
                         <a href="#">
                             <img src={user.imagePath} alt="Image"/>
