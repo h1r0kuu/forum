@@ -22,7 +22,8 @@
    margin: 0px 5px;
 }
 .navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a.active {
     color: #fff;
     background-color: #ff7361;
     border-radius: 3px;
