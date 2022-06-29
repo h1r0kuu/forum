@@ -1,5 +1,7 @@
 package com.site.forum.controller;
 
+import com.site.forum.service.PostService;
+import com.site.forum.service.UserService;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,8 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class StatsContoller {
 
-    private final PostServiceImpl postService;
-    private final UserServiceImpl userService;
+    private final PostService postService;
+    private final UserService userService;
 
     @GetMapping("/stats")
     public ResponseEntity<HashMap<String, Integer>> statistics() {

@@ -2,6 +2,7 @@ package com.site.forum.controller;
 
 import com.site.forum.dto.NotificationDto;
 import com.site.forum.entity.Notification;
+import com.site.forum.service.NotificationService;
 import com.site.forum.service.impl.NotificationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final NotificationServiceImpl notificationService;
+    private final NotificationService notificationService;
 
     private final NotificationDto notificationDto = new NotificationDto();
 

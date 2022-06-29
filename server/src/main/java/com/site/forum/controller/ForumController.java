@@ -3,6 +3,7 @@ package com.site.forum.controller;
 import com.site.forum.dto.ForumDto;
 import com.site.forum.entity.Forum;
 import com.site.forum.model.ForumModel;
+import com.site.forum.service.ForumService;
 import com.site.forum.service.impl.ForumServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/forums")
 @RequiredArgsConstructor
 public class ForumController {
-    private final ForumServiceImpl forumService;
+    private final ForumService forumService;
     private final ForumDto forumDto = new ForumDto();
 
     @PostMapping(value = "/create")

@@ -3,10 +3,16 @@ package com.site.forum.controller;
 import com.site.forum.dto.CommentDto;
 import com.site.forum.dto.PostDto;
 import com.site.forum.entity.Comment;
+import com.site.forum.entity.Notification;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.exception.UserNotAuthorized;
+import com.site.forum.service.CommentService;
+import com.site.forum.service.NotificationService;
+import com.site.forum.service.PostService;
+import com.site.forum.service.UserService;
 import com.site.forum.service.impl.CommentServiceImpl;
+import com.site.forum.service.impl.NotificationServiceImpl;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import com.site.forum.utils.JWTUtil;
@@ -18,6 +24,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,16 +35,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostServiceImpl postService;
-    private final CommentServiceImpl commentService;
-    private final UserServiceImpl userService;
+    private final PostService postService;
+    private final CommentService commentService;
+    private final UserService userService;
+    private final NotificationService notificationService;
 
     private final PostDto postDto = new PostDto();
     private final CommentDto commentDto = new CommentDto();
 
     private final JWTUtil jwtUtil;
     @PostMapping(value = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<PostDto> create(@RequestBody PostDto post) {
+    public ResponseEntity<PostDto> create(@Valid @RequestBody PostDto post) {
         Post createdPost = postService.create( postDto.convertToEntity(post) );
         return ResponseEntity.ok( postDto.convertToDto(createdPost) );
     }
@@ -77,7 +85,7 @@ public class PostController {
         }
         Page<PostDto> posts = postList.map(postDto::convertToDto);
 
-        return   ResponseEntity.ok(posts);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/forum/{id}")
@@ -90,7 +98,7 @@ public class PostController {
         Page<Post> postList = postService.getByForumIdAndPage(id, paging);
         Page<PostDto> posts = postList.map(postDto::convertToDto);
 
-        return   ResponseEntity.ok(posts);
+        return ResponseEntity.ok(posts);
     }
 
     @PostMapping("/{id}/like")

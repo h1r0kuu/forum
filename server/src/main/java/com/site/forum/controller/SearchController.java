@@ -4,6 +4,8 @@ import com.site.forum.dto.PostDto;
 import com.site.forum.dto.UserDto;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
+import com.site.forum.service.PostService;
+import com.site.forum.service.UserService;
 import com.site.forum.service.impl.PostServiceImpl;
 import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -24,8 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchController {
 
-    private final UserServiceImpl userService;
-    private final PostServiceImpl postService;
+    private final UserService userService;
+    private final PostService postService;
 
     private final UserDto userDto = new UserDto();
     private final PostDto postDto = new PostDto();
