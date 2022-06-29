@@ -16,19 +16,16 @@ class PostSevice {
         return api.get(`${POST_API_RUL}/all?page=${page}&order=${order}`)
     }
     
-    create(data, callback) {
-        axios.post(`${POST_API_RUL}/create`, data)
-        .then((res) => {
-            callback(res)
-        })
+    create(data) {
+        return axios.post(`${POST_API_RUL}/create`, data)
     }
 
     like(postId, data) {
-        axios.post(`${POST_API_RUL}/${postId}/like`, data)
+        return axios.post(`${POST_API_RUL}/${postId}/like`, data)
     }
 
     dislike(postId, data) {
-        axios.post(`${POST_API_RUL}/${postId}/dislike`, data)
+        return axios.post(`${POST_API_RUL}/${postId}/dislike`, data)
     }
 
     hidePost(postId) {
