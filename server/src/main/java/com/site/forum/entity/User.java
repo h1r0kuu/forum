@@ -38,17 +38,17 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             joinColumns = @JoinColumn(name = "followed_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
     private Set<User> followers;
 
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers",fetch = FetchType.EAGER)
     private Set<User> following;
 
     @OneToMany(mappedBy = "user")
@@ -57,7 +57,7 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "views")
     private Set<Post> posts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "hidden_posts",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -65,7 +65,7 @@ public class User implements UserDetails {
     )
     private Set<Post> hiddenPosts;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Notification> notifications;
 
     @CreationTimestamp
