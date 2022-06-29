@@ -1,8 +1,9 @@
-import api from "../utils/authQuery"
+import axios from "axios"
+import api,{API_URL} from "../utils/authQuery"
 
 class AuthService {
     async login(username, password) {
-        return api.post('/auth/login', {username, password})
+        return axios.post(`${API_URL}/auth/login`, {username, password})
     }
 
     async registration(data) {
