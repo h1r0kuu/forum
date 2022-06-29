@@ -9,7 +9,7 @@ import Navbar from "../../components/layout/Navigation/Navbar"
 import PostListTemplate from "../../components/layout/Post/PostListTemplate";
 import PostService from '../../services/PostService';
 
-function HiddenPosts({store}) {
+function HiddenPosts() {
     const {username} = useParams()
     const [hiddenPosts, setHiddenPosts] = useState([])
 
@@ -30,7 +30,7 @@ function HiddenPosts({store}) {
 
     return (
         <>
-            <Navbar store={store}/>
+            <Navbar/>
             <table>
                 <thead>
                     <tr>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import Pagination from "../../Pagination"
 import Sidebar from "../Sidebar/Sidebar"
 
-function UserListTemplate({users, pagination, order, store}) {
+function UserListTemplate({users, pagination, order}) {
     return (
         <>
         <div className="container">
@@ -22,7 +22,7 @@ function UserListTemplate({users, pagination, order, store}) {
                         </section>
                     </div>
                 </div>
-                <Sidebar store={store} />
+                <Sidebar/>
             </div>
         </div>
         </>

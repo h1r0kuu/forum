@@ -2,12 +2,13 @@ import Stats from "./Bars/Stats"
 import LoginBar from "./Bars/LoginBar"
 import RecentPosts from "./Bars/RecentPosts"
 import OnlineUsers from "./Bars/OnlineUsers"
+import {IsAuth} from "../../../utils/UserUtil"
 
-function Sidebar({store}) {
+function Sidebar() {
     return (
         <aside className="col-md-3 sidebar97239">
             <Stats />
-            {!store.isAuth &&
+            {!IsAuth() &&
                 <LoginBar />
             }
             <OnlineUsers />

@@ -7,7 +7,7 @@ import Profile from "../../components/layout/User/Profile"
 
 import UserService from "../../services/UserService"
 
-function ProfilePage({store}) {
+function ProfilePage() {
     const {username} = useParams()
     const [user, setUser] = useState({})
     const [posts, setUserPosts] = useState([])
@@ -20,13 +20,13 @@ function ProfilePage({store}) {
 
     return (
         <>
-        <Navbar store={store}/>
+        <Navbar/>
         <div className="container">
             <div className="row">
                 <div className="col-md-9">
-                    <Profile user={user} store={store}/>                    
+                    <Profile user={user}/>                    
                 </div>
-                <Sidebar store={store} />
+                <Sidebar/>
             </div>
         </div>
         </>

@@ -5,8 +5,10 @@ import LeaveCommentForm from "../../Comments/LeaveCommentForm"
 import AuthorDetails from "./AuthorDetails"
 
 import PostService from "../../../services/PostService"
+import { GetStore } from '../../../utils/UserUtil';
 
-function PostDetail({post, store}) {
+function PostDetail({post}) {
+    const store = GetStore()
     
     function like(e) {
         e.preventDefault()
@@ -69,10 +71,10 @@ function PostDetail({post, store}) {
             <AuthorDetails author={post.creator}/>
             }
             {post.comments && post.comments.length > 0 &&
-                <CommentList comments={post.comments} store={store} postId={post.id}/>
+                <CommentList comments={post.comments} postId={post.id}/>
             }
             {!post.closed &&
-                <LeaveCommentForm post={post} store={store} />
+                <LeaveCommentForm post={post}/>
             }
         </>
     )

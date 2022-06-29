@@ -9,7 +9,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Pagination from "../../Pagination";
 import PostListTemplate from "./PostListTemplate";
 
-function PostList({store}) {
+function PostList() {
     const {forumId} = useParams()
     
     const [posts, setPosts] = useState([])
@@ -36,8 +36,8 @@ function PostList({store}) {
     
     return (
         <>
-        <Navbar store={store}/>
-        <PostListTemplate posts={posts} pagination={pagination} store={store} order={order}/>
+        <Navbar/>
+        <PostListTemplate posts={posts} pagination={pagination} order={order}/>
         </>
     )
 }

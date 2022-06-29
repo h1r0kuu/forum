@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import SearchInput from "../components/layout/Header/SearchInput"
@@ -5,7 +6,7 @@ import Navbar from "../components/layout/Navigation/Navbar"
 import PostListTempalte from "../components/layout/Post/PostListTemplate"
 import PostService from "../services/PostService"
 
-function Index({store}) {
+function Index() {
     const [posts, setPosts] = useState([])
     const [pagination, setPagination] = useState({})
     const [hasMore, setHasMore] = useState(true);
@@ -17,8 +18,8 @@ function Index({store}) {
     
     const loadMorePosts = () => {
         PostService.getAll(page,order).then(res => {
-            setPosts(res.data.content)
             const {content, ...pagin} = res.data
+            setPosts(content)
             setPagination(pagin)
         })
     }
@@ -28,13 +29,13 @@ function Index({store}) {
     }, [page, order])
     return (
         <>
-            <Navbar store={store}/>
+            <Navbar/>
             <SearchInput/>
             <section className="main-content920">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-9">
-                            <PostListTempalte posts={posts} pagination={pagination} order={order} store={store}/>
+                            <PostListTempalte posts={posts} pagination={pagination} order={order}/>
                         </div>
                     </div>
                 </div>

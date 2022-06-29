@@ -4,8 +4,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import CommentService from "../../services/CommentService"
+import { GetStore } from '../../utils/UserUtil';
 
-function Comment({comment, store, postId}) {
+function Comment({comment, postId}) {
+    const store = GetStore()
+
     const [replyHidden, setReplyHidden] = useState(true)
     
     function toggleReplyInput() {

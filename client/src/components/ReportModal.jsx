@@ -1,13 +1,14 @@
 import "../assets/css/style.css"
 import ReportService from "../services/ReportService"
+import { GetUser } from "../utils/UserUtil"
 
-function ReportModal({objId, objType, setModal, store}) {
+function ReportModal({objId, objType, setModal}) {
     console.log(objType)
     function onSubmit(e) {
         e.preventDefault()
         let form = new FormData(e.target)
         let reason = form.get("text")
-        let user = store.user
+        let user = GetUser()
         ReportService.create({text: reason,entity: objType, objectId: objId, user: user}, (res) => {
             setModal(false)
             alert("Your report succesffuly sended")

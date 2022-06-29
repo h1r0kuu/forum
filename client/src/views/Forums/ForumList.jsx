@@ -7,18 +7,22 @@ import ForumService from "../../services/ForumService"
 
 
 
-function ForumList({store}) {
+function ForumList() {
     const [forums, setForums] = useState([])
-    
+    const [isLoaded, setIsLoaded] = useState(false)
+
     useEffect( ()=> {
-        ForumService.getAllForums(false).then(res => {
-            setForums(res.data)
-        })
+        if(isLoaded === false) {  
+            ForumService.getAllForums(false).then(res => {
+                setForums(res.data)
+                setIsLoaded(true)
+            })
+        }
     }, [])
 
     return (        
         <>
-        <Navbar store={store}/>
+        <Navbar/>
         <div className="container">
             <div className="row">
                 <div className="col-md-9">
@@ -28,7 +32,7 @@ function ForumList({store}) {
                         ))}
                     </ul>
                 </div>
-                <Sidebar store={store} />
+                <Sidebar/>
             </div>
         </div>
         </>

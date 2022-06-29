@@ -1,7 +1,8 @@
 import CommentService from "../../services/CommentService"
 import NotificationServicre from "../../services/NotificationServicre"
+import { GetUser } from "../../utils/UserUtil"
 
-function LeaveCommentForm({post, store}) {
+function LeaveCommentForm({post}) {
     function onSubmit(e) {
         e.preventDefault()
         let form = new FormData(e.target)
@@ -10,7 +11,7 @@ function LeaveCommentForm({post, store}) {
 
         CommentService.create(post.id, {
             "text": text,
-            "user": store.user
+            "user": GetUser()
         })
 
         NotificationServicre.notify({

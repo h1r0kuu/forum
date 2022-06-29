@@ -1,12 +1,19 @@
+import "../../../assets/css/animate.css"
+
 import { useEffect, useState } from "react"
 import ForumService from "../../../services/ForumService"
 import PostService from "../../../services/PostService"
+import { GetUser } from "../../../utils/UserUtil"
+import { Store } from 'react-notifications-component';
 
 import CKEditorInput from "../../CKEditorComponent"
 
-function PostCreateForm({store}) {
+function PostCreateForm() {
     const [postText, setPostText] = useState('')
     const [forums, setForums] = useState([])
+    // const [errors, setErrors] = useState([])
+    const user = GetUser()
+    
     
     function onSubmit(e) {
         e.preventDefault()
@@ -18,11 +25,28 @@ function PostCreateForm({store}) {
             "title": title,
             "text": postText,
             "forum": {"id":forumId},
-            "creator": {...store.user}
-        }, (res)=> {
+            "creator": {...user}
+        }).then(res => {
             window.location.href = '/posts/' + res.data.id
+        }).catch(e => {
+            const errors = e.response.data.errors
+            if(errors.length > 0) {
+                errors.forEach(error => {
+                    Store.addNotification({
+                        title: 'Error',
+                        message: error,
+                        type: 'danger',
+                        container: 'bottom-left',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    })
+                })
+            }
         })
-
     }
 
     useEffect( ()=> {

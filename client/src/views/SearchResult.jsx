@@ -5,7 +5,7 @@ import PostListTemplate from "../components/layout/Post/PostListTemplate";
 import UserListTemplate from "../components/layout/User/UserListTemplate";
 import SearchService from "../services/SearchService";
 
-function SearchResult({store}) {
+function SearchResult() {
     const [searchRes, setSearchRes] = useState([])
     const [pagination, setPagination] = useState({})
     const [hasMore, setHasMore] = useState(true)
@@ -35,7 +35,7 @@ function SearchResult({store}) {
     }, [q, order, field, page])
     return (
         <>
-            <Navbar store={store}/>
+            <Navbar/>
             {searchRes.length > 0
             ?
             
@@ -49,14 +49,12 @@ function SearchResult({store}) {
                         ?
                             <PostListTemplate posts={searchRes}
                                               pagination={pagination} 
-                                              order={order} 
-                                              store={store}
+                                              order={order}
                                               additionalParams={"&query=" + q}/>
                         :
                             <UserListTemplate users={searchRes} 
                                               pagination={pagination} 
                                               order={order} 
-                                              store={store}
                                               additionalParams={"&query=" + q}/>
                     }
                 </div>

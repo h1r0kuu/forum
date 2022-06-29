@@ -7,7 +7,7 @@ import Sidebar from "../../components/layout/Sidebar/Sidebar"
 
 import PostService from "../../services/PostService"
 
-function PostInfo({store}) {
+function PostInfo() {
     const {postId} = useParams()
     const [post, setPost] = useState({})
 
@@ -19,13 +19,13 @@ function PostInfo({store}) {
 
     return (
         <>
-        <Navbar store={store}/>
+        <Navbar/>
         <div className="container">
             <div className="row">
                 <div className="col-md-9">
-                    <PostDetail post={post} store={store} />
+                    <PostDetail post={post}/>
                 </div>
-                <Sidebar store={store} />
+                <Sidebar/>
             </div>
         </div>
         </>

@@ -1,6 +1,6 @@
 import Comment from "./Comment"
 
-function CommentList({comments, store, postId}) {
+function CommentList({comments, postId}) {
     return (    
         <div className="comment-list12993">
             <div className="container">
@@ -8,7 +8,7 @@ function CommentList({comments, store, postId}) {
                 <div className="comments-container">
                     <ul id="comments-list" className="comments-list">
                         {comments.map(comment => (
-                            <Comment comment={comment} store={store} postId={postId}/>
+                            <Comment comment={comment} postId={postId}/>
                         ))}
                     </ul>
                 </div>

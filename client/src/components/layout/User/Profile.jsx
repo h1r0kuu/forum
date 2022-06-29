@@ -2,13 +2,16 @@ import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import UserService from '../../../services/UserService';
+import { GetUser } from '../../../utils/UserUtil';
 
-function Profile({user, store}) {
+function Profile({user}) {
+    const authUser = GetUser()
+
     function follow(e) {
         e.preventDefault()
         UserService.follow({
             followingUsername: user.username,
-            followerUsername: store.user.username
+            followerUsername: authUser.username
         })
     }
     return (
@@ -36,7 +39,7 @@ function Profile({user, store}) {
                 </div>
             </div>
             <div className="user-description303">
-                {user.username !== store.user.username &&
+                {user.username !== authUser.username &&
                 <>
                     <a href="#">Follow</a>
                     <a href="#">Ask Ahmed Hasan</a>

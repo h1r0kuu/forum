@@ -5,7 +5,7 @@ import Navbar from "../Navigation/Navbar"
 import Sidebar from "../Sidebar/Sidebar"
 import Post from "./Post"
 
-function PostListTemplate({posts, pagination, order, store, additionalParams}) {
+function PostListTemplate({posts, pagination, order, additionalParams}) {
     return (
         <>
         <div className="container">
@@ -17,7 +17,7 @@ function PostListTemplate({posts, pagination, order, store, additionalParams}) {
                         <Link to={`?page=0&order=createdAt`} className="tab">Recent Post</Link>
                         <section id="content">
                             {posts.map( post => (
-                                <Post post={post} key={post.id} store={store}/>
+                                <Post post={post} key={post.id}/>
                             ))}
                             {pagination && pagination.pageable && 
                                 <Pagination pagination={pagination} order={order} additionalParams={additionalParams}/>
@@ -25,7 +25,7 @@ function PostListTemplate({posts, pagination, order, store, additionalParams}) {
                         </section>
                     </div>
                 </div>
-                <Sidebar store={store} />
+                <Sidebar/>
             </div>
         </div>
         </>

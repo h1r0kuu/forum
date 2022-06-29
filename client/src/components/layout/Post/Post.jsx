@@ -6,7 +6,7 @@ import ReportModal from '../../ReportModal';
 
 import PostService from "../../../services/PostService"
 
-function Post({post, store, deletePost}) {
+function Post({post, deletePost}) {
     const [modal, setModal] = useState(false)
 
     function hidePost(e) {
@@ -64,7 +64,7 @@ function Post({post, store, deletePost}) {
             </div>
         </div>
         {modal &&
-            <ReportModal objId = {post.id} objType = {ENTITY_TYPE.POST} setModal={setModal} store={store}/>
+            <ReportModal objId = {post.id} objType = {ENTITY_TYPE.POST} setModal={setModal}/>
         }
         </>
     )

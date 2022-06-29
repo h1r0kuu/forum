@@ -24,6 +24,24 @@ import AdminPostList from "./views/Admin/AdminPostList";
 import AdminUserList from "./views/Admin/AdminUserList";
 import AdminReports from "./views/Admin/AdminReports";
 
+import {
+  BASE,
+  FORUMS,
+  FORUM,
+  POST_CREATE,
+  POST,
+  USER,
+  USER_HIDDEN_POSTS,
+  LOGIN,
+  REGISTRATION,
+  SEARCH,
+  ADMIN,
+  ADMIN_FORUMS,
+  ADMIN_POSTS,
+  ADMIN_USERS,
+  ADMIN_REPORTS
+} from "./constants/routeConstants"
+
 function App() {
   const {store} = useContext(Context);
   
@@ -36,31 +54,35 @@ function App() {
   return (
     <>
       <Routes>
-      <Route path="*" element={<Index store={store} />} />
+        <Route path="*" element={<Index/>} />
 
-      <Route exact path="/forums" element={<ForumList store={store} />} />
-      <Route exact path="/forums/:forumId" element={<PostList store={store} />} />
+        <Route path={BASE} element={<Index/>} />
 
-      <Route exact path="/posts/create" element={<CreatePost store={store} />} />
-      <Route exact path="/posts/:postId" element={<PostInfo store={store} />} />
+        <Route exact path={FORUMS} element={<ForumList/>} />
+        <Route exact path={FORUM} element={<PostList/>} />
 
-      <Route exact path="/user/:username" element={<ProfilePage store={store} />} />
-      <Route exact path="/user/:username/hidden_posts" element={<HiddenPosts store={store} />} />
-     
-      <Route exact path="/login" element={<Login store={store} />} />
-      <Route exact path="/registration" element={<Registration store={store} />} />
+        <Route exact path={POST_CREATE} element={<CreatePost/>} />
+        <Route exact path={POST} element={<PostInfo/>} />
 
-      <Route exact path="/search" element={<SearchResult store={store} />} />
-      
-      {store.user.role === "ADMIN" &&
-        <>
-          <Route exact path="/admin" element={<AdminIndex store={store} />} />
-          <Route exact path="/admin/forums" element={<AdminForumList store={store} />} />
-          <Route exact path="/admin/posts" element={<AdminPostList store={store} />} />
-          <Route exact path="/admin/users" element={<AdminUserList store={store} />} />
-          <Route exact path="/admin/reports" element={<AdminReports store={store} />} />
-        </>
-      }
+        <Route exact path={USER} element={<ProfilePage/>} />
+        <Route exact path={USER_HIDDEN_POSTS} element={<HiddenPosts/>} />
+        {!store.isAuth &&
+          <>
+            <Route exact path={LOGIN} element={<Login/>} />
+            <Route exact path={REGISTRATION} element={<Registration/>} />
+          </>
+        }
+        <Route exact path={SEARCH} element={<SearchResult/>} />
+        
+        {store.user.role === "ADMIN" &&
+          <>
+            <Route exact path={ADMIN} element={<AdminIndex/>} />
+            <Route exact path={ADMIN_FORUMS} element={<AdminForumList/>} />
+            <Route exact path={ADMIN_POSTS} element={<AdminPostList/>} />
+            <Route exact path={ADMIN_USERS} element={<AdminUserList/>} />
+            <Route exact path={ADMIN_REPORTS} element={<AdminReports/>} />
+          </>
+        }
       </Routes>
     </>
   )  
