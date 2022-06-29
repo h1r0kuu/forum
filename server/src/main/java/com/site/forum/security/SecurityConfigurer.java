@@ -18,6 +18,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @EnableWebSecurity
@@ -52,7 +53,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
+    @Bean
+    public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
+        return new SecurityContextHolderAwareRequestFilter();
+    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
