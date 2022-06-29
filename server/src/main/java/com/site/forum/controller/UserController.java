@@ -3,6 +3,9 @@ package com.site.forum.controller;
 import com.site.forum.dto.*;
 import com.site.forum.entity.User;
 import com.site.forum.model.FollowModel;
+import com.site.forum.service.CommentService;
+import com.site.forum.service.ProfileCommentService;
+import com.site.forum.service.UserService;
 import com.site.forum.service.impl.CommentServiceImpl;
 import com.site.forum.service.impl.ProfileCommentImpl;
 import com.site.forum.service.impl.UserServiceImpl;
@@ -25,9 +28,9 @@ public class UserController {
 
     private final SessionRegistry sessionRegistry;
 
-    private final UserServiceImpl userService;
-    private final CommentServiceImpl commentService;
-    private final ProfileCommentImpl profileCommentService;
+    private final UserService userService;
+    private final CommentService commentService;
+    private final ProfileCommentService profileCommentService;
 
     private final UserDto userDto = new UserDto();
     private final ForumDto forumDto = new ForumDto();
@@ -47,15 +50,17 @@ public class UserController {
     @GetMapping("/online")
     public ResponseEntity<List<UserDto>> getOnlineUsers() {
         List<UserDto> onlineUsers = new ArrayList<>();
-        List<Object> principals = sessionRegistry.getAllPrincipals();
+        List<User> principals = sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> u instanceof User)
+                .map(u -> (User)u)
+                .collect( Collectors.toMap(User::getUsername, u -> u, (u, q) -> u)).values()
+                .stream().toList();
 
-        for(Object principal : principals) {
-            if(principal instanceof User) {
-                List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions(principal, false);
-                for(SessionInformation sesInfo : activeUserSession) {
-                    if(!sesInfo.isExpired()) {
-                        onlineUsers.add(userDto.convertToDto((User)principal));
-                    }
+        for(User user : principals) {
+            List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions((Object)user, false);
+            for(SessionInformation sesInfo : activeUserSession) {
+                if(!sesInfo.isExpired()) {
+                    onlineUsers.add(userDto.convertToDto(user));
                 }
             }
         }
