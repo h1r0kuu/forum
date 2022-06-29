@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.modelmapper.ModelMapper;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Objects;
@@ -18,7 +21,9 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = CommentDtoSerializer.class)
 public class CommentDto {
     private Long id;
+    @Size(min = 3, max = 255, message = "The text must be between 3 and 255 characters long")
     private String text;
+    @NotNull(message = "User cannot be null")
     private UserDto user;
     private int likesCount;
     private int dislikesCount;

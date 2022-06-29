@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Objects;
@@ -14,13 +16,17 @@ import java.util.stream.Collectors;
 
 @Data
 @ToString
-@EqualsAndHashCode(exclude = {"creator", "views"})
+@EqualsAndHashCode(exclude = {"creator"})
 public class PostDto {
     private Long id;
+    @Size(min = 3, max = 16, message = "The title must be between 3 and 16 characters long")
     private String title;
+    @Size(min = 3, message = "The text must be more than 3 characters long")
     private String text;
     private Boolean closed;
+    @NotNull(message = "Forum cannot be null")
     private ForumDto forum;
+    @NotNull(message = "Creator cannot be null")
     private UserDto creator;
     private Set<CommentDto> comments;
     private int likesCount;

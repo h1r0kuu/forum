@@ -1,6 +1,7 @@
 package com.site.forum.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.site.forum.constraints.PasswordConstraint;
 import com.site.forum.entity.User;
 import com.site.forum.enums.UserRole;
 import com.site.forum.model.UserModel;
@@ -9,7 +10,9 @@ import lombok.Data;
 import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,7 +21,9 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = UserDtoSerializer.class)
 public class UserDto {
     private Long id;
+    @Size(min = 3, max = 20, message = "The username must be between 3 and 200 characters long")
     private String username;
+    @PasswordConstraint(message = "Password should contain at least one uppercase & special character")
     private String password;
     private UserRole role;
     private String imagePath;
@@ -36,9 +41,9 @@ public class UserDto {
         NotificationDto notificationDto = new NotificationDto();
         userDto.setCommentsCount(  Objects.nonNull(user.getComments()) ? user.getComments().size() : 0 );
         userDto.setHiddenPostsCount( Objects.nonNull(user.getHiddenPosts()) ? user.getHiddenPosts().size() : 0 );
-        userDto.setNotifications(user.getNotifications().stream()
+        userDto.setNotifications( Objects.nonNull(user.getNotifications()) ? user.getNotifications().stream()
                 .map(notificationDto::convertToDto)
-                .collect(Collectors.toSet())
+                .collect(Collectors.toSet()) : Collections.emptySet()
         );
         return userDto;
     }

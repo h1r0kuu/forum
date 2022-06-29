@@ -6,6 +6,7 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @Data
 public class ForumDto {
     private Long id;
+    @Size(min = 3, max = 16, message = "The title must be between 3 and 16 characters long")
     private String title;
     private Set<ForumDto> subForums;
     private int postsCount;
@@ -31,8 +33,8 @@ public class ForumDto {
                                     .collect(Collectors.toSet());
         int postCount = forum.getPosts().size();
         if(!entitySubForums.isEmpty()) {
-            for (ForumDto subforum : entitySubForums) {
-                postCount += subforum.getPostsCount();
+            for (ForumDto subForum : entitySubForums) {
+                postCount += subForum.getPostsCount();
             }
         }
         dto.setPostsCount(postCount);
