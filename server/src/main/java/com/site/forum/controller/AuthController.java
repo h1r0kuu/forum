@@ -4,7 +4,7 @@ import com.site.forum.dto.UserDto;
 import com.site.forum.entity.User;
 import com.site.forum.enums.UserRole;
 import com.site.forum.model.AuthModel;
-import com.site.forum.model.UserModel;
+import com.site.forum.model.RegistrationModel;
 import com.site.forum.service.UserService;
 import com.site.forum.service.impl.UserServiceImpl;
 import com.site.forum.utils.FileUpload;
@@ -49,19 +49,16 @@ public class AuthController {
     private String fileUploadPath;
 
     @PostMapping(value = "/registration", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<UserDto> registration(@Valid @ModelAttribute UserModel userModel) throws IOException {
-        System.out.println(userModel.getPassword());
-        userModel.setRole( UserRole.USER );
+    public ResponseEntity<UserDto> registration(@Valid @ModelAttribute RegistrationModel userModel) throws IOException {
         MultipartFile file = userModel.getImage();
         userModel.setPassword( new BCryptPasswordEncoder().encode(userModel.getPassword()));
 
-//        FileUpload.upload(fileUploadPath, file.getOriginalFilename(), file);
+        FileUpload.upload(fileUploadPath, file.getOriginalFilename(), file);
 
         UserDto user = userDto.modelToDto(userModel);
         user.setImagePath("http://localhost:8080/img/" + file.getOriginalFilename());
-
+        user.setRole(UserRole.USER);
         User createdUser = userService.registration(userDto.convertToEntity(user));
-
         return ResponseEntity.ok(userDto.convertToDto(createdUser));
     }
 
