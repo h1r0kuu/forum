@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification setRead(Long id) {
-        Notification notification = notificationRepository.getById(id);
+        Notification notification = notificationRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Notification not found")
+        );
         notification.setRead(true);
         update(notification);
         return notification;

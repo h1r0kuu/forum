@@ -21,7 +21,7 @@ public class JWTUtil {
 
     private final UserServiceImpl userService;
 
-    @Value(value = "$ {jwt.secret_key}")
+    @Value(value = "${jwt.secret_key}")
     private String SECRET_KEY;
 
     public String getUsernameFromToken(String token) {
@@ -83,7 +83,7 @@ public class JWTUtil {
         return !isTokenExpired(jwt);
     }
 
-    public User extractUserFromToken(String token) throws UserNotAuthorized {
+    public User extractUserFromToken(String token) {
         String username = getUsernameFromToken(token);
         return userService.getUserByUsername(username);
     }

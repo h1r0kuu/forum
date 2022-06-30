@@ -12,6 +12,9 @@ import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class FileUpload {
+
+    private FileUpload(){}
+    
     public static String upload(String uploadDir,
                               String fileName,
                               MultipartFile image) throws IOException {

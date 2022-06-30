@@ -1,14 +1,9 @@
 package com.site.forum.dto;
 
 import com.site.forum.entity.Notification;
-import com.site.forum.entity.ProfileComment;
-import com.site.forum.entity.User;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.modelmapper.ModelMapper;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

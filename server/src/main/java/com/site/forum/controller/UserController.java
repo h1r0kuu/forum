@@ -48,19 +48,18 @@ public class UserController {
     public ResponseEntity<Set<UserDto>> getOnlineUsers() {
         Set<UserDto> onlineUsers = new HashSet<>();
         List<User> principals = sessionRegistry.getAllPrincipals().stream()
-                .filter(u -> u instanceof User)
-                .map(u -> (User)u)
+                .filter(User.class::isInstance)
+                .map(User.class::cast)
                 .toList();
 
         for(User user : principals) {
-            List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions((Object)user, false);
+            List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions(user, false);
             for(SessionInformation sesInfo : activeUserSession) {
                 if(!sesInfo.isExpired()) {
                     onlineUsers.add(userDto.convertToDto(user));
                 }
             }
         }
-        onlineUsers.stream().forEach(u -> System.out.println(u.getId()));
         return ResponseEntity.ok(onlineUsers);
     }
 

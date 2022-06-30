@@ -34,7 +34,7 @@ public class ReportController {
 
     @GetMapping("/all")
     public ResponseEntity<Set<ReportDto>> getReports(@RequestParam("entity_type") @Nullable ReportEntity entityType) {
-        Set<ReportDto> reports = new HashSet<>();
+        Set<ReportDto> reports;
         if (Objects.nonNull(entityType)) {
             reports = reportService.findReportsByEntity(entityType).stream()
                     .map(reportDto::convertToDto)

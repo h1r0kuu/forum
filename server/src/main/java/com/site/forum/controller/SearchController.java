@@ -6,8 +6,6 @@ import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.service.PostService;
 import com.site.forum.service.UserService;
-import com.site.forum.service.impl.PostServiceImpl;
-import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -2,8 +2,6 @@ package com.site.forum.controller;
 
 import com.site.forum.service.PostService;
 import com.site.forum.service.UserService;
-import com.site.forum.service.impl.PostServiceImpl;
-import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
