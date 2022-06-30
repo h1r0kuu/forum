@@ -5,6 +5,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,11 +55,9 @@ public class RestException extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status, WebRequest request) {
-
+    private ResponseEntity<Object> exceptionWithBinding(BindException ex,
+                                                        HttpHeaders headers,
+                                                        HttpStatus status, WebRequest request) {
         HashMap<String, Object> body = new HashMap<>();
         body.put("timestamp", new Date());
         body.put("status", status.value());
@@ -72,5 +71,18 @@ public class RestException extends ResponseEntityExceptionHandler {
         body.put("errors", errors);
 
         return new ResponseEntity<>(body, headers, status);
+    }
+    @Override
+    public ResponseEntity<Object> handleBindException(BindException ex,
+                                                      HttpHeaders headers,
+                                                      HttpStatus status, WebRequest request) {
+        return exceptionWithBinding(ex, headers,status,request);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status, WebRequest request) {
+        return exceptionWithBinding(ex, headers,status,request);
     }
 }
