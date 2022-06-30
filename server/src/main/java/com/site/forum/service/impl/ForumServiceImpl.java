@@ -33,7 +33,7 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public Forum getById(Long id) {
         return forumRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("Forum not founded")
+                () -> new NoSuchElementException("Forum not found")
         );
     }
 
