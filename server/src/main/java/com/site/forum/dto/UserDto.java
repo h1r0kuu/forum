@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.site.forum.constraints.PasswordConstraint;
 import com.site.forum.entity.User;
 import com.site.forum.enums.UserRole;
-import com.site.forum.model.UserModel;
+import com.site.forum.model.RegistrationModel;
 import com.site.forum.serializers.UserDtoSerializer;
 import lombok.Data;
 import org.hibernate.Hibernate;
@@ -21,9 +21,7 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = UserDtoSerializer.class)
 public class UserDto {
     private Long id;
-    @Size(min = 3, max = 20, message = "The username must be between 3 and 200 characters long")
     private String username;
-    @PasswordConstraint(message = "Password should contain at least one uppercase & special character")
     private String password;
     private UserRole role;
     private String imagePath;
@@ -48,7 +46,7 @@ public class UserDto {
         return userDto;
     }
 
-    public UserDto modelToDto(UserModel model) {
+    public UserDto modelToDto(RegistrationModel model) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(model, UserDto.class);
     }
