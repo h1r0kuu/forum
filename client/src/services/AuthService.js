@@ -7,7 +7,7 @@ class AuthService {
     }
 
     async registration(data) {
-        return api.post(`${API_URL}/auth/registration`, data, {
+        return api.post('/auth/registration', data, {
             headers: {
                 "Content-Type": 'multipart/form-data'
             },
