@@ -4,12 +4,13 @@ import { useState } from "react"
 
 import UserService from "../../../services/UserService"
 import AuthService from "../../../services/AuthService"
+import { Store } from "react-notifications-component"
 
 function RegistrationForm() {
-    const [errors, setErrors] = useState([])
-    async function onSubmit(e) {
+    let errors = []
+    
+    function onSubmit(e) {
         e.preventDefault()
-
         let form = new FormData(e.target)
 
         let username = form.get("username")
@@ -18,20 +19,38 @@ function RegistrationForm() {
         let image = form.get("image")
 
         if(password !== confirm_password) {
-            setErrors([...errors, "Passwords don't match"])
+            console.log(password + " !== " + confirm_password)
+            errors.push("Passwords don't match")
+            
         }
-
-        try {
-            let user = await UserService.getUser(username)
-            console.log(user)
-            if(user) {
-                setErrors([...errors, "User with this username already exist"])
+        AuthService.registration({
+            username: username,
+            password: password,
+            image: image
+        }).then((res) => {
+            console.log(res)
+            // window.location.href = "/"
+        }).catch(e => {
+            errors.push(...e.response.data.errors)
+            if(errors && errors.length > 0) {
+                console.log(errors)
+                errors.forEach(error => {
+                    Store.addNotification({
+                        title: 'Error',
+                        message: error,
+                        type: 'danger',
+                        container: 'bottom-left',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    })
+                })
             }
-        } catch(e) {
-            AuthService.registration(form).then(
-                window.location.href = "/"
-            )
-        }
+            errors = []
+        })
     }
 
     return (
@@ -39,11 +58,11 @@ function RegistrationForm() {
             <div className="title">Sign up</div>
             <div className="description">Hello there, Register form</div>
             <form onSubmit={onSubmit}>
-                <input type="text" placeholder="Username"/>
+                <input type="text" placeholder="Username" name="username"/>
                 <input type="file" name="image"/>
                 {/* <input type="email" placeholder="Email"/> */}
-                <input type="password" placeholder="Password"/>
-                <input type="password" placeholder="Confirm password"/>
+                <input type="password" placeholder="Password" name="password"/>
+                <input type="password" placeholder="Confirm password" name="confirm_password"/>
                 <div className="column" style={{
                     display: "flex",
                     flexDirection: "column"
