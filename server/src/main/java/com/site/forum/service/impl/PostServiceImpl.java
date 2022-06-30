@@ -80,6 +80,7 @@ public class PostServiceImpl implements PostService {
         likes.add(user);
 
         post.setLikes(likes);
+        post.setDislikes(dislikes);
         update(post);
     }
 
@@ -92,6 +93,7 @@ public class PostServiceImpl implements PostService {
         dislikes.add(user);
 
         post.setDislikes(dislikes);
+        post.setLikes(likes);
         update(post);
     }
 
@@ -101,7 +103,6 @@ public class PostServiceImpl implements PostService {
         views.add(user);
 
         post.setViews(views);
-        update(post);
     }
 
     @Override
