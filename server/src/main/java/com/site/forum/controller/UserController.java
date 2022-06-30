@@ -6,16 +6,13 @@ import com.site.forum.model.FollowModel;
 import com.site.forum.service.CommentService;
 import com.site.forum.service.ProfileCommentService;
 import com.site.forum.service.UserService;
-import com.site.forum.service.impl.CommentServiceImpl;
-import com.site.forum.service.impl.ProfileCommentImpl;
-import com.site.forum.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,13 +45,12 @@ public class UserController {
     }
 
     @GetMapping("/online")
-    public ResponseEntity<List<UserDto>> getOnlineUsers() {
-        List<UserDto> onlineUsers = new ArrayList<>();
+    public ResponseEntity<Set<UserDto>> getOnlineUsers() {
+        Set<UserDto> onlineUsers = new HashSet<>();
         List<User> principals = sessionRegistry.getAllPrincipals().stream()
                 .filter(u -> u instanceof User)
                 .map(u -> (User)u)
-                .collect( Collectors.toMap(User::getUsername, u -> u, (u, q) -> u)).values()
-                .stream().toList();
+                .toList();
 
         for(User user : principals) {
             List<SessionInformation> activeUserSession = sessionRegistry.getAllSessions((Object)user, false);
@@ -64,7 +60,7 @@ public class UserController {
                 }
             }
         }
-
+        onlineUsers.stream().forEach(u -> System.out.println(u.getId()));
         return ResponseEntity.ok(onlineUsers);
     }
 
