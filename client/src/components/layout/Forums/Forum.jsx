@@ -21,11 +21,6 @@ function Forum({forum}) {
                                 <i className="fa fa-comment" aria-hidden="true"> {forum.postsCount} posts</i>
                             </button>
                             </a>
-                            <a href="#">
-                            <button type="button" className="q-type23 button-ques2973">
-                                <i className="fa fa-user-circle-o" aria-hidden="true"> 70 view</i>
-                            </button>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -49,11 +44,6 @@ function Forum({forum}) {
                                     <a href="#">
                                     <button type="button" className="q-type238">
                                         <i className="fa fa-comment" aria-hidden="true"> {subForum.postsCount} posts</i>
-                                    </button>
-                                    </a>
-                                    <a href="#">
-                                    <button type="button" className="q-type23 button-ques2973">
-                                        <i className="fa fa-user-circle-o" aria-hidden="true"> 70 view</i>
                                     </button>
                                     </a>
                                 </div>
