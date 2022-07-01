@@ -31,6 +31,7 @@ public class FileUpload {
         } catch(IOException exception) {
             log.error(exception.getMessage());
         }
+        assert filePath != null;
         return filePath.toString().replace("\\","/");
     }
 }
