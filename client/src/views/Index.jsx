@@ -4,12 +4,15 @@ import { useSearchParams } from "react-router-dom"
 import SearchInput from "../components/layout/Header/SearchInput"
 import Navbar from "../components/layout/Navigation/Navbar"
 import PostListTempalte from "../components/layout/Post/PostListTemplate"
+import Loader from "../components/Loader"
 import PostService from "../services/PostService"
 
 function Index() {
     const [posts, setPosts] = useState([])
     const [pagination, setPagination] = useState({})
     const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setLoading] = useState(true)
+
 
     const [searchParams, setSearchParams] = useSearchParams();
     
@@ -21,6 +24,8 @@ function Index() {
             const {content, ...pagin} = res.data
             setPosts(content)
             setPagination(pagin)
+            setLoading(false)
+            
         })
     }
 
@@ -35,7 +40,12 @@ function Index() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-9">
-                            <PostListTempalte posts={posts} pagination={pagination} order={order}/>
+                            {isLoading === false  
+                            ? 
+                                <PostListTempalte posts={posts} pagination={pagination} order={order}/>
+                            :
+                                <Loader/>
+                            }
                         </div>
                     </div>
                 </div>

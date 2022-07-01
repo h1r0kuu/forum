@@ -8,6 +8,7 @@ import Navbar from "../Navigation/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import Pagination from "../../Pagination";
 import PostListTemplate from "./PostListTemplate";
+import Loader from "../../Loader";
 
 function PostList() {
     const {forumId} = useParams()
@@ -15,6 +16,7 @@ function PostList() {
     const [posts, setPosts] = useState([])
     const [pagination, setPagination] = useState({})
     const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setLoading] = useState(true)
 
     const [searchParams, setSearchParams] = useSearchParams();
     
@@ -23,12 +25,13 @@ function PostList() {
     
     const loadMorePosts = () => {
         PostService.getPostsByForumId(forumId,page,order).then(res => {
-            setPosts(res.data.content)
             const {content, ...pagin} = res.data
+            setPosts(content)
             setPagination(pagin)
+            setLoading(false)
         })
     }
-    console.log(pagination)
+    
     
     useEffect(()=>{
         loadMorePosts()
@@ -37,7 +40,12 @@ function PostList() {
     return (
         <>
         <Navbar/>
-        <PostListTemplate posts={posts} pagination={pagination} order={order}/>
+        {isLoading === false
+        ?    
+            <PostListTemplate posts={posts} pagination={pagination} order={order}/>
+        :
+            <Loader/>
+        }
         </>
     )
 }
