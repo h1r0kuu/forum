@@ -42,7 +42,7 @@ function Comment({comment, postId}) {
     }
 
     return (
-        <li>
+        <li id={comment.id}>
             <div className="comment-main-level">
                 <div className="comment-avatar">
                     <img src={comment.user.imagePath} alt="" />

@@ -1,17 +1,38 @@
+import { Store } from "react-notifications-component"
 import CommentService from "../../services/CommentService"
 import NotificationServicre from "../../services/NotificationServicre"
 import { GetUser } from "../../utils/UserUtil"
 
-function LeaveCommentForm({post}) {
+function LeaveCommentForm({post, comments, setComments}) {
+    const user = GetUser()
+
     function onSubmit(e) {
         e.preventDefault()
         let form = new FormData(e.target)
         
         let text = form.get("text")
-
+        
         CommentService.create(post.id, {
             "text": text,
-            "user": GetUser()
+            "user": user
+        }).then(res => {
+            const comment = res.data
+            const updatedComments = [...comments]
+            updatedComments.push(comment)
+            setComments(updatedComments)
+            window.location.href = `#${comment.id}`
+            Store.addNotification({
+                title: 'Info',
+                message: "Comment successfully created",
+                type: 'success',
+                container: 'bottom-left',
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            })
         })
 
         NotificationServicre.notify({
