@@ -16,7 +16,7 @@ public interface PostService {
     Post getById(Long id);
     List<Post> getByForumId(Long forumId);
     Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable);
-
+    Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable, String username);
     void like(Post post, User user);
     void dislike(Post post, User user);
     void addView(Post post, User user);

@@ -72,6 +72,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable, String username) {
+        return postRepository.findByForum_Id(forumId, pageable, username);
+    }
+
+    @Override
     public void like(Post post, User user) {
         Set<User> likes = post.getLikes();
         Set<User> dislikes = post.getDislikes();
