@@ -92,10 +92,17 @@ public class PostController {
     public ResponseEntity<Page<PostDto>> getPostsByForumId(@PathVariable("id") Long id,
                                                            @Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
                                                            @RequestParam(defaultValue = "0", value = "page") int page,
-                                                           @RequestParam(defaultValue = "5", value = "size") int size) {
+                                                           @RequestParam(defaultValue = "5", value = "size") int size,
+                                                           HttpServletRequest request) throws UserNotAuthorized {
         Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
-    
-        Page<Post> postList = postService.getByForumIdAndPage(id, paging);
+
+        String token = jwtUtil.extractTokenFromRequest(request);
+        Page<Post> postList;
+        if(!token.equals("null") && jwtUtil.validateToken(token)) {
+            postList = postService.getByForumIdAndPage(id, paging, jwtUtil.extractUserFromToken(token).getUsername());
+        } else {
+            postList = postService.getByForumIdAndPage(id, paging);
+        }
         Page<PostDto> posts = postList.map(postDto::convertToDto);
 
         return ResponseEntity.ok(posts);
