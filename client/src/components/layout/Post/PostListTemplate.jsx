@@ -6,6 +6,11 @@ import Sidebar from "../Sidebar/Sidebar"
 import Post from "./Post"
 
 function PostListTemplate({posts, pagination, order, additionalParams}) {
+
+    function deletePost(postId) {
+        document.getElementById("post-"+postId).remove()
+    }
+
     return (
         <>
         <div className="container">
@@ -17,7 +22,7 @@ function PostListTemplate({posts, pagination, order, additionalParams}) {
                         <Link to={`?page=0&order=createdAt`} className="tab">Recent Post</Link>
                         <section id="content">
                             {posts.map( post => (
-                                <Post post={post} key={post.id}/>
+                                <Post post={post} key={post.id} deletePost={deletePost}/>
                             ))}
                             {pagination && pagination.pageable && 
                                 <Pagination pagination={pagination} order={order} additionalParams={additionalParams}/>

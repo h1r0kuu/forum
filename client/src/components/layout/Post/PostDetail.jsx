@@ -6,8 +6,12 @@ import AuthorDetails from "./AuthorDetails"
 
 import PostService from "../../../services/PostService"
 import { GetStore } from '../../../utils/UserUtil';
+import { useEffect, useState } from 'react';
+import { useReducer } from 'react';
+import NotificationServicre from '../../../services/NotificationServicre';
+import CommentService from '../../../services/CommentService';
 
-function PostDetail({post}) {
+function PostDetail({post, comments, setComments}) {
     const store = GetStore()
     
     function like(e) {
@@ -70,11 +74,11 @@ function PostDetail({post}) {
             {post.author &&
             <AuthorDetails author={post.creator}/>
             }
-            {post.comments && post.comments.length > 0 &&
-                <CommentList comments={post.comments} postId={post.id}/>
+            {comments && comments.length > 0 &&
+                <CommentList comments={comments} postId={post.id}/>
             }
             {!post.closed &&
-                <LeaveCommentForm post={post}/>
+                <LeaveCommentForm post={post} comments={comments} setComments={setComments}/>
             }
         </>
     )

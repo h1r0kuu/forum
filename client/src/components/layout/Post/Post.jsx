@@ -5,22 +5,23 @@ import ENTITY_TYPE from '../../../utils/enums';
 import ReportModal from '../../ReportModal';
 
 import PostService from "../../../services/PostService"
+import { IsAuth } from '../../../utils/UserUtil';
 
 function Post({post, deletePost}) {
+
+    const isAuth = IsAuth()
     const [modal, setModal] = useState(false)
 
     function hidePost(e) {
         e.preventDefault()
         PostService.hidePost(post.id).then(res => {
-            console.log(res)
-        }).finally(() => {
-            // remove post
+            deletePost(post.id)
         })
     }
 
     return (
         <>
-        <div className="question-type2033">
+        <div className="question-type2033" id={"post-"+post.id}>
             <div className="row">
 
                 <div className="col-md-10">
@@ -41,9 +42,11 @@ function Post({post, deletePost}) {
                             <a href="#">
                                 <i className="fa fa-bug" aria-hidden="true" onClick={()=>setModal(true)}>Report</i>
                             </a>
-                            <a href="#">
-                                <i className="fa fa-eye" aria-hidden="true" onClick={hidePost}>Hide</i>
-                            </a>
+                            {isAuth &&
+                                <a href="#">
+                                    <i className="fa fa-eye" aria-hidden="true" onClick={hidePost}>Hide</i>
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
