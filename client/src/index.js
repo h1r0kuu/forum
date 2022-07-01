@@ -11,14 +11,12 @@ export const Context = createContext(store)
 
 
 root.render(
-  <React.StrictMode>
-    <Context.Provider value={{store}}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={ <App /> }>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Context.Provider>
-  </React.StrictMode>
+  <Context.Provider value={{store}}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={ <App /> }>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </Context.Provider>
 );
