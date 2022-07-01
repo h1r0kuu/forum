@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "post")
+@DynamicInsert
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -28,7 +31,8 @@ public class Post {
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
-    @Column(name = "closed", columnDefinition = "boolean default false")
+    @Column(name = "closed")
+    @ColumnDefault("false")
     private Boolean closed;
 
     @ManyToOne
