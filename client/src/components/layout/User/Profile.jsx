@@ -81,7 +81,7 @@ function Profile({user}) {
                 <div className="ul_list_ul_list-icon-ok281">
                     <ul>
                         <li>
-                            <a href="#">Comments ( {user.commentsCount} )</a>
+                            <Link to={`/user/${user.username}/comments`}>Comments ( {user.commentsCount} )</Link>
                         </li>
                         {user.followrs &&
                             <li>
