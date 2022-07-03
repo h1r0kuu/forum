@@ -3,6 +3,7 @@ package com.site.forum.controller;
 import com.site.forum.service.PostService;
 import com.site.forum.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,8 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-public class StatsContoller {
+@Cacheable(value = "stats")
+public class StatsController {
 
     private final PostService postService;
     private final UserService userService;

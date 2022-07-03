@@ -3,7 +3,6 @@ package com.site.forum.controller;
 import com.site.forum.dto.CommentDto;
 import com.site.forum.dto.PostDto;
 import com.site.forum.entity.Comment;
-import com.site.forum.entity.Notification;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.exception.UserNotAuthorized;
@@ -11,12 +10,9 @@ import com.site.forum.service.CommentService;
 import com.site.forum.service.NotificationService;
 import com.site.forum.service.PostService;
 import com.site.forum.service.UserService;
-import com.site.forum.service.impl.CommentServiceImpl;
-import com.site.forum.service.impl.NotificationServiceImpl;
-import com.site.forum.service.impl.PostServiceImpl;
-import com.site.forum.service.impl.UserServiceImpl;
 import com.site.forum.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
+@Cacheable(value = "posts")
 public class PostController {
 
     private final PostService postService;

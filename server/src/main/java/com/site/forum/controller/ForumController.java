@@ -6,6 +6,7 @@ import com.site.forum.model.ForumModel;
 import com.site.forum.service.ForumService;
 import com.site.forum.service.impl.ForumServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/forums")
 @RequiredArgsConstructor
+@Cacheable(value = "forums")
 public class ForumController {
     private final ForumService forumService;
     private final ForumDto forumDto = new ForumDto();

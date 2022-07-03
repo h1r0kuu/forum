@@ -6,6 +6,7 @@ import com.site.forum.enums.ReportEntity;
 import com.site.forum.service.ReportService;
 import com.site.forum.service.impl.ReportServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/reports")
 @RequiredArgsConstructor
+@Cacheable(value = "reports")
 public class ReportController {
 
     private final ReportService reportService;
