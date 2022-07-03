@@ -1,0 +1,8 @@
+.comment-main-level {
+    display: flex;
+}
+
+.comment-avatar > img {
+    border-radius: 50%;
+    width: 50px;
+}

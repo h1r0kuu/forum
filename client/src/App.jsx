@@ -31,6 +31,7 @@ import {
   POST_CREATE,
   POST,
   USER,
+  USER_COMMENTS,
   USER_HIDDEN_POSTS,
   LOGIN,
   REGISTRATION,
@@ -41,6 +42,7 @@ import {
   ADMIN_USERS,
   ADMIN_REPORTS
 } from "./constants/routeConstants"
+import UserComments from "./views/User/UserComments";
 
 function App() {
   const {store} = useContext(Context);
@@ -65,6 +67,7 @@ function App() {
         <Route exact path={POST} element={<PostInfo/>} />
 
         <Route exact path={USER} element={<ProfilePage/>} />
+        <Route exact path={USER_COMMENTS} element={<UserComments/>} />
         <Route exact path={USER_HIDDEN_POSTS} element={<HiddenPosts/>} />
         {!store.isAuth &&
           <>
