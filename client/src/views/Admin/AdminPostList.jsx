@@ -41,9 +41,9 @@ function AdminPostList() {
                         <th><Link to={"?page=0&order=closed"}>closed</Link></th>
                         <th><Link to={"?page=0&order=forum.title"}>forum</Link></th>
                         <th><Link to={"?page=0&order=creator.username"}>creator</Link></th>
-                        <th><Link to={"?page=0&order=comments"}>comments count</Link></th>
-                        <th><Link to={"?page=0&order=likesCount"}>likes count</Link></th>
-                        <th><Link to={"?page=0&order=dislikesCount"}>dislikes count</Link></th>
+                        <th><Link to={"?page=0&order=comments.size"}>comments count</Link></th>
+                        <th><Link to={"?page=0&order=likes.size"}>likes count</Link></th>
+                        <th><Link to={"?page=0&order=dislikes.size"}>dislikes count</Link></th>
                         <th><Link to={"?page=0&order=createdAt"}>Created at</Link></th>
                         <th><Link to={"?page=0&order=updatedAt"}>Updated at</Link></th>
                     </tr>
@@ -52,7 +52,7 @@ function AdminPostList() {
                     {posts.map(post => (
                         <tr>
                             <td>{post.id}</td>
-                            <td>{post.title}</td>
+                            <td><Link to={"/posts/"+post.id}>{post.title}</Link></td>
                             <td>{post.closed.toString()}</td>
                             <td>{post.forum.title}</td>
                             <td>{post.creator.username}</td>
@@ -60,7 +60,7 @@ function AdminPostList() {
                             <td>{post.likesCount}</td>
                             <td>{post.dislikesCount}</td>
                             <td><Moment format="DD MMM YYYY">{post.createdAt}</Moment></td>
-                            <td> <Moment format="DD MMM YYYY">{post.updatedAt}</Moment></td>
+                            <td><Moment format="DD MMM YYYY">{post.updatedAt}</Moment></td>
                         </tr>
                     ))}
                 </tbody>
