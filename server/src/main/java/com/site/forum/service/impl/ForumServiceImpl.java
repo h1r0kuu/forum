@@ -6,6 +6,7 @@ import com.site.forum.service.ForumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -31,6 +32,7 @@ public class ForumServiceImpl implements ForumService {
     }
 
     @Override
+    @Transactional
     public Forum getById(Long id) {
         return forumRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("Forum not found")
