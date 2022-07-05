@@ -23,10 +23,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post create(Post post) {
+        if(post.getForum() == null) {
+            throw new NoSuchElementException("Forum cannot be null");
+        }
+
         Forum forum = forumService.getById(post.getForum().getId());
+
         if(forum == null) {
             throw new NoSuchElementException("Forum doesn't exist");
         }
+
         return postRepository.save(post);
     }
 
