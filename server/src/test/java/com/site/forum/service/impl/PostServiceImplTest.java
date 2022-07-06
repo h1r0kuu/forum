@@ -7,43 +7,44 @@ import com.site.forum.entity.Post;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource("/application-test.properties")
 public class PostServiceImplTest {
 
-    @Autowired
     private PostServiceImpl postService;
-    @Autowired
 
     private ForumServiceImpl forumService;
 
-    @MockBean
+    @Autowired
     private PostRepository postRepository;
 
-    @MockBean
+    @Autowired
     private ForumRepository forumRepository;
 
     private Forum mainForum;
 
     @Before
     public void init() {
-//        forumService = new ForumServiceImpl(forumRepository);
-//        postService = new PostServiceImpl(postRepository, forumService);
-//        MockitoAnnotations.initMocks(this);
+        forumService = new ForumServiceImpl(forumRepository);
+        postService = new PostServiceImpl(postRepository, forumService);
 
         mainForum = forumService.create(new Forum(1L, "test", null, null, null, null, null));
     }

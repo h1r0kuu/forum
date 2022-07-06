@@ -2,6 +2,7 @@ package com.site.forum.service.impl;
 
 import com.site.forum.dao.ForumRepository;
 import com.site.forum.entity.Forum;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,17 +20,21 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 @SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource("/application-test.properties")
 public class ForumServiceImplTest {
 
-    @Autowired
     private ForumServiceImpl forumService;
 
-    @MockBean
+    @Autowired
     private ForumRepository forumRepository;
+
+    @Before
+    public void init() {
+        forumService = new ForumServiceImpl(forumRepository);
+    }
 
     @Test
     public void getById() {
