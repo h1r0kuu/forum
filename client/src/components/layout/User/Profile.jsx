@@ -41,36 +41,10 @@ function Profile({user}) {
             <div className="user-description303">
                 {user.username !== authUser.username &&
                 <>
-                    <a href="#">Follow</a>
+                    <a href="#" onClick={follow}>Follow</a>
                     <a href="#">Ask Ahmed Hasan</a>
                 </>
                 }
-            </div>
-            <div className="user-social3903">
-                <p>Follow : <span>
-                    <a href="#">
-                        <i className="fa fa-facebook" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                        <i className="fa fa-twitter" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                        <i className="fa fa-linkedin" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                        <i className="fa fa-google-plus" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                        <i className="fa fa-pinterest-p" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                        <i className="fa fa-instagram" aria-hidden="true"></i>
-                    </a>
-                    <a href="#">
-                        <i className="fa fa-envelope-o" aria-hidden="true"></i>
-                    </a>
-                </span>
-                </p>
             </div>
         </div>
 
@@ -78,53 +52,29 @@ function Profile({user}) {
         <div className="user-statas921">
             <div className="row">
                 <div className="col-md-6">
-                <div className="ul_list_ul_list-icon-ok281">
-                    <ul>
-                        <li>
-                            <Link to={`/user/${user.username}/comments`}>Comments ( {user.commentsCount} )</Link>
-                        </li>
-                        {user.followrs &&
+                    <div className="ul_list_ul_list-icon-ok281">
+                        <ul>
                             <li>
-                                <a href="#">Followers ( {user.followers.length} )</a>
+                                <Link to={`/user/${user.username}/comments`}>Comments ( {user.commentsCount} )</Link>
                             </li>
-                        }
-                        {user.following &&
+                            {user.followrs &&
+                                <li>
+                                    <a href="#">Followers ( {user.followers.length} )</a>
+                                </li>
+                            }
+                            {user.following &&
+                                <li>
+                                    <a href="#">Following ( {user.following.length} )</a>
+                                </li>
+                            }
                             <li>
-                                <a href="#">Following ( {user.following.length} )</a>
+                                <Link to={`/user/${user.username}/hidden_posts`}>Hidden posts ( {user.hiddenPostsCount} )</Link>
                             </li>
-                        }
-                        <li>
-                            <Link to={`/user/${user.username}/hidden_posts`}>Hidden posts ( {user.hiddenPostsCount} )</Link>
-                        </li>
-                    </ul>
-                </div>
-                </div>
-                <div className="col-md-6">
-                <div className="ul_list_ul_list-icon-ok281">
-                    <ul>
-                    <li>
-                        <a href="#">Questions ( 4 )</a>
-                    </li>
-                    <li>
-                        <a href="#">Asked Questions ( 0 )</a>
-                    </li>
-                    <li>
-                        <a href="#">Followed Questions ( 3 )</a>
-                    </li>
-                    <li>
-                        <a href="#">Posts ( 10 )</a>
-                    </li>
-                    <li>
-                        <a href="#">Points ( 208 )</a>
-                    </li>
-                    <li>
-                        <a href="#">Followers ( 47 )</a>
-                    </li>
-                    <li>
-                        <a href="#">Comments ( 1 )</a>
-                    </li>
-                    </ul>
-                </div>
+                            <li>
+                                <Link to={`/user/${user.username}/posts`}>Posts ( {user.postsCount} )</Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
