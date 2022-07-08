@@ -23,6 +23,10 @@ class UserService {
         return axios.get(`${API_URL}/${username}/comments`)
     }
 
+    async getUserPosts(username, page, order) {
+        return axios.get(`${API_URL}/${username}/posts?page=${page}&order=${order}`)
+    }
+
     async getOnlineUsers() {
         return axios.get(`${API_URL}/online`)
     }

@@ -9,6 +9,7 @@ export const POST = "/posts/:postId"
 export const USER = "/user/:username"
 export const USER_COMMENTS = "/user/:username/comments"
 export const USER_HIDDEN_POSTS = "/user/:username/hidden_posts"
+export const USER_POSTS = "/user/:username/posts"
 
 export const LOGIN = "/login"
 export const REGISTRATION = "/registration"
