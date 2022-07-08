@@ -65,6 +65,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Page<Post> getUserPosts(String username, Pageable pageable) {
+        return postRepository.findByCreator_Username(username, pageable);
+    }
+
+    @Override
     public List<Post> getHiddenPosts(String username) {
         return userRepository.getHiddenPosts(username);
     }

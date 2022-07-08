@@ -27,6 +27,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "p.id NOT IN (SELECT h.id FROM User u JOIN u.hiddenPosts h WHERE u.username = :username)")
     Page<Post> findByForum_Id(Long id, Pageable pageable, String username);
     List<Post> findByCreator_Username(String username);
+    Page<Post> findByCreator_Username(String username, Pageable pageable);
     @Query("SELECT p FROM Post p WHERE p.title LIKE %?1%")
     Page<Post> searchPostByTitleLike(String title, Pageable pageable);
 }

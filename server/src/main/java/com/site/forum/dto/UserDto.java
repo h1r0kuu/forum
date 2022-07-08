@@ -27,6 +27,7 @@ public class UserDto {
     private String imagePath;
     private int commentsCount;
     private int hiddenPostsCount;
+    private int postsCount;
     private Set<UserDto> followers;
     private Set<UserDto> following;
     private Set<NotificationDto> notifications;
@@ -39,6 +40,7 @@ public class UserDto {
         NotificationDto notificationDto = new NotificationDto();
         userDto.setCommentsCount(  Objects.nonNull(user.getComments()) ? user.getComments().size() : 0 );
         userDto.setHiddenPostsCount( Objects.nonNull(user.getHiddenPosts()) ? user.getHiddenPosts().size() : 0 );
+        userDto.setPostsCount( Objects.nonNull(user.getPosts()) ? user.getPosts().size() : 0 );
         userDto.setNotifications( Objects.nonNull(user.getNotifications()) ? user.getNotifications().stream()
                 .map(notificationDto::convertToDto)
                 .collect(Collectors.toSet()) : Collections.emptySet()

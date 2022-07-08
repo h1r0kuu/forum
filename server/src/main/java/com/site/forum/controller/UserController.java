@@ -1,13 +1,19 @@
 package com.site.forum.controller;
 
 import com.site.forum.dto.*;
+import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
 import com.site.forum.model.FollowModel;
 import com.site.forum.service.CommentService;
 import com.site.forum.service.ProfileCommentService;
 import com.site.forum.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
@@ -78,10 +84,13 @@ public class UserController {
     }
 
     @GetMapping("/{username}/posts")
-    public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable("username") String username) {
-        List<PostDto> posts = userService.getUserPosts(username).stream()
-                                         .map(postDto::convertToDto)
-                                         .toList();
+    public ResponseEntity<Page<PostDto>> getUserPosts(@PathVariable("username") String username,
+                                                      @Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
+                                                      @RequestParam(defaultValue = "0", value = "page") int page,
+                                                      @RequestParam(defaultValue = "10", value = "size") int size) {
+        Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
+        Page<Post> postList = userService.getUserPosts(username, paging);
+        Page<PostDto> posts = postList.map(postDto::convertToDto);
         return ResponseEntity.ok(posts);
     }
 

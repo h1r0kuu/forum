@@ -16,6 +16,7 @@ public interface UserService {
     User registration(User user);
     List<Forum> getUserForums(String username);
     List<Post> getUserPosts(String username);
+    Page<Post> getUserPosts(String username, Pageable pageable);
     List<Post> getHiddenPosts(String username);
     Page<User> searchUserByUsernameLike(String username, Pageable pageable);
     void hidePost(User user, Post post);
