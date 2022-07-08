@@ -17,8 +17,8 @@ function PostListTemplate({posts, pagination, order, additionalParams}) {
             <div className="row">
                 <div className="col-md-9">
                     <div id="main">
-                        <Link to={`?page=0&order=comments`} className="tab">Most Response</Link>
-                        <Link to={`?page=0&order=no_comments`} className="tab">No Answer</Link>
+                        <Link to={`?page=0&order=comments.size`} className="tab">Most Response</Link>
+                        <Link to={`?page=0&order=title`} className="tab">Title</Link>
                         <Link to={`?page=0&order=createdAt`} className="tab">Recent Post</Link>
                         <section id="content">
                             {posts.map( post => (
