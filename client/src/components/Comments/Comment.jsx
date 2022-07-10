@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import CommentService from "../../services/CommentService"
 import { GetStore } from '../../utils/UserUtil';
 
-function Comment({comment, postId}) {
+function Comment({comment, postId, creatorUsername}) {
     const store = GetStore()
 
     const [replyHidden, setReplyHidden] = useState(true)
@@ -51,12 +51,10 @@ function Comment({comment, postId}) {
                     <div className="comment-head">
                         <h6 className="comment-name">
                             <Link to={"/user/" + comment.user.username}>{comment.user.username}</Link>
+                            {comment.user.username === creatorUsername &&
+                                <a href="#" class="designetion2" style={{marginLeft: "5px", color: "#fff"}}>Creator</a>
+                            }
                         </h6>
-                        <span>
-                            <i className="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i>
-                        </span>
-                        <i className="fa fa-reply"></i>
-                        <i className="fa fa-heart" aria-hidden="true"></i>
                     </div>
                     <div className="comment-content"> {comment.text} </div>
                     <div className="l-rightside39">
@@ -86,12 +84,10 @@ function Comment({comment, postId}) {
                             <div className="comment-head">
                                 <h6 className="comment-name">
                                     <Link to={"/users/"+reply.user.username}>{reply.user.username}</Link>
+                                    {reply.user.username === creatorUsername &&
+                                        <a href="#" class="designetion2" style={{marginLeft: "5px", color: "#fff"}}>Creator</a>
+                                    }
                                 </h6>
-                                <span>
-                                    <i className="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i>
-                                </span>
-                                <i className="fa fa-reply"></i>
-                                <i className="fa fa-heart"></i>
                             </div>
                             <div className="comment-content">{reply.text}</div>
                             <div className="l-rightside39">
