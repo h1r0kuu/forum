@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import SearchInput from "../components/layout/Header/SearchInput"
+import AskInput from "../components/layout/Header/AskInput"
 import Navbar from "../components/layout/Navigation/Navbar"
 import PostListTempalte from "../components/layout/Post/PostListTemplate"
 import Loader from "../components/Loader"
@@ -35,7 +35,7 @@ function Index() {
     return (
         <>
             <Navbar/>
-            <SearchInput/>
+            <AskInput/>
             <section className="main-content920">
                 <div className="container">
                     <div className="row">

@@ -2,7 +2,7 @@ import Moment from 'react-moment';
 
 import CommentList from "../../Comments/CommentList"
 import LeaveCommentForm from "../../Comments/LeaveCommentForm"
-import AuthorDetails from "./AuthorDetails"
+import CreatorDetails from "./CreatorDetails"
 
 import PostService from "../../../services/PostService"
 import { GetStore } from '../../../utils/UserUtil';
@@ -48,11 +48,6 @@ function PostDetail({post, comments, setComments}) {
                     <hr/>
                     <div className="post-footer29032">
                         <div className="l-side2023">
-                            <i className="fa fa-check check2" aria-hidden="true"> solved</i>
-                            <a href="#">
-                                <i className="fa fa-star star2" aria-hidden="true"> 5</i>
-                            </a>
-                            <i className="fa fa-folder folder2" aria-hidden="true"> wordpress</i>
                             <i className="fa fa-clock-o clock2" aria-hidden="true"> <Moment fromNow>{post.createdAt}</Moment></i>
                             <a href="#">
                                 <i className="fa fa-commenting commenting2" aria-hidden="true"> {post.comments ? post.comments.length : 0} answer</i>
@@ -71,11 +66,11 @@ function PostDetail({post, comments, setComments}) {
                     </div>
                 </div>
             </div>
-            {post.author &&
-            <AuthorDetails author={post.creator}/>
+            {post.creator &&
+                <CreatorDetails creator={post.creator}/>
             }
             {comments && comments.length > 0 &&
-                <CommentList comments={comments} postId={post.id}/>
+                <CommentList comments={comments} postId={post.id} creatorUsername={post.creator.username}/>
             }
             {!post.closed &&
                 <LeaveCommentForm post={post} comments={comments} setComments={setComments}/>
