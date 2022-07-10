@@ -57,6 +57,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "views")
     private Set<Post> posts;
 
+    @OneToMany(mappedBy = "creator")
+    private Set<Post> createdPosts;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "hidden_posts",

@@ -40,7 +40,7 @@ public class UserDto {
         NotificationDto notificationDto = new NotificationDto();
         userDto.setCommentsCount(  Objects.nonNull(user.getComments()) ? user.getComments().size() : 0 );
         userDto.setHiddenPostsCount( Objects.nonNull(user.getHiddenPosts()) ? user.getHiddenPosts().size() : 0 );
-        userDto.setPostsCount( Objects.nonNull(user.getPosts()) ? user.getPosts().size() : 0 );
+        userDto.setPostsCount( Objects.nonNull(user.getCreatedPosts()) ? user.getCreatedPosts().size() : 0 );
         userDto.setNotifications( Objects.nonNull(user.getNotifications()) ? user.getNotifications().stream()
                 .map(notificationDto::convertToDto)
                 .collect(Collectors.toSet()) : Collections.emptySet()
