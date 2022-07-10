@@ -1611,7 +1611,6 @@ h5:hover {
     position: relative;
     float: left;
     background-color: #fff;
-    height: 100px;
     width: 70px;
 }
 
@@ -1873,7 +1872,6 @@ h5:hover {
     -webkit-transition: color 0.3s ease;
     -o-transition: color 0.3s ease;
     transition: color 0.3s ease;
-    display: none;
 }
 
 .comment-box .comment-head i:hover {
