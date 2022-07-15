@@ -34,6 +34,7 @@ import {
   USER_COMMENTS,
   USER_HIDDEN_POSTS,
   USER_POSTS,
+  CHATS,
   LOGIN,
   REGISTRATION,
   SEARCH,
@@ -45,6 +46,7 @@ import {
 } from "./constants/routeConstants"
 import UserComments from "./views/User/UserComments";
 import UserPosts from "./views/User/UserPosts";
+import ChatsPage from "./views/Chat/Chats";
 
 function App() {
   const {store} = useContext(Context);
@@ -72,6 +74,8 @@ function App() {
         <Route exact path={USER_COMMENTS} element={<UserComments/>} />
         <Route exact path={USER_HIDDEN_POSTS} element={<HiddenPosts/>} />
         <Route exact path={USER_POSTS} element={<UserPosts/>} />
+
+        <Route exact path={CHATS} element={<ChatsPage/>} />
 
         {!store.isAuth &&
           <>

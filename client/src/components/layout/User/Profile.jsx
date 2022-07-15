@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import UserService from '../../../services/UserService';
 import { GetUser } from '../../../utils/UserUtil';
 
-function Profile({user}) {
+function Profile({user, setModal}) {
+
     const authUser = GetUser()
 
     function follow(e) {
@@ -42,7 +43,7 @@ function Profile({user}) {
                 {user.username !== authUser.username &&
                 <>
                     <a href="#" onClick={follow}>Follow</a>
-                    <a href="#">Ask Ahmed Hasan</a>
+                    <a href="#" onClick={()=>setModal(true)}>Ask Ahmed Hasan</a>
                 </>
                 }
             </div>

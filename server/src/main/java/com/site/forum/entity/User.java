@@ -71,6 +71,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Notification> notifications;
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Chat> chats;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
