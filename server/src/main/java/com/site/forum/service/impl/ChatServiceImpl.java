@@ -6,6 +6,8 @@ import com.site.forum.entity.Chat;
 import com.site.forum.entity.ChatMessage;
 import com.site.forum.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Chat getChat(Long id) {
         return chatRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public Page<ChatMessage> getChatMessages(Long id, Pageable pageable) {
+        return messageRepository.findByChat_Id(id, pageable);
     }
 
     @Override
