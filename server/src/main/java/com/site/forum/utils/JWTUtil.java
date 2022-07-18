@@ -89,7 +89,7 @@ public class JWTUtil {
     }
     public String extractTokenFromRequest(HttpServletRequest request) throws UserNotAuthorized {
         String header = request.getHeader("Authorization");
-        if(!Objects.nonNull(header) || !header.startsWith("Bearer ")) {
+        if(!Objects.nonNull(header) || !header.startsWith("Bearer ") || !(header.substring(7).length() > 4)) {
             throw new UserNotAuthorized("User not authorized");
         }
         return header.substring(7);

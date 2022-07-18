@@ -68,7 +68,7 @@ public class PostController {
                                                 @RequestParam(value = "page", defaultValue = "0") int page,
                                                 @RequestParam(value = "size", defaultValue = "10") int size,
                                                 @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
-                                                HttpServletRequest request) {
+                                                HttpServletRequest request) throws UserNotAuthorized {
         Pageable paging = PageRequest.of(page, size, Sort.by(direction, orderBy, "id"));
         String token = jwtUtil.extractTokenFromRequest(request);
 
