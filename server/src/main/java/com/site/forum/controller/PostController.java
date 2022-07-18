@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor

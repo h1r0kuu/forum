@@ -2,10 +2,8 @@ package com.site.forum.controller;
 
 import com.site.forum.dto.ChatDto;
 import com.site.forum.dto.ChatMessageDto;
-import com.site.forum.dto.PostDto;
 import com.site.forum.entity.Chat;
 import com.site.forum.entity.ChatMessage;
-import com.site.forum.entity.User;
 import com.site.forum.model.ChatModel;
 import com.site.forum.service.ChatService;
 import com.site.forum.service.UserService;
@@ -18,11 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/chats")
 @RequiredArgsConstructor

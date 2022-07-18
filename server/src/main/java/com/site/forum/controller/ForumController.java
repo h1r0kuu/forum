@@ -4,7 +4,6 @@ import com.site.forum.dto.ForumDto;
 import com.site.forum.entity.Forum;
 import com.site.forum.model.ForumModel;
 import com.site.forum.service.ForumService;
-import com.site.forum.service.impl.ForumServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/forums")
 @RequiredArgsConstructor

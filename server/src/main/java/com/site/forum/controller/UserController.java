@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
