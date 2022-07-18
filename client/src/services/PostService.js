@@ -1,42 +1,46 @@
-import axios from "axios"
-import api from "../utils/authQuery"
-import { IsAuth } from "../utils/UserUtil"
+import api from "../api/axios"
+import axios from "../api/axios"
 
-const POST_API_RUL = "http://localhost:8080/api/v1/posts"
+import { POST_API_URL } from "../utils/urls"
 
-class PostSevice {
+export const PostService = {
+    async getOne(postId) {
+        const {data} = await api.get(`${POST_API_URL}/` + postId)
+        return data
+    },
+
+    async getPostsByForumId(forumId, page=0, order="createdAt") {
+        const {data} = await api.get(`${POST_API_URL}/forum/${forumId}/?page=${page}&order=${order}`)
+        return data
+    },
+
+    async getAll(page, order, direction) {
+        const {data} = await api.get(`${POST_API_URL}/all?page=${page}&order=${order}&direction=${direction}`)
+        return data
+    },
     
-    getOne(postId) {
-        return api.get(`${POST_API_RUL}/` + postId)
-    }
+    async create(payload) {
+        const {data} = await axios.post(`${POST_API_URL}/create`, payload)
+        return data
+    },
 
-    getPostsByForumId(forumId, page=0, order="createdAt") {
-        return api.get(`${POST_API_RUL}/forum/${forumId}/?page=${page}&order=${order}`)
-    }
+    async like(postId, payload) {
+        const {data} = await axios.post(`${POST_API_URL}/${postId}/like`, payload)
+        return data
+    },
 
-    getAll(page, order) {
-        return api.get(`${POST_API_RUL}/all?page=${page}&order=${order}`)
-    }
-    
-    create(data) {
-        return axios.post(`${POST_API_RUL}/create`, data)
-    }
+    async dislike(postId, payload) {
+        const {data} = await axios.post(`${POST_API_URL}/${postId}/dislike`, payload)
+        return data
+    },
 
-    like(postId, data) {
-        return axios.post(`${POST_API_RUL}/${postId}/like`, data)
-    }
+    async hidePost(postId) {
+        const {data} = await api.post(`${POST_API_URL}/${postId}/hide`)
+        return data
+    },
 
-    dislike(postId, data) {
-        return axios.post(`${POST_API_RUL}/${postId}/dislike`, data)
-    }
-
-    hidePost(postId) {
-        return api.post(`${POST_API_RUL}/${postId}/hide`)
-    }
-
-    unHidePost(postId) {
-        return api.post(`${POST_API_RUL}/${postId}/unhide`)
-    }
+    async unHidePost(postId) {
+        const {data} = await api.post(`${POST_API_URL}/${postId}/unhide`)
+        return data
+    },
 }
-
-export default new PostSevice()

@@ -1,11 +1,10 @@
 import axios from "axios"
+import { STATS_API_URL } from "../utils/urls"
 
-const STATS_API_RUL = "http://localhost:8080/api/v1/stats"
 
-class StatsSevice {
-    stats() {
-        return axios.get(`${STATS_API_RUL}`)
+export const StatsService = {
+    async stats() {
+        const {data} = await axios.get(`${STATS_API_URL}`)
+        return data
     }
 }
-
-export default new StatsSevice()

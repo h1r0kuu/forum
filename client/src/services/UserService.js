@@ -1,38 +1,41 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:8080/api/v1/users"
+import { USER_API_URL } from "../utils/urls"
 
 class UserService {
     async getAll() {
-        return axios.get(`${API_URL}/all`)
+        const {data} = await axios.get(`${USER_API_URL}/all`)
+        return data
     }
 
     async getUser(username) {
-        return axios.get(`${API_URL}/${username}`)
+        const {data} = await axios.get(`${USER_API_URL}/${username}`)
+        return data
     }
 
-    async follow(data) {
-        axios.post(`${API_URL}/follow`, data)
+    async follow(payload) {
+        const {data} = await axios.post(`${USER_API_URL}/follow`, payload)
+        return data
     }
-
-    async getUserPosts(username) {
-        return axios.get(`${API_URL}/${username}/posts`)
+    
+    async getUserPosts(username, page=0, order="createdAt") {
+        const {data} = await axios.get(`${USER_API_URL}/${username}/posts?page=${page}&order=${order}`)
+        return data
     }
 
     async getUserComments(username) {
-        return axios.get(`${API_URL}/${username}/comments`)
-    }
-
-    async getUserPosts(username, page, order) {
-        return axios.get(`${API_URL}/${username}/posts?page=${page}&order=${order}`)
+        const {data} = await axios.get(`${USER_API_URL}/${username}/comments`)
+        return data
     }
 
     async getOnlineUsers() {
-        return axios.get(`${API_URL}/online`)
+        const {data} = await axios.get(`${USER_API_URL}/online`)
+        return data
     }
 
     async getUserHiddenPosts(username) {
-        return axios.get(`${API_URL}/${username}/hidden_posts`)
+        const {data} = await axios.get(`${USER_API_URL}/${username}/hidden_posts`)
+        return data
     }
 }
 

@@ -1,15 +1,15 @@
-import axios from "axios"
+import axios from "../api/axios"
 
-const API_URL = "http://localhost:8080/api/v1/forums"
+import { FORUMS_API_URL } from "../utils/urls"
 
-class ForumService {
-    create(data) {
-        return axios.post(`${API_URL}/create`, data)
-    }
+export const ForumService = {
+    async create(payload) {
+        const {data} = await axios.post(`${FORUMS_API_URL}/create`, payload)
+        return data
+    },
 
-    getAllForums(subforums) {
-        return axios.get(`${API_URL}/all?subforums=${subforums}`)
+    async getAllForums(subforums) {
+        const {data} = await axios.get(`${FORUMS_API_URL}/all?subforums=${subforums}`)
+        return data
     }
 }
-
-export default new ForumService()
