@@ -1,0 +1,491 @@
+.chat-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+.chats {
+    min-width: 360px;
+    max-width: 100%;
+    height: 92vh;
+    min-height: 300px;
+    max-height: 720px;
+    background: #e6eaea;
+    margin: 0 auto;
+}
+@media screen and (max-width: 360px) {
+    .chats {
+        width: 100%;
+        height: 100vh;
+   }
+}
+.chats .left-side {
+    float: left;
+    min-width: 280px;
+    max-width: 340px;
+    width: 40%;
+    height: 100%;
+    background: #EE4A35;
+    color: #f5f5f5;
+    overflow: hidden;
+    position: relative;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side {
+        width: 58px;
+        min-width: 58px;
+   }
+}
+.chats .left-side .profile {
+    width: 80%;
+    margin: 25px auto;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile {
+        width: 100%;
+        margin: 0 auto;
+        padding: 5px 0 0 0;
+        background: #F32207;
+   }
+}
+.chats .left-side .profile.expanded .wrap {
+    height: 210px;
+    line-height: initial;
+}
+.chats .left-side .profile.expanded .wrap p {
+    margin-top: 20px;
+}
+.chats .left-side .profile.expanded .wrap i.expand-button {
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+   ;
+}
+.chats .left-side .profile .wrap {
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+    -moz-transition: 0.3s height ease;
+    -o-transition: 0.3s height ease;
+    -webkit-transition: 0.3s height ease;
+    transition: 0.3s height ease;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap {
+        height: 55px;
+   }
+}
+.chats .left-side .profile .wrap img {
+    width: 50px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 2px solid #e74c3c;
+    height: auto;
+    float: left;
+    cursor: pointer;
+    -moz-transition: 0.3s border ease;
+    -o-transition: 0.3s border ease;
+    -webkit-transition: 0.3s border ease;
+    transition: 0.3s border ease;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap img {
+        width: 40px;
+        margin-left: 4px;
+   }
+}
+.chats .left-side .profile .wrap img.online {
+    border: 2px solid #2ecc71;
+}
+.chats .left-side .profile .wrap img.away {
+    border: 2px solid #f1c40f;
+}
+.chats .left-side .profile .wrap img.busy {
+    border: 2px solid #e74c3c;
+}
+.chats .left-side .profile .wrap img.offline {
+    border: 2px solid #95a5a6;
+}
+.chats .left-side .profile .wrap p {
+    float: left;
+    margin-left: 15px;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap p {
+        display: none;
+   }
+}
+.chats .left-side .profile .wrap i.expand-button {
+    float: right;
+    margin-top: 23px;
+    font-size: 0.8em;
+    cursor: pointer;
+    color: #FF7361;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap i.expand-button {
+        display: none;
+   }
+}
+.chats .left-side .profile .wrap #status-options {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    width: 150px;
+    margin: 70px 0 0 0;
+    border-radius: 6px;
+    z-index: 99;
+    line-height: initial;
+    background: #FF7361;
+    -moz-transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+    -webkit-transition: 0.3s all ease;
+    transition: 0.3s all ease;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options {
+        width: 58px;
+        margin-top: 57px;
+   }
+}
+.chats .left-side .profile .wrap #status-options.active {
+    opacity: 1;
+    visibility: visible;
+    margin: 75px 0 0 0;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options.active {
+        margin-top: 62px;
+   }
+}
+.chats .left-side .profile .wrap #status-options:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #FF7361;
+    margin: -8px 0 0 24px;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options:before {
+        margin-left: 23px;
+   }
+}
+.chats .left-side .profile .wrap #status-options ul {
+    overflow: hidden;
+    border-radius: 6px;
+}
+.chats .left-side .profile .wrap #status-options ul li {
+    padding: 15px 0 30px 18px;
+    display: block;
+    cursor: pointer;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options ul li {
+        padding: 15px 0 35px 22px;
+   }
+}
+.chats .left-side .profile .wrap #status-options ul li:hover {
+    background: #496886;
+}
+.chats .left-side .profile .wrap #status-options ul li span.status-circle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 5px 0 0 0;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options ul li span.status-circle {
+        width: 14px;
+        height: 14px;
+   }
+}
+.chats .left-side .profile .wrap #status-options ul li span.status-circle:before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    margin: -3px 0 0 -3px;
+    background: transparent;
+    border-radius: 50%;
+    z-index: 0;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options ul li span.status-circle:before {
+        height: 18px;
+        width: 18px;
+   }
+}
+.chats .left-side .profile .wrap #status-options ul li p {
+    padding-left: 12px;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .profile .wrap #status-options ul li p {
+        display: none;
+   }
+}
+.chats .left-side .profile .wrap #status-options ul li#status-online span.status-circle {
+    background: #2ecc71;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-online.active span.status-circle:before {
+    border: 1px solid #2ecc71;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-away span.status-circle {
+    background: #f1c40f;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-away.active span.status-circle:before {
+    border: 1px solid #f1c40f;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-busy span.status-circle {
+    background: #e74c3c;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-busy.active span.status-circle:before {
+    border: 1px solid #e74c3c;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-offline span.status-circle {
+    background: #95a5a6;
+}
+.chats .left-side .profile .wrap #status-options ul li#status-offline.active span.status-circle:before {
+    border: 1px solid #95a5a6;
+}
+.chats .left-side .profile .wrap #expanded {
+    padding: 100px 0 0 0;
+    display: block;
+    line-height: initial !important;
+}
+.chats .left-side .profile .wrap #expanded label {
+    float: left;
+    clear: both;
+    margin: 0 8px 5px 0;
+    padding: 5px 0;
+}
+.chats .left-side .profile .wrap #expanded input {
+    border: none;
+    margin-bottom: 6px;
+    background: #F32207;
+    border-radius: 3px;
+    color: #f5f5f5;
+    padding: 7px;
+    width: calc(100% - 43px);
+}
+.chats .left-side .profile .wrap #expanded input:focus {
+    outline: none;
+    background: #FF7361;
+}
+.chats .left-side .chat-search {
+    border-top: 1px solid #F32207;
+    border-bottom: 1px solid #F32207;
+    font-weight: 300;
+    vertical-align: middle;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side .chat-search {
+        display: none;
+   }
+}
+.chats .left-side .chat-search label {
+    position: absolute;
+    padding: 0;
+    border: none;
+    margin: 5px 0 0 20px;
+}
+.chats .left-side .chat-search input {
+    padding: 10px 0 10px 46px;
+    width: calc(100% - 25px);
+    border: none;
+    background: #F32207;
+    color: #f5f5f5;
+}
+.chats .left-side .chat-search input:focus {
+    outline: none;
+    background: #FF7361;
+}
+.chats .left-side .chat-search input::-webkit-input-placeholder {
+    color: #f5f5f5;
+}
+.chats .left-side .chat-search input::-moz-placeholder {
+    color: #f5f5f5;
+}
+.chats .left-side .chat-search input:-ms-input-placeholder {
+    color: #f5f5f5;
+}
+.chats .left-side .chat-search input:-moz-placeholder {
+    color: #f5f5f5;
+}
+
+body {
+    scrollbar-color: #000 !important;
+}
+
+
+.chats .left-side #bottom-bar {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+.chats .left-side #bottom-bar button {
+    float: left;
+    border: none;
+    width: 50%;
+    padding: 10px 0;
+    background: #F32207;
+    color: #f5f5f5;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side #bottom-bar button {
+        float: none;
+        width: 100%;
+        padding: 15px 0;
+   }
+}
+.chats .left-side #bottom-bar button:focus {
+    outline: none;
+}
+.chats .left-side #bottom-bar button:nth-child(1) {
+    border-right: 1px solid #EE4A35;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side #bottom-bar button:nth-child(1) {
+        border-right: none;
+        border-bottom: 1px solid #EE4A35;
+   }
+}
+.chats .left-side #bottom-bar button:hover {
+    background: #FF7361;
+}
+.chats .left-side #bottom-bar button i {
+    margin-right: 3px;
+    font-size: 1em;
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side #bottom-bar button i {
+        font-size: 1.3em;
+   }
+}
+@media screen and (max-width: 735px) {
+    .chats .left-side #bottom-bar button span {
+        display: none;
+   }
+}
+.chats .content {
+    float: right;
+    width: 60%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+@media screen and (max-width: 735px) {
+    .chats .content {
+        width: calc(100% - 58px);
+        min-width: 300px !important;
+   }
+}
+@media screen and (min-width: 900px) {
+    .chats .content {
+        width: calc(100% - 340px);
+   }
+}
+.chats .content .contact-profile {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background: #f5f5f5;
+}
+.chats .content .contact-profile img {
+    width: 40px;
+    border-radius: 50%;
+    float: left;
+    margin: 9px 12px 0 9px;
+}
+.chats .content .contact-profile p {
+    float: left;
+}
+.chats .content .contact-profile .social-media {
+    float: right;
+}
+.chats .content .contact-profile .social-media i {
+    margin-left: 14px;
+    cursor: pointer;
+}
+.chats .content .contact-profile .social-media i:nth-last-child(1) {
+    margin-right: 20px;
+}
+.chats .content .contact-profile .social-media i:hover {
+    color: #FF7361;
+}
+
+.chats .content .message-input {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+}
+.chats .content .message-input .wrap {
+    position: relative;
+}
+.chats .content .message-input .wrap input {
+    float: left;
+    border: none;
+    width: calc(100% - 90px);
+    padding: 11px 32px 10px 8px;
+    font-size: 0.8em;
+    color: #F32207;
+    margin-bottom: 0;
+}
+@media screen and (max-width: 735px) {
+    .chats .content .message-input .wrap input {
+        padding: 15px 32px 16px 8px;
+   }
+}
+.chats .content .message-input .wrap input:focus {
+    outline: none;
+}
+.chats .content .message-input .wrap .attachment {
+    position: absolute;
+    right: 60px;
+    z-index: 4;
+    margin-top: 10px;
+    font-size: 1.1em;
+    color: #FF7361;
+    opacity: 0.5;
+    cursor: pointer;
+}
+@media screen and (max-width: 735px) {
+    .chats .content .message-input .wrap .attachment {
+        margin-top: 17px;
+        right: 65px;
+   }
+}
+.chats .content .message-input .wrap .attachment:hover {
+    opacity: 1;
+}
+.chats .content .message-input .wrap button {
+    float: right;
+    border: none;
+    width: 50px;
+    padding: 12px 0;
+    cursor: pointer;
+    background: #F32207;
+    color: #f5f5f5;
+}
+@media screen and (max-width: 735px) {
+    .chats .content .message-input .wrap button {
+        padding: 16px 0;
+   }
+}
+.chats .content .message-input .wrap button:hover {
+    background: #FF7361;
+}
+.chats .content .message-input .wrap button:focus {
+    outline: none;
+}

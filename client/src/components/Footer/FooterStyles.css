@@ -1,0 +1,26 @@
+.footer {
+    background-color: #222629;
+    padding: 10px;
+}
+
+.footer p {
+    color: #ddd;
+}
+
+.footer-social {
+    float: right;
+}
+
+.footer-social a {
+    display: inline-block;
+    padding-top: 3px;
+    padding-left: 8px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #000;
+    border-radius: 50%;
+}
+
+.footer-social i {
+    color: #000;
+}

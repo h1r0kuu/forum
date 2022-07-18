@@ -1,0 +1,118 @@
+.login-sidebar {
+    background-color: #fff;
+    padding: 15px;
+    margin-top: 30px;
+    -webkit-box-shadow: 0px 0px 13px -3px;
+            box-shadow: 0px 0px 13px -3px;
+}
+
+.login-sidebar h4 {
+    color: #FF7361;
+    font-weight: bold;
+    font-family: serif;
+    border-bottom: 2px solid #eaeaeb;
+    padding-bottom: 10px;
+}
+
+.login-sidebar .fa-user {
+    margin-left: 10px;
+    position: absolute;
+    z-index: 9999;
+    margin-top: 6px;
+    font-size: 25px;
+    color: #FF7361;
+}
+
+.login-sidebar .namein309 {
+    position: relative;
+    z-index: 1;
+    padding-left: 30px;
+    height: 40px;
+    width: 235px;
+    border: 1px solid #FF7361;
+    outline: none;
+    background: rgba(255, 115, 97, 0.20);
+    color: #000;
+    font-weight: bold;
+}
+
+
+.input-data {
+    margin-top: 10px;
+}
+
+.login-sidebar .fa-lock {
+    margin-left: 10px;
+    position: absolute;
+    z-index: 9999;
+    margin-top: 6px;
+    font-size: 25px;
+    color: #FF7361;
+}
+
+.login-sidebar .password {
+    position: relative;
+    z-index: 1;
+    padding-left: 30px;
+    height: 40px;
+    width: 235px;
+    border: 1px solid #FF7361;
+    outline: none;
+    background: rgba(255, 115, 97, 0.20);
+    color: #000;
+    font-weight: bold;
+}
+
+.login-btn {
+    margin-top: 15px;
+    height: 35px;
+    width: 235px;
+    text-align: center;
+    background-color: #FF7361;
+    border: none;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.login-btn:hover {
+    margin-top: 15px;
+    height: 35px;
+    width: 235px;
+    text-align: center;
+    background-color: #222629;
+    border: none;
+    font-weight: bold;
+    color: #fff;
+    -webkit-transition: .6s;
+    -o-transition: .6s;
+    transition: .6s;
+    border-radius: 2px;
+}
+
+.rememberme {
+    margin-top: 10px;
+}
+
+.rememberme label {
+    margin: 0;
+    display: inline;
+    font-size: 13px;
+    color: #FF7361;
+}
+
+.rememberme a {
+    text-decoration: none;
+}
+
+.register-btn {
+    color: #222629;
+    float: right;
+    font-size: 12px;
+}
+
+.register-btn:hover {
+    color: #FF7361;
+    float: right;
+    font-size: 12px;
+}

@@ -1,102 +1,77 @@
-import "./assets/css/style.css"
+import "./App.css"
 import "./assets/css/bootstrap.css"
 import "./assets/css/font-awesome.min.css"
+import "./assets/css/animate.css"
 
 import { Route, Routes } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { Context } from "./index";
+import { useContext, useEffect } from "react"
+import { Context } from "."
 import { observer } from 'mobx-react-lite'
 
-import Index from "./views/Index";
-import Login from "./views/Auth/Login";
-import Registration from "./views/Auth/Registration";
-import CreatePost from "./views/Posts/CreatePost";
-import PostInfo from "./views/Posts/PostInfo";
-import ProfilePage from "./views/User/ProfilePage";
-import HiddenPosts from "./views/User/HiddenPosts";
-import ForumList from "./views/Forums/ForumList";
-import PostList from "./components/layout/Post/PostList";
-import SearchResult from "./views/SearchResult";
-
-import AdminIndex from "./views/Admin/AdminIndex";
-import AdminForumList from "./views/Admin/AdminForumList";
-import AdminPostList from "./views/Admin/AdminPostList";
-import AdminUserList from "./views/Admin/AdminUserList";
-import AdminReports from "./views/Admin/AdminReports";
-
 import {
-  BASE,
-  FORUMS,
-  FORUM,
-  POST_CREATE,
-  POST,
+  HOME,
+  CREATE_POST,
+  POST_DETAILS,
   USER,
   USER_COMMENTS,
   USER_HIDDEN_POSTS,
   USER_POSTS,
   CHATS,
   LOGIN,
-  REGISTRATION,
+  SIGNUP,
   SEARCH,
   ADMIN,
   ADMIN_FORUMS,
   ADMIN_POSTS,
   ADMIN_USERS,
   ADMIN_REPORTS
-} from "./constants/routeConstants"
-import UserComments from "./views/User/UserComments";
-import UserPosts from "./views/User/UserPosts";
-import ChatsPage from "./views/Chat/Chats";
+} from "./utils/routeConstants"
+
+import Home from "./pages/Home/Home"
+import CreatePost from "./pages/CreatePost/CreatePost"
+import PostDetails from "./pages/PostDetails/PostDetails"
+import Profile from "./pages/Profile/Profile"
+import Login from "./pages/Login/Login"
+import Signup from "./pages/Signup/Signup"
+import UserChats from "./pages/Chats/UserChats"
 
 function App() {
+
   const {store} = useContext(Context);
   
   useEffect(()=> {
       if(localStorage.getItem("token")) {
-          store.checkAuth(localStorage.getItem("token"))
+        store.checkAuth(localStorage.getItem("token"))
       }
   }, [])
 
   return (
-    <>
-      <Routes>
-        <Route path="*" element={<Index/>} />
+    <Routes>
 
-        <Route path={BASE} element={<Index/>} />
+      <Route path={HOME} element={<Home/>} />
 
-        <Route exact path={FORUMS} element={<ForumList/>} />
-        <Route exact path={FORUM} element={<PostList/>} />
+      <Route exact path={CREATE_POST} element={<CreatePost/>} />
+      <Route exact path={POST_DETAILS} element={<PostDetails/>} />
 
-        <Route exact path={POST_CREATE} element={<CreatePost/>} />
-        <Route exact path={POST} element={<PostInfo/>} />
+      <Route exact path={USER} element={<Profile/>} />
+      <Route exact path={USER_COMMENTS} />
+      <Route exact path={USER_HIDDEN_POSTS} />
+      <Route exact path={USER_POSTS} />
 
-        <Route exact path={USER} element={<ProfilePage/>} />
-        <Route exact path={USER_COMMENTS} element={<UserComments/>} />
-        <Route exact path={USER_HIDDEN_POSTS} element={<HiddenPosts/>} />
-        <Route exact path={USER_POSTS} element={<UserPosts/>} />
+      <Route exact path={CHATS} element={<UserChats/>} />
 
-        <Route exact path={CHATS} element={<ChatsPage/>} />
+      <Route exact path={LOGIN} element={<Login/>} />
+      <Route exact path={SIGNUP} element={<Signup/>} />
 
-        {!store.isAuth &&
-          <>
-            <Route exact path={LOGIN} element={<Login/>} />
-            <Route exact path={REGISTRATION} element={<Registration/>} />
-          </>
-        }
-        <Route exact path={SEARCH} element={<SearchResult/>} />
-        
-        {store.user.role === "ADMIN" &&
-          <>
-            <Route exact path={ADMIN} element={<AdminIndex/>} />
-            <Route exact path={ADMIN_FORUMS} element={<AdminForumList/>} />
-            <Route exact path={ADMIN_POSTS} element={<AdminPostList/>} />
-            <Route exact path={ADMIN_USERS} element={<AdminUserList/>} />
-            <Route exact path={ADMIN_REPORTS} element={<AdminReports/>} />
-          </>
-        }
-      </Routes>
-    </>
-  )  
+      <Route exact path={SEARCH} />
+
+      <Route exact path={ADMIN} />
+      <Route exact path={ADMIN_FORUMS} />
+      <Route exact path={ADMIN_POSTS} />
+      <Route exact path={ADMIN_USERS} />
+      <Route exact path={ADMIN_REPORTS} />
+    </Routes>
+  );
 }
 
-export default observer(App);
+export default observer(App)

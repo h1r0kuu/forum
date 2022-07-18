@@ -1,0 +1,74 @@
+.footer-search {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.footer-search .fa-pencil-square-o {
+    position: absolute;
+    margin-top: 0px;
+    z-index: 9999;
+    margin-left: 0px;
+    font-size: 25px;
+    background-color: #222629;
+    padding: 9px;
+    color: #fff;
+}
+
+.footer-search .form-control {
+    border-color: #FF7361;
+}
+
+.footer-search .form-control:focus {
+    border-color: #FF7361;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#custom-search-input {
+    margin: 0px 0px 0px 18px;
+    margin-top: 10px;
+    padding: 0px;
+}
+
+#custom-search-input .search-query {
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 55px;
+    padding-left: 4px \9;
+    margin-bottom: 0;
+    outline: none;
+    height: 43px;
+    color: #222629;
+    font-weight: bold;
+}
+
+#custom-search-input button {
+    border: 0;
+    background: none;
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    margin-bottom: 0;
+    color: #fd6372;
+}
+
+.glyphicon {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .btn-group {
+    z-index: 2;
+    height: 36px;
+    color: #fff;
+}

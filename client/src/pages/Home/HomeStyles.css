@@ -1,0 +1,53 @@
+#main {
+    margin: 25px 0;
+    background: #F3F3F3;
+}
+
+@media screen and (max-width: 650px) {
+    #main > .order-param {
+        font-size: 0;
+    }
+    #main > .order-param:before {
+        margin: 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #main > .order-param {
+        padding: 15px;
+    }
+}
+
+#main > .order-param {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 13px 15px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+}
+
+#main > .order-param:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+#main > .order-param:before {
+    content: '\f1cb';
+}
+
+#main > .order-param:hover {
+    color: #888;
+    cursor: pointer;
+}
+
+#main > .active {
+    color: #555;
+    border: 1px solid #FF7361;
+    border-top: 2px solid #FF7361;
+    border-bottom: 1px solid #FF7361;
+    background-color: #FF7361;
+}

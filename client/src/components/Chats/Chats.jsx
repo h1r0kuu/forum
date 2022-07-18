@@ -1,0 +1,139 @@
+import { useCallback, useEffect, useState } from "react"
+import { GetUser } from "../../utils/authUser"
+import ChatList from "./ChatList/ChatList"
+import Messages from "./Messages/Messages"
+
+import "./ChatsStyles.css"
+
+import { ChatService } from "../../services/chatService"
+import { useSearchParams } from "react-router-dom"
+
+function Chats() {
+    const [chats, setChats] = useState([])
+    const [selectedChat, setSelectedChat] = useState({})
+    const [messages, setMessages] = useState([])
+    const [hasMore, setHasMore] = useState(true)
+    const [page, setPage] = useState(0)
+
+    const [chatLoading, setChatLoading] = useState(true)
+    const [messagesLoading, setMessagesLoading] = useState(true)
+
+    const user = GetUser()
+    const username = user.username
+
+    useEffect(() => {
+        ChatService.getUserChats(username).then(data => {
+            setChats(data)
+            setSelectedChat(data[0])
+            setChatLoading(false)
+        })
+    }, [username])
+
+    const loadMoreMessages = () => {
+        if(!chatLoading) {
+            ChatService.getChatMessages(selectedChat.id, page).then(data => {
+                setMessages(messages.concat(data.content))
+                if(data.content < 15) {
+                    setHasMore(false)
+                }
+                setPage(page + 1)
+                setMessagesLoading(false)
+            })
+        }
+    }
+
+    useEffect(() => {
+        loadMoreMessages()
+    }, [selectedChat])
+
+
+    function sendMessage(e) {
+        e.preventDefault()
+        let form = new FormData(e.target)
+        let message = form.get("message")
+        ChatService.sendMessage({
+            text: message,
+            chat: selectedChat,
+            author: user
+        }).then(res => {
+            setMessages([...messages, res.data])
+        })
+    }
+    return (
+        <div className="chats">
+            <div className="left-side">
+                <div className="profile">
+                    <div className="wrap">
+                        <img src="http://emilcarlsson.se/assets/mikeross.png" className="online" alt="" />
+                        <p>Mike Ross</p>
+                        <i className="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div className="chat-search">
+                    <label>
+                        <i className="fa fa-search" aria-hidden="true"></i>
+                    </label>
+                    <input type="text" placeholder="Search contacts..." />
+                </div>
+                {chatLoading ? (
+                    <p>Loading</p>
+                ) : (
+                    <ChatList 
+                        chats={chats}
+                        username={username}
+                        setSelectedChat={setSelectedChat}
+                        setMessages={setMessages}
+                        selectedChatId={selectedChat.id}
+                        setPage={setPage}
+                        setHasMore={setHasMore}
+                    />
+                )}
+                <div id="bottom-bar">
+                    <button id="addcontact">
+                        <i className="fa fa-user-plus fa-fw" aria-hidden="true"></i>
+                        <span>Add contact</span>
+                    </button>
+                    <button id="settings">
+                        <i className="fa fa-cog fa-fw" aria-hidden="true"></i>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </div>
+            <div className="content">
+                <div className="contact-profile">
+                <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                <p>Harvey Specter</p>
+                <div className="social-media">
+                    <i className="fa fa-facebook" aria-hidden="true"></i>
+                    <i className="fa fa-twitter" aria-hidden="true"></i>
+                    <i className="fa fa-instagram" aria-hidden="true"></i>
+                </div>
+                </div>
+                {messagesLoading ? (
+                    <p>Loading</p>
+
+                ) : (
+                    <Messages
+                        messages={messages}
+                        username={username}
+                        loadMoreMessages={loadMoreMessages}
+                        hasMore={hasMore}
+                    />
+                )}
+                <div className="message-input">
+                    <div className="wrap">
+                        <form onSubmit={sendMessage}>
+                            <input type="text" placeholder="Write your message..." />
+                                <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
+                            <button className="submit" type="submit">
+                                <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Chats

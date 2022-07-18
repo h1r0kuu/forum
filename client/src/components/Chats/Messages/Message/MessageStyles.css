@@ -1,0 +1,74 @@
+ul li.msg {
+    display: inline-block;
+    clear: both;
+    margin: 15px 15px 5px 25px !important;
+    width: calc(100% - 25px);
+    font-size: 0.9em;
+}
+
+ul li.msg:first-child {
+    margin: 0 20px 35px 0 !important;
+}
+
+ul li:nth-last-child(1) {
+    margin-bottom: 20px;
+}
+
+ul li.msg img {
+    width: 42px;
+    border-radius: 50%;
+    float: right;
+}
+ul li.msg p {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 305px;
+    line-height: 130%;
+}
+
+ul li.msg .msg-date {
+    font-size: 12px;
+}
+
+@media screen and (min-width: 735px) {
+    ul li.msg p {
+        max-width: 500px;
+   }
+}
+
+li.replies img {
+    height: 42px;
+    border-radius: 50% !important;
+    float: left !important;
+}
+
+li.replies p {
+    background: #FF7361;
+    color: #f5f5f5;
+    float: left;
+}
+
+li.replies .msg-date {
+    float: left;
+}
+
+li.sent .msg-date {
+    float: right;
+}
+
+li.sent {
+    width: calc(100% - 25px);
+}
+
+li.sent img {
+    height: 42px;
+    border-radius: 50%;
+    margin: 6px 8px 0 0;
+    float: right;
+}
+
+li.sent p {
+    background: #f5f5f5;
+    float: right;
+}

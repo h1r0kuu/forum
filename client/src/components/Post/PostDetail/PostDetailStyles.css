@@ -1,0 +1,64 @@
+.single-post {
+    margin-top: 70px;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0px 0px 13px -3px;
+}
+
+.post-right-icon {
+    float: right;
+    margin-top: 25px;
+}
+
+.post-right-icon a {
+    text-decoration: none;
+    background-color: #FF7361;
+    padding: 5px;
+    color: #fff;
+    font-family: fontawesome;
+    font-size: 12px;
+    margin-right: 2px;
+}
+
+.post-details-info {
+    margin-top: 30px;
+    line-height: 1.5em;
+    font-family: fontawesome;
+}
+
+.post-details-info p {
+    margin-bottom: 30px;
+}
+
+.report {
+    background-color: #fd6372;
+}
+
+.report:hover {
+    background-color: #222629;
+}
+
+.post-footer i {
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 12px;
+    background-color: #fff;
+}
+
+.post-icons {
+    display: inline-block;
+}
+
+.post-icons a {
+    color: #222629;
+}
+
+.tolltip-button {
+    padding-left: 3px;
+    border: none;
+    background-color: #fff;
+}
+
+.post-likes i {
+    font-size: 12px;
+}

@@ -1,0 +1,57 @@
+.author-img {
+    position: relative;
+    float: left;
+    background-color: #fff;
+    height: 100px;
+    width: 70px;
+}
+
+.author-img img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid #dedede;
+}
+
+.au-image-overlay {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transition: .5s ease;
+    -o-transition: .5s ease;
+    transition: .5s ease;
+    background-color: #FF7361;
+    border-radius: 50%;
+}
+
+.au-image-overlay {
+    padding-top: 15px;
+}
+
+.au-image-overlay a {
+    color: #ffffff;
+}
+
+.author-img:hover .au-image-overlay {
+    opacity: 1;
+}
+
+.author-details {
+    background-color: #fff;
+    padding: 40px;
+    margin-top: 20px;
+    font-family: fontawesome;
+    -webkit-box-shadow: 0px 0px 13px -3px;
+            box-shadow: 0px 0px 13px -3px;
+}
+
+.author-details h5 {
+    margin-left: 30px;
+    margin-top: -10px;
+    font-weight: bold;
+}

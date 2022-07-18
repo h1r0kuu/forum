@@ -1,0 +1,84 @@
+.navbar-default {
+    background-color: #2F3239 !important;
+    border-color: #2F3239 !important;
+    padding: 20px;
+}
+
+.navbar-brand > img {
+    display: block;
+    margin-top: -20px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff !important;
+    padding: 8px 25px 8px 25px;
+    margin:5px 0px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+.navbar-default .navbar-nav > li{
+   margin: 0px 5px !important;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #fff !important;
+    background-color: #ff7361 !important;
+    border-radius: 3px;
+    padding: 8px 25px 8px 25px;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #fff;
+    background-color: #ff7361;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #fff;
+    background-color: #ff7361;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #2F3239 !important;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 230px;
+    padding: 0px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: none;
+    border-radius: 3px !important;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    margin-left: 30px;
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 8px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    font-family: serif;
+}

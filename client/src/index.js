@@ -1,22 +1,19 @@
-import React, { createContext } from 'react';
+import React, {createContext} from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {BrowserRouter as Router} from "react-router-dom";
+
 import App from './App';
-import Store from './services/store';
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
+import Store from "./store/Store"
 
 export const store = new Store();
-
 export const Context = createContext(store)
 
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Context.Provider value={{store}}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={ <App /> }>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <App/>
+    </Router>
   </Context.Provider>
 );

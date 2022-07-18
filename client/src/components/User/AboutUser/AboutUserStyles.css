@@ -1,0 +1,116 @@
+.about-user {
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 30px;
+    margin-top: 70px;
+}
+
+.role a {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 20px;
+    font-size: 10px;
+    padding: 3px 10px 3px 10px;
+    background-color: #DD9933;
+    font-family: fontawesome;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.user-image img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    float: left;
+}
+
+.user-list {
+    margin-left: 80px;
+    line-height: 2em;
+}
+
+.user-list ul li {
+    font-family: fontawesome;
+    list-style: none;
+}
+
+.ul-list-user-left {
+    float: left;
+    margin-right: 80px;
+}
+
+.ul-list-user-right {
+    padding-left: 20px;
+}
+
+.user-description {
+    margin-top: 50px;
+}
+
+.user-description p {
+    margin-bottom: 30px;
+    color: #848991;
+    font-family: fontawesome;
+}
+
+.user-description a {
+    padding: 8px 20px 8px 20px;
+    text-decoration: none;
+    background-color: #FF7361;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: bold;
+    font-family: fontawesome;
+}
+
+.user-social {
+    margin-top: 30px;
+}
+
+.user-social a {
+    background-color: #000;
+}
+
+.user-social i {
+    background-color: #000;
+    height: 30px;
+    width: 30px;
+    padding: 8px;
+    color: #fff;
+}
+
+.user-social i:hover {
+    background-color: #000;
+    height: 30px;
+    width: 30px;
+    padding: 8px;
+    color: #fff;
+}
+
+.user-social .fa-facebook {
+    background-color: #3B5998;
+}
+
+.user-social .fa-twitter {
+    background-color: #1DA1F2;
+}
+
+.user-social .fa-linkedin {
+    background-color: #0077B5;
+}
+
+.user-social .fa-google-plus {
+    background-color: #CE4538;
+}
+
+.user-social .fa-pinterest-p {
+    background-color: #BD081C;
+}
+
+.user-social .fa-instagram {
+    background-color: #E3425A;
+}
+
+.user-social .fa-envelope-o {
+    background-color: #222629;
+}

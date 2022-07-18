@@ -1,0 +1,35 @@
+.leave-comment-input {
+    margin-top: 30px;
+    height: 203px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #fd6372;
+    color: #FF7361;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.leave-comment-submit {
+    padding: 8px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #FF7361;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    font-family: fontawesome;
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+
+.leave-comment-submit:hover {
+    padding: 8px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #222629;
+    border: none;
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}

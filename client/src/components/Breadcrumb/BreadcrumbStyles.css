@@ -1,0 +1,20 @@
+
+.header-breadcrumb {
+    padding: 2px;
+    background-color: #FF7361;
+    margin-top: -20px;
+}
+
+.breadcrumb-style {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    background-color: transparent;
+    border-radius: 4px;
+    margin-left: -15px;
+}
+
+.breadcrumb-style a {
+    color: #fff;
+    text-decoration: none;
+}
