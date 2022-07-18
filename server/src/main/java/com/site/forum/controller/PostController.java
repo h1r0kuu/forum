@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,11 +50,10 @@ public class PostController {
                                           HttpServletRequest request) throws UserNotAuthorized {
         Post post = postService.getById(id);
         String token = jwtUtil.extractTokenFromRequest(request);
-        if(jwtUtil.validateToken(token)) {
+        if (token != null && jwtUtil.validateToken(token)) {
             User user = jwtUtil.extractUserFromToken(token);
             postService.addView(post, user);
         }
-
         return ResponseEntity.ok( postDto.convertToDto(post) );
     }
 
@@ -67,20 +65,20 @@ public class PostController {
 
     @GetMapping("/all")
     public ResponseEntity<Page<PostDto>> getAll(@Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
-                                                @RequestParam(defaultValue = "0", value = "page") int page,
-                                                @RequestParam(defaultValue = "10", value = "size") int size,
-                                                HttpServletRequest request) throws UserNotAuthorized {
-        Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
-
+                                                @RequestParam(value = "page", defaultValue = "0") int page,
+                                                @RequestParam(value = "size", defaultValue = "10") int size,
+                                                @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
+                                                HttpServletRequest request) {
+        Pageable paging = PageRequest.of(page, size, Sort.by(direction, orderBy, "id"));
         String token = jwtUtil.extractTokenFromRequest(request);
+
         Page<Post> postList;
-        if (!token.equals("null") && jwtUtil.validateToken(token)) {
+        if (token != null && jwtUtil.validateToken(token)) {
             postList = postService.getAll(paging, jwtUtil.extractUserFromToken(token).getUsername());
         } else {
             postList = postService.getAll(paging);
         }
         Page<PostDto> posts = postList.map(postDto::convertToDto);
-
         return ResponseEntity.ok(posts);
     }
 
@@ -112,14 +110,13 @@ public class PostController {
         Post post = postService.getById(id);
         User user = userService.getUserByUsername(username);
         postService.like(post, user);
-        return ResponseEntity.ok("likes");
+        return ResponseEntity.ok("liked");
     }
 
     @PostMapping("/{id}/dislike")
     public ResponseEntity<String> dislikePost(@PathVariable("id") Long id,
                                               @RequestBody Map<String, String> payload) {
         String username = payload.get("username");
-
         Post post = postService.getById(id);
         User user = userService.getUserByUsername(username);
         postService.dislike(post, user);
