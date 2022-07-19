@@ -1,12 +1,13 @@
 package com.site.forum.dto;
 
-import com.site.forum.entity.Notification;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.site.forum.serializers.NotificationDtoSerializer;
 import lombok.Data;
-import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
 @Data
+@JsonSerialize(using = NotificationDtoSerializer.class)
 public class NotificationDto {
     private Long id;
     private String text;
@@ -14,14 +15,10 @@ public class NotificationDto {
     private boolean isRead;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public NotificationDto convertToDto(Notification notification) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(notification, NotificationDto.class);
+    public NotificationDto() {
     }
-
-    public Notification convertToEntity(NotificationDto notificationDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(notificationDto, Notification.class);
+    public NotificationDto(String text, UserDto user) {
+        this.text = text;
+        this.user = user;
     }
 }

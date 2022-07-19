@@ -1,12 +1,11 @@
 package com.site.forum.dto;
 
-import com.site.forum.entity.Report;
-import com.site.forum.entity.User;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.site.forum.enums.ReportEntity;
+import com.site.forum.serializers.ReportDtoSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 @EqualsAndHashCode
+@JsonSerialize(using = ReportDtoSerializer.class)
 public class ReportDto {
     private Long id;
     @Size(min = 3, max = 255, message = "The text must be between 3 and 255 characters long")
@@ -23,17 +23,7 @@ public class ReportDto {
     private ReportEntity entity;
     @NotNull(message = "Object id cannot be null")
     private Integer objectId;
-    private User user;
+    private UserDto user;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public ReportDto convertToDto(Report report) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(report, ReportDto.class);
-    }
-
-    public Report convertToEntity(ReportDto profileCommentDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(profileCommentDto, Report.class);
-    }
 }

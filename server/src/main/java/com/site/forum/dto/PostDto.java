@@ -1,22 +1,20 @@
 package com.site.forum.dto;
 
-import com.site.forum.entity.Post;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.site.forum.serializers.PostDtoSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @ToString
-@EqualsAndHashCode(exclude = {"creator"})
+@EqualsAndHashCode(exclude = {"creator", "forum"})
+@JsonSerialize(using = PostDtoSerializer.class)
 public class PostDto {
     private Long id;
     @Size(min = 3, max = 16, message = "The title must be between 3 and 16 characters long")
@@ -29,36 +27,9 @@ public class PostDto {
     @NotNull(message = "Creator cannot be null")
     private UserDto creator;
     private Set<CommentDto> comments;
-    private int likesCount;
-    private int dislikesCount;
-    private int viewsCount;
+    private Set<UserDto> likes;
+    private Set<UserDto> dislikes;
+    private Set<UserDto> views;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public PostDto convertToDto(Post post) {
-        ModelMapper modelMapper = new ModelMapper();
-        PostDto dto = modelMapper.map(post, PostDto.class);
-
-        CommentDto commentDto = new CommentDto();
-        dto.setComments(
-                post.getComments() != null
-                ?
-                    post.getComments()
-                        .stream()
-                        .filter(comment -> comment.getParentComment()==null)
-                        .map(commentDto::convertToDto)
-                        .collect(Collectors.toSet())
-                :
-                    Collections.emptySet()
-        );
-        dto.setLikesCount(Objects.nonNull(post.getLikes()) ? post.getLikes().size() : 0);
-        dto.setDislikesCount(Objects.nonNull(post.getDislikes()) ? post.getDislikes().size() : 0);
-        dto.setViewsCount( Objects.nonNull(post.getViews()) ? post.getViews().size() : 0 );
-        return dto;
-    }
-
-    public Post convertToEntity(PostDto postDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(postDto, Post.class);
-    }
 }

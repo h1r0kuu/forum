@@ -1,15 +1,14 @@
 package com.site.forum.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.site.forum.entity.ChatMessage;
-import com.site.forum.entity.Report;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.site.forum.serializers.ChatMessageDtoSerializer;
 import lombok.Data;
-import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
 @Data
+@JsonSerialize(using = ChatMessageDtoSerializer.class)
 public class ChatMessageDto {
     private Long id;
     private String text;
@@ -18,14 +17,4 @@ public class ChatMessageDto {
     private UserDto author;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public ChatMessageDto convertToDto(ChatMessage message) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(message, ChatMessageDto.class);
-    }
-
-    public ChatMessage convertToEntity(ChatMessageDto messageDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(messageDto, ChatMessage.class);
-    }
 }

@@ -1,10 +1,10 @@
 package com.site.forum.dto;
 
-import com.site.forum.entity.ProfileComment;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.site.forum.serializers.ProfileCommentDtoSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 @EqualsAndHashCode
+@JsonSerialize(using = ProfileCommentDtoSerializer.class)
 public class ProfileCommentDto {
     private Long id;
     @NotNull(message = "Commentator cannot be null")
@@ -23,14 +24,4 @@ public class ProfileCommentDto {
     private String text;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-    public ProfileCommentDto convertToDto(ProfileComment profileComment) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(profileComment, ProfileCommentDto.class);
-    }
-
-    public ProfileComment convertToEntity(ProfileCommentDto profileCommentDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(profileCommentDto, ProfileComment.class);
-    }
 }

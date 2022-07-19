@@ -25,38 +25,15 @@ public class UserDto {
     private String password;
     private UserRole role;
     private String imagePath;
-    private int commentsCount;
-    private int hiddenPostsCount;
-    private int postsCount;
+    private Set<CommentDto> comments;
+    private Set<PostDto> hiddenPosts;
+    private Set<PostDto> posts;
     private Set<UserDto> followers;
     private Set<UserDto> following;
     private Set<NotificationDto> notifications;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public UserDto convertToDto(User user) {
-        ModelMapper modelMapper = new ModelMapper();
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        NotificationDto notificationDto = new NotificationDto();
-        userDto.setCommentsCount(  Objects.nonNull(user.getComments()) ? user.getComments().size() : 0 );
-        userDto.setHiddenPostsCount( Objects.nonNull(user.getHiddenPosts()) ? user.getHiddenPosts().size() : 0 );
-        userDto.setPostsCount( Objects.nonNull(user.getCreatedPosts()) ? user.getCreatedPosts().size() : 0 );
-        userDto.setNotifications( Objects.nonNull(user.getNotifications()) ? user.getNotifications().stream()
-                .map(notificationDto::convertToDto)
-                .collect(Collectors.toSet()) : Collections.emptySet()
-        );
-        return userDto;
-    }
-
-    public UserDto modelToDto(RegistrationModel model) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(model, UserDto.class);
-    }
-
-    public User convertToEntity(UserDto userDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(userDto, User.class);
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,7 +53,6 @@ public class UserDto {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
-                ", commentsCount=" + commentsCount +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
