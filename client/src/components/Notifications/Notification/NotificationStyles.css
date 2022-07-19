@@ -1,0 +1,30 @@
+.notification {
+    position: relative;
+    padding-left: 31px;
+    padding-top: 20px;
+    z-index: 2;
+}
+
+.circle {
+    background-color: #fff;
+    color: #4071a3;
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    border: 2px #4071a3 solid;
+    box-shadow: 0 0 0 3px #fff;
+}
+
+.notification-msg {
+    margin-top: 0;
+    padding: 0 15px;
+}
+
+.notification-time {
+    left: 16px;
+    position: relative;
+    font-size: 12px;
+    display: block;
+    line-height: 1;
+}
