@@ -13,38 +13,37 @@ public class CommentDtoSerializer extends StdSerializer<CommentDto> {
         super(CommentDto.class);
     }
 
-    private void defaultSerialize(CommentDto comment, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeNumberField("id", comment.getId());
-        jsonGenerator.writeStringField("text", comment.getText());
+    public static void defaultSerialize(CommentDto value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        jsonGenerator.writeNumberField("id", value.getId());
+        jsonGenerator.writeStringField("text", value.getText());
 
         jsonGenerator.writeObjectFieldStart("user");
-        UserDtoSerializer userDtoSerializer = new UserDtoSerializer();
-        userDtoSerializer.defaultSerialize(comment.getUser(),jsonGenerator,serializerProvider);
+        UserDtoSerializer.defaultSerialize(value.getUser(),jsonGenerator,serializerProvider);
         jsonGenerator.writeEndObject();
 
-        jsonGenerator.writeNumberField("likesCount", comment.getLikesCount());
-        jsonGenerator.writeNumberField("dislikesCount", comment.getDislikesCount());
-        jsonGenerator.writeStringField("createdAt", comment.getCreatedAt().toString());
-        jsonGenerator.writeStringField("updatedAt", comment.getUpdatedAt().toString());
+        jsonGenerator.writeNumberField("likesCount", value.getLikes().size());
+        jsonGenerator.writeNumberField("dislikesCount", value.getDislikes().size());
+        jsonGenerator.writeStringField("createdAt", value.getCreatedAt().toString());
+        jsonGenerator.writeStringField("updatedAt", value.getUpdatedAt().toString());
     }
 
     @Override
-    public void serialize(CommentDto comment, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(CommentDto value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
 
-        defaultSerialize(comment, jsonGenerator, serializerProvider);
+        defaultSerialize(value, jsonGenerator, serializerProvider);
 
-        if(comment.getParentComment() != null) {
+        if(value.getParentComment() != null) {
             jsonGenerator.writeObjectFieldStart("parent_comment");
-            defaultSerialize(comment.getParentComment(), jsonGenerator, serializerProvider);
+            defaultSerialize(value.getParentComment(), jsonGenerator, serializerProvider);
             jsonGenerator.writeEndObject();
         } else {
             jsonGenerator.writeNullField("parent_comment");
         }
 
         jsonGenerator.writeArrayFieldStart("replies");
-        if(comment.getReplies().size() > 0 && comment.getReplies() != null) {
-            for(CommentDto reply : comment.getReplies()) {
+        if(value.getReplies().size() > 0 && value.getReplies() != null) {
+            for(CommentDto reply : value.getReplies()) {
                 jsonGenerator.writeStartObject();
                 defaultSerialize(reply,jsonGenerator,serializerProvider);
                 jsonGenerator.writeEndObject();
