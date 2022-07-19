@@ -5,14 +5,9 @@ import { Link } from "react-router-dom"
 import dayjs from "../../../utils/dayjsRelative"
 import { MakeUrl } from "../../../utils/urls"
 import { PostService } from "../../../services/postService"
+import { extractContent } from "../../../utils/textUtil"
 
 function PostListItem({post}) {
-
-    function extractContent(s) {
-        const span = document.createElement('span')
-        span.innerHTML = s
-        return span.textContent || span.innerText
-    }
 
     function hidePost(e) {
         e.preventDefault()
