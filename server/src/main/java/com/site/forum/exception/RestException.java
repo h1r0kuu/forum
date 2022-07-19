@@ -42,13 +42,13 @@ public class RestException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserNotAuthorized.class)
     public ResponseEntity<HashMap<String, Object>> userNotAuthorized(UserNotAuthorized exception, WebRequest request) {
         HashMap<String, Object> error = new HashMap<>();
-        error.put("status_code", HttpStatus.LOCKED.value());
+        error.put("status_code", HttpStatus.UNAUTHORIZED.value());
         error.put("error", exception.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<HashMap<String, Object>> userNotAuthorized(ExpiredJwtException exception, WebRequest request) {
+    public ResponseEntity<HashMap<String, Object>> expiredJwtException(ExpiredJwtException exception, WebRequest request) {
         HashMap<String, Object> error = new HashMap<>();
         error.put("status_code", HttpStatus.UNAUTHORIZED.value());
         error.put("error", exception.getMessage());
