@@ -3,14 +3,50 @@ import "./NavbarStyles.css"
 import { Link } from "react-router-dom"
 import { CHATS, CREATE_POST, HOME, LOGIN, SIGNUP } from "../../../utils/routeConstants"
 import { GetStore, GetUser, IsAuth } from "../../../utils/authUser"
-import { MakeUrl } from "../../../utils/urls"
-import { useEffect } from "react"
+import { MakeUrl, WEBSOCKET_URL } from "../../../utils/urls"
+import { useEffect, useState } from "react"
+import { Stomp } from "@stomp/stompjs"
+import SockJS from "sockjs-client"
+import { NotificationSevice } from "../../../services/notificationService"
+
+import Notifications from "../../Notifications/Notifications"
+
+import notificationAudio from "../../../assets/audio/notification.mp3"
 
 function Navbar() {
+    const [notifications, setNotifications] = useState([])
+    const [openNotification, setOpen] = useState(false)
 
     const isAuth = IsAuth()
     const user = GetUser()
     const store = GetStore()
+
+    const toggleNotification = () => {
+        if(openNotification === false) {
+            setOpen(true)
+        } else {
+            setOpen(false)
+        }
+    }
+
+    useEffect(() => {
+        NotificationSevice.getNotifications().then(data => {
+            setNotifications(data)
+        })
+    }, [])
+    let stompClient = Stomp.over(new SockJS(WEBSOCKET_URL))
+
+    useEffect(() => {
+        // stompClient.debug = () => {};
+        stompClient.connect({}, () => {
+            stompClient.subscribe('/topic/notifications/' + user.username, data => {
+                setNotifications(() => notifications.concat(data))
+                console.log("NEW DATA")
+                new Audio(notificationAudio).play()
+            })
+        })
+    }, [stompClient, user])
+
 
     return (
         <div>
@@ -30,6 +66,18 @@ function Navbar() {
                             {isAuth === true ? (
                                 <>
                                     <li><Link to={MakeUrl.userUrl(user.username)}>Profile</Link></li>
+                                    <li className="notification-btn" onClick={() => toggleNotification()}>
+                                        <Link to={"#"}>
+                                            <i className="fa fa-bell">
+                                                <span className="notifcation-count">
+                                                    {notifications.length}
+                                                </span>
+                                            </i>
+                                        </Link>
+                                        {openNotification &&
+                                            <Notifications notifications={notifications}/>
+                                        }
+                                    </li>
                                     <li><Link to={CHATS}>Chats</Link></li>
                                     <li><Link to={"#"} onClick={() => store.logout()}>Logout</Link></li>
                                 </>
