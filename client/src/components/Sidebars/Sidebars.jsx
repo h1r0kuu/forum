@@ -1,3 +1,4 @@
+import Forums from "./Forums/Forums"
 import Login from "./Login/Login"
 import OnlineUsers from "./OnlineUsers/OnlineUsers"
 import RecentPosts from "./RecentPosts/RecentPosts"
@@ -9,6 +10,7 @@ function Sidebars() {
     return (
         <aside className="col-md-3 sidebars">
             <Stats/>
+            <Forums/>
             <OnlineUsers/>
             <Login/>
             <RecentPosts/>
