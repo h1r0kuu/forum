@@ -8,6 +8,7 @@ import com.site.forum.model.RegistrationModel;
 import com.site.forum.service.UserService;
 import com.site.forum.utils.FileUpload;
 import com.site.forum.utils.JWTUtil;
+import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -38,7 +39,7 @@ public class AuthController {
     private final UserService userService;
     private final JWTUtil jwtUtil;
 
-    private final UserDto userDto = new UserDto();
+    private final Mapper mapper;
 
     @Value("${user.image.upload.path}")
     private String fileUploadPath;
@@ -50,11 +51,11 @@ public class AuthController {
 
         FileUpload.upload(fileUploadPath, file.getOriginalFilename(), file);
 
-        UserDto user = userDto.modelToDto(userModel);
+        UserDto user = mapper.convertTo(userModel, UserDto.class);
         user.setImagePath("http://localhost:8080/img/" + file.getOriginalFilename());
         user.setRole(UserRole.USER);
-        User createdUser = userService.registration(userDto.convertToEntity(user));
-        return ResponseEntity.ok(userDto.convertToDto(createdUser));
+        User createdUser = userService.registration( mapper.convertTo(user, User.class) );
+        return ResponseEntity.ok( mapper.convertTo(createdUser, UserDto.class) );
     }
 
     @PostMapping("/login")
@@ -71,7 +72,7 @@ public class AuthController {
 
         HashMap<String, Object> res = new HashMap<>();
         res.put("token", jwt);
-        res.put("user", userDto.convertToDto(user));
+        res.put("user", mapper.convertTo(user, UserDto.class) );
 
         sessionRegistry.registerNewSession(user.getId().toString(), authentication.getPrincipal());
         return ResponseEntity.ok(res);
@@ -79,13 +80,13 @@ public class AuthController {
 
     @GetMapping("/refresh")
     public ResponseEntity<HashMap<String, Object>> refreshToken(@RequestParam("token") String jwtToken) {
+        HashMap<String, Object> res = new HashMap<>();
         String username = jwtUtil.getUsernameFromToken(jwtToken);
         User user = userService.getUserByUsername(username);
         String jwt = jwtUtil.generateToken(user);
 
-        HashMap<String, Object> res = new HashMap<>();
         res.put("token", jwt);
-        res.put("user", userDto.convertToDto(user));
+        res.put("user", mapper.convertTo(user, UserDto.class) );
 
         return ResponseEntity.ok(res);
     }

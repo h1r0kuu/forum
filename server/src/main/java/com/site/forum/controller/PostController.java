@@ -1,7 +1,9 @@
 package com.site.forum.controller;
 
 import com.site.forum.dto.CommentDto;
+import com.site.forum.dto.NotificationDto;
 import com.site.forum.dto.PostDto;
+import com.site.forum.dto.UserDto;
 import com.site.forum.entity.Comment;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
@@ -11,12 +13,14 @@ import com.site.forum.service.NotificationService;
 import com.site.forum.service.PostService;
 import com.site.forum.service.UserService;
 import com.site.forum.utils.JWTUtil;
+import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,14 +39,14 @@ public class PostController {
     private final UserService userService;
     private final NotificationService notificationService;
 
-    private final PostDto postDto = new PostDto();
-    private final CommentDto commentDto = new CommentDto();
-
+    private final SimpMessagingTemplate messagingTemplate;
+    private final Mapper mapper;
     private final JWTUtil jwtUtil;
+
     @PostMapping(value = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<PostDto> create(@Valid @RequestBody PostDto post) {
-        Post createdPost = postService.create( postDto.convertToEntity(post) );
-        return ResponseEntity.ok( postDto.convertToDto(createdPost) );
+        Post createdPost = postService.create( mapper.convertTo(post, Post.class) );
+        return ResponseEntity.ok( mapper.convertTo(createdPost, PostDto.class) );
     }
 
     @GetMapping("/{id}")
@@ -54,7 +58,7 @@ public class PostController {
             User user = jwtUtil.extractUserFromToken(token);
             postService.addView(post, user);
         }
-        return ResponseEntity.ok( postDto.convertToDto(post) );
+        return ResponseEntity.ok( mapper.convertTo(post, PostDto.class) );
     }
 
     @DeleteMapping("/{id}/delete")
@@ -70,7 +74,12 @@ public class PostController {
                                                 @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
                                                 HttpServletRequest request) throws UserNotAuthorized {
         Pageable paging = PageRequest.of(page, size, Sort.by(direction, orderBy, "id"));
-        String token = jwtUtil.extractTokenFromRequest(request);
+        String token = null;
+        try {
+            token = jwtUtil.extractTokenFromRequest(request);
+        } catch(UserNotAuthorized ignored) {
+
+        }
 
         Page<Post> postList;
         if (token != null && jwtUtil.validateToken(token)) {
@@ -78,8 +87,14 @@ public class PostController {
         } else {
             postList = postService.getAll(paging);
         }
-        Page<PostDto> posts = postList.map(postDto::convertToDto);
+        Page<PostDto> posts = postList.map(p -> mapper.convertTo(p, PostDto.class));
         return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<PostDto>> getRecentPosts() {
+        List<Post> posts = postService.getRecentPosts();
+        return ResponseEntity.ok(mapper.listConvertTo(posts, PostDto.class));
     }
 
     @GetMapping("/forum/{id}")
@@ -97,7 +112,7 @@ public class PostController {
         } else {
             postList = postService.getByForumIdAndPage(id, paging);
         }
-        Page<PostDto> posts = postList.map(postDto::convertToDto);
+        Page<PostDto> posts = postList.map(p -> mapper.convertTo(p, PostDto.class));
 
         return ResponseEntity.ok(posts);
     }
@@ -145,11 +160,9 @@ public class PostController {
     }
 //    Comments
     @GetMapping("/{id}/comments")
-    public ResponseEntity<Set<CommentDto>> getPostComments(@PathVariable("id") Long id) {
-        Set<CommentDto> comments = commentService.getByPostId(id).stream()
-                                                                 .map(commentDto::convertToDto)
-                                                                 .collect(Collectors.toSet());
-        return ResponseEntity.ok(comments);
+    public ResponseEntity<List<CommentDto>> getPostComments(@PathVariable("id") Long id) {
+        List<Comment> comments = commentService.getByPostId(id);
+        return ResponseEntity.ok(mapper.listConvertTo(comments, CommentDto.class));
     }
 
     @DeleteMapping("/{id}/comments/{commentId}/delete")
@@ -162,8 +175,14 @@ public class PostController {
     public ResponseEntity<CommentDto> createComment(@PathVariable("id") Long id,
                                                     @RequestBody CommentDto commentDto) {
         Post post = postService.getById(id);
-        Comment createdComment = commentService.create( commentDto.convertToEntity(commentDto), post );
-        return ResponseEntity.ok(commentDto.convertToDto(createdComment));
+        Comment createdComment = commentService.create( mapper.convertTo(commentDto, Comment.class), post );
+        if(!post.getCreator().getUsername().equals(commentDto.getUser().getUsername())) {
+//            NotificationDto notification = notificationDto.convertToDto(notificationService.sendNotification(notificationDto.convertToEntity(
+//                    new NotificationDto("New comment in your post", userDto.convertToDto(post.getCreator()))
+//            )));
+//            messagingTemplate.convertAndSend("/topic/notifications/" + post.getCreator().getUsername(), notification);
+        }
+        return ResponseEntity.ok( mapper.convertTo(createdComment, CommentDto.class) );
     }
 
     @PostMapping("/comments/{commentId}/like")

@@ -4,6 +4,7 @@ import com.site.forum.dto.ForumDto;
 import com.site.forum.entity.Forum;
 import com.site.forum.model.ForumModel;
 import com.site.forum.service.ForumService;
+import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,12 @@ import java.util.List;
 @Cacheable(value = "forums")
 public class ForumController {
     private final ForumService forumService;
-    private final ForumDto forumDto = new ForumDto();
+    private final Mapper mapper;
 
     @PostMapping(value = "/create")
     public ResponseEntity<ForumDto> create(@RequestBody ForumModel model) {
         Forum res = null;
-        Forum forum = forumDto.modelToEntity( model);
+        Forum forum = mapper.convertTo(model, Forum.class);
         forumService.create(forum);
         res = forum;
         if(model.getParentId() != null) {
@@ -31,7 +32,7 @@ public class ForumController {
             forumService.create(parentForum);
             res = parentForum;
         }
-        return ResponseEntity.ok( forumDto.convertToDto(res) );
+        return ResponseEntity.ok( mapper.convertTo(res, ForumDto.class) );
     }
 
     @DeleteMapping("/{id}/delete")
@@ -42,17 +43,14 @@ public class ForumController {
 
     @GetMapping("/all")
     public ResponseEntity<List<ForumDto>> getForums(@RequestParam(value = "subforums", defaultValue = "false") boolean subforums) {
-        List<ForumDto> forums;
+        List<Forum> forums;
         if(!subforums) {
             forums = forumService.getAll().stream()
                     .filter(f -> !forumService.isForumASubForum(f.getId()))
-                    .map(forumDto::convertToDto)
                     .toList();
         } else {
-            forums = forumService.getAll().stream()
-                    .map(forumDto::convertToDto)
-                    .toList();
+            forums = forumService.getAll();
         }
-        return ResponseEntity.ok(forums);
+        return ResponseEntity.ok( mapper.listConvertTo(forums, ForumDto.class) );
     }
 }
