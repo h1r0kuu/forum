@@ -13,6 +13,7 @@ public interface PostService {
     List<Post> getAll();
     Page<Post> getAll(Pageable pageable);
     Page<Post> getAll(Pageable pageable, String username);
+    List<Post> getRecentPosts();
     Post getById(Long id);
     List<Post> getByForumId(Long forumId);
     Page<Post> getByForumIdAndPage(Long forumId, Pageable pageable);
@@ -20,6 +21,5 @@ public interface PostService {
     void like(Post post, User user);
     void dislike(Post post, User user);
     void addView(Post post, User user);
-
     Page<Post> searchPostByTitleLike(String title, Pageable pageable);
 }

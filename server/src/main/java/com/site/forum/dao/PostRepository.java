@@ -16,6 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p" +
             " WHERE p.id NOT IN (SELECT h.id FROM User u JOIN u.hiddenPosts h WHERE u.username = ?1)")
     Page<Post> findAll(Pageable pageable, String username);
+    List<Post> findTop5ByOrderByCreatedAtDesc();
     List<Post> findByForum_Id(Long id);
     @Query("SELECT p FROM Post p " +
             "WHERE p.forum.id = ?1 OR p.forum.id IN " +

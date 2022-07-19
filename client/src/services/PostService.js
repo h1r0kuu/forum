@@ -14,11 +14,16 @@ export const PostService = {
         return data
     },
 
-    async getAll(page, order, direction) {
-        const {data} = await api.get(`${POST_API_URL}/all?page=${page}&order=${order}&direction=${direction}`)
+    async getAll(page, order, direction, forum) {
+        const {data} = await api.get(`${POST_API_URL}/all?page=${page}&order=${order}&direction=${direction}&forum=${forum}`)
         return data
     },
     
+    async getRecentPosts() {
+        const {data} = await axios.get(`${POST_API_URL}/recent`)
+        return data
+    },
+
     async create(payload) {
         const {data} = await axios.post(`${POST_API_URL}/create`, payload)
         return data
