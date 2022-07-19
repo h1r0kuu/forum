@@ -6,7 +6,10 @@ import Messages from "./Messages/Messages"
 import "./ChatsStyles.css"
 
 import { ChatService } from "../../services/chatService"
-import { useSearchParams } from "react-router-dom"
+
+import { Stomp } from "@stomp/stompjs"
+import SockJS from "sockjs-client"
+import { WEBSOCKET_URL } from "../../utils/urls"
 
 function Chats() {
     const [chats, setChats] = useState([])
@@ -20,6 +23,19 @@ function Chats() {
 
     const user = GetUser()
     const username = user.username
+    
+    useEffect(() => {
+        let stompClient = Stomp.over(new SockJS(WEBSOCKET_URL))
+        stompClient.debug = () => {};
+        stompClient.connect({}, () => {
+            stompClient.subscribe('/topic/chat/' + username, data => {
+                setMessages(() => messages.concat(data))
+                console.log("message after new message")
+                console.log(messages)
+            })
+        })
+
+    }, [username])
 
     useEffect(() => {
         ChatService.getUserChats(username).then(data => {
@@ -30,9 +46,10 @@ function Chats() {
     }, [username])
 
     const loadMoreMessages = () => {
-        if(!chatLoading) {
+        if(chatLoading === false) {
             ChatService.getChatMessages(selectedChat.id, page).then(data => {
-                setMessages(messages.concat(data.content))
+                setMessages(() => messages.concat(data.content))
+
                 if(data.content < 15) {
                     setHasMore(false)
                 }
@@ -55,8 +72,6 @@ function Chats() {
             text: message,
             chat: selectedChat,
             author: user
-        }).then(res => {
-            setMessages([...messages, res.data])
         })
     }
     return (
@@ -123,7 +138,7 @@ function Chats() {
                 <div className="message-input">
                     <div className="wrap">
                         <form onSubmit={sendMessage}>
-                            <input type="text" placeholder="Write your message..." />
+                            <input type="text" placeholder="Write your message..." name="message"/>
                                 <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
                             <button className="submit" type="submit">
                                 <i className="fa fa-paper-plane" aria-hidden="true"></i>
