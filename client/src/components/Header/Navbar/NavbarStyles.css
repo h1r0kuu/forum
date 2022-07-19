@@ -1,3 +1,25 @@
+.notification-btn {
+    position: relative;
+    z-index: 99;
+}
+
+.notification-btn > a > .fa-bell {
+    position: relative;
+}
+
+.notifcation-count {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: red;
+    height: 15px;
+    width: 15px;
+    line-height: 15px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 10px;
+}
+
 .navbar-default {
     background-color: #2F3239 !important;
     border-color: #2F3239 !important;
