@@ -43,6 +43,12 @@
     padding-left: 20px;
 }
 
+.ul-list-user-left ul,
+.ul-list-user-right ul {
+    display: flex;
+    flex-direction: column;
+}
+
 .user-description {
     margin-top: 50px;
 }
@@ -113,4 +119,13 @@
 
 .user-social .fa-envelope-o {
     background-color: #222629;
+}
+
+.settings-btn {
+    padding: 8px 20px 8px 20px;
+    text-decoration: none;
+    background-color: #FF7361;
+    border-radius: 3px;
+    color: #fff;
+    text-transform: uppercase;
 }
