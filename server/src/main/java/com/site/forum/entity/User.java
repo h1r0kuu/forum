@@ -57,7 +57,7 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "views")
     private Set<Post> posts;
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     private Set<Post> createdPosts;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -125,6 +125,14 @@ public class User implements UserDetails {
 
     public void addFollower(User follower) {
         followers.add(follower);
+    }
+
+    public void removeFollowing(User followed) {
+        following.remove(followed);
+    }
+
+    public void removeFollower(User follower) {
+        followers.remove(follower);
     }
 
     @Override
