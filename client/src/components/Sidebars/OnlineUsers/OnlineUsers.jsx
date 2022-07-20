@@ -2,7 +2,7 @@ import "./OnlineUsersStyles.css"
 
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
-import userService from "../../../services/userService"
+import { UserService } from "../../../services/userService"
 import { MakeUrl } from "../../../utils/urls"
 
 function OnlineUsers() {
@@ -10,7 +10,7 @@ function OnlineUsers() {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        userService.getOnlineUsers().then( data => {
+        UserService.getOnlineUsers().then( data => {
             setUsers(data)
             setLoading(false)
         })
