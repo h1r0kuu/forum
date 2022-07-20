@@ -11,6 +11,8 @@ function Post() {
     const [post, setPost] = useState({})
     const [comments, setComments] = useState([])
     const [author, setAuthor] = useState({})
+    const [isLoading, setLoading] = useState(true)
+
 
     useEffect(()=>{
         PostService.getOne(postId).then( data => {
@@ -19,15 +21,22 @@ function Post() {
             setComments(comments)
             info.commentsCount = comments.length
             setPost(info)
+            setLoading(false)
         })
     }, [postId])
 
     return (
         <>
-            <PostDetail post={post}/>
-            <PostAuthor author={author}/>
-            <PostCommentList comments={comments} authorUsername={author.username} postId={post.id}/>
-            <PostLeaveCommentForm postId={post.id} comments={comments} setComments={setComments}/>
+            {isLoading ? (
+                <p>Loading</p>
+            ) : (
+                <>
+                <PostDetail post={post}/>
+                <PostAuthor author={author}/>
+                <PostCommentList comments={comments} authorUsername={author.username} postId={post.id}/>
+                <PostLeaveCommentForm postId={post.id} comments={comments} setComments={setComments}/>
+                </>
+            )}
         </>
     )
 }
