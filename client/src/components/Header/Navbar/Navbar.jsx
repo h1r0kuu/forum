@@ -30,21 +30,25 @@ function Navbar() {
     }
 
     useEffect(() => {
-        NotificationSevice.getNotifications().then(data => {
-            setNotifications(data)
-        })
+        if(isAuth) {
+            NotificationSevice.getNotifications().then(data => {
+                setNotifications(data)
+            })
+        }
     }, [])
     let stompClient = Stomp.over(new SockJS(WEBSOCKET_URL))
 
     useEffect(() => {
-        // stompClient.debug = () => {};
-        stompClient.connect({}, () => {
-            stompClient.subscribe('/topic/notifications/' + user.username, data => {
-                setNotifications(() => notifications.concat(data))
-                console.log("NEW DATA")
-                new Audio(notificationAudio).play()
+        if(isAuth) {
+            stompClient.debug = () => {};
+            stompClient.connect({}, () => {
+                stompClient.subscribe('/topic/notifications/' + user.username, data => {
+                    setNotifications(() => notifications.concat(data))
+                    console.log("NEW DATA")
+                    new Audio(notificationAudio).play()
+                })
             })
-        })
+        }
     }, [stompClient, user])
 
 
