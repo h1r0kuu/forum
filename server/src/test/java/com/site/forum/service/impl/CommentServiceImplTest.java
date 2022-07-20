@@ -17,8 +17,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.NoSuchElementException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
