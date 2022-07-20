@@ -16,16 +16,16 @@ function ForumItem({forum}) {
 
     return (
         <li className="forum-link">
-            <div class="main-forum">
+            <div className="main-forum">
                 <Link to={"?forum="+forum.id}>
-                    <span class="forum_title">{forum.title}</span>
+                    <span className="forum_title">{forum.title}</span>
                     {forum.subForum.length > 0 &&
                         <div className="arrow" onClick={() => toggleSubForums()}></div>
                     }
                 </Link>
             </div>
             {forum.subForum.length > 0 &&
-                <ul class="forum__sub-forums">
+                <ul className="forum__sub-forums">
                     <li><Link to={"#"}>Plugins</Link></li>
                     <li><Link to={"#"}>UI Face</Link></li>
                     <li><Link to={"#"}>Pigments</Link></li>

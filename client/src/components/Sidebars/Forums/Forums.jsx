@@ -16,9 +16,9 @@ function Forums() {
     return (
         <div className="forums">
             <h4>Forums</h4>
-            <ul class="forum-links">
+            <ul className="forum-links">
                 {forums.map(forum => (
-                    <ForumItem forum={forum} />
+                    <ForumItem forum={forum} key={forum.id} />
                 ))}
             </ul>
         </div>
