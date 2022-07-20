@@ -2,6 +2,7 @@ import "./TopBarStyles.css"
 
 import { Link } from "react-router-dom"
 import { LOGIN } from "../../../utils/routeConstants"
+import { search } from "../../../functions/search"
 
 function TopBar() {
     return (
@@ -19,11 +20,11 @@ function TopBar() {
                     </div>
                     <div className="col-md-6">
                         <div className="navbar-serch-right-side">
-                            <form className="navbar-form" role="search">
+                            <form className="navbar-form" onSubmit={search}>
                                 <div className="input-group add-on">
-                                    <input className="form-control form-control222" placeholder="Search" id="srch-term" type="text" />
+                                    <input className="form-control form-control222" placeholder="Search" id="srch-term" type="text" name="search" />
                                     <div className="input-group-btn">
-                                        <button className="btn btn-default btn-default2913" type="button"><i className="glyphicon glyphicon-search"></i></button>
+                                        <button className="btn btn-default btn-default2913" type="submit"><i className="glyphicon glyphicon-search"></i></button>
                                     </div>
                                 </div>
                             </form>
