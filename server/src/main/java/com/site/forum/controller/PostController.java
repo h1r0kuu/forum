@@ -1,9 +1,7 @@
 package com.site.forum.controller;
 
 import com.site.forum.dto.CommentDto;
-import com.site.forum.dto.NotificationDto;
 import com.site.forum.dto.PostDto;
-import com.site.forum.dto.UserDto;
 import com.site.forum.entity.Comment;
 import com.site.forum.entity.Post;
 import com.site.forum.entity.User;
@@ -17,16 +15,15 @@ import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -53,10 +50,12 @@ public class PostController {
     public ResponseEntity<PostDto> getOne(@PathVariable("id") Long id,
                                           HttpServletRequest request) throws UserNotAuthorized {
         Post post = postService.getById(id);
-        String token = jwtUtil.extractTokenFromRequest(request);
-        if (token != null && jwtUtil.validateToken(token)) {
-            User user = jwtUtil.extractUserFromToken(token);
-            postService.addView(post, user);
+        if (Objects.nonNull(request.getHeader("Authorization"))) {
+            String token = jwtUtil.extractTokenFromRequest(request);
+            if (token != null && jwtUtil.validateToken(token)) {
+                User user = jwtUtil.extractUserFromToken(token);
+                postService.addView(post, user);
+            }
         }
         return ResponseEntity.ok( mapper.convertTo(post, PostDto.class) );
     }
@@ -66,14 +65,9 @@ public class PostController {
         postService.delete(id);
         return ResponseEntity.ok("Successfuly deleted");
     }
-
     @GetMapping("/all")
-    public ResponseEntity<Page<PostDto>> getAll(@Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
-                                                @RequestParam(value = "page", defaultValue = "0") int page,
-                                                @RequestParam(value = "size", defaultValue = "10") int size,
-                                                @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
+    public ResponseEntity<Page<PostDto>> getAll(@PageableDefault(size = 5, sort = "createdAt") Pageable pageable,
                                                 HttpServletRequest request) throws UserNotAuthorized {
-        Pageable paging = PageRequest.of(page, size, Sort.by(direction, orderBy, "id"));
         String token = null;
         try {
             token = jwtUtil.extractTokenFromRequest(request);
@@ -83,9 +77,9 @@ public class PostController {
 
         Page<Post> postList;
         if (token != null && jwtUtil.validateToken(token)) {
-            postList = postService.getAll(paging, jwtUtil.extractUserFromToken(token).getUsername());
+            postList = postService.getAll(pageable, jwtUtil.extractUserFromToken(token).getUsername());
         } else {
-            postList = postService.getAll(paging);
+            postList = postService.getAll(pageable);
         }
         Page<PostDto> posts = postList.map(p -> mapper.convertTo(p, PostDto.class));
         return ResponseEntity.ok(posts);
@@ -99,18 +93,14 @@ public class PostController {
 
     @GetMapping("/forum/{id}")
     public ResponseEntity<Page<PostDto>> getPostsByForumId(@PathVariable("id") Long id,
-                                                           @Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
-                                                           @RequestParam(defaultValue = "0", value = "page") int page,
-                                                           @RequestParam(defaultValue = "5", value = "size") int size,
+                                                           @PageableDefault(size = 5, sort = "createdAt") Pageable pageable,
                                                            HttpServletRequest request) throws UserNotAuthorized {
-        Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
-
         String token = jwtUtil.extractTokenFromRequest(request);
         Page<Post> postList;
         if(!token.equals("null") && jwtUtil.validateToken(token)) {
-            postList = postService.getByForumIdAndPage(id, paging, jwtUtil.extractUserFromToken(token).getUsername());
+            postList = postService.getByForumIdAndPage(id, pageable, jwtUtil.extractUserFromToken(token).getUsername());
         } else {
-            postList = postService.getByForumIdAndPage(id, paging);
+            postList = postService.getByForumIdAndPage(id, pageable);
         }
         Page<PostDto> posts = postList.map(p -> mapper.convertTo(p, PostDto.class));
 
