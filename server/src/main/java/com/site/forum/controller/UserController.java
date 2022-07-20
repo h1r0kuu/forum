@@ -100,11 +100,43 @@ public class UserController {
         return ResponseEntity.ok( mapper.listConvertTo(profileComments, ProfileCommentDto.class) );
     }
 
+    @GetMapping("/{username}/following")
+    public ResponseEntity<List<UserDto>> getUserFollowingList(@PathVariable("username") String username) {
+        Set<User> users = userService.getUserByUsername(username).getFollowing();
+        return ResponseEntity.ok( mapper.listConvertTo(users, UserDto.class) );
+    }
+
+    @GetMapping("/{username}/followers")
+    public ResponseEntity<List<UserDto>> getUserFollowers(@PathVariable("username") String username) {
+        Set<User> users = userService.getUserByUsername(username).getFollowers();
+        return ResponseEntity.ok( mapper.listConvertTo(users, UserDto.class) );
+    }
+
     @PostMapping("/follow")
     public ResponseEntity<String> follow(@RequestBody FollowModel followModel) {
         User following = userService.getUserByUsername(followModel.getFollowingUsername());
-        following.addFollower( userService.getUserByUsername(followModel.getFollowerUsername()) );
+        User follower = userService.getUserByUsername(followModel.getFollowerUsername());
+
+        following.addFollower( follower );
+        follower.addFollowing( following );
+
         userService.update(following);
-        return ResponseEntity.ok("Successfuly followed");
+        userService.update(following);
+
+        return ResponseEntity.ok("Successfully followed");
+    }
+
+    @PostMapping("/unfollow")
+    public ResponseEntity<String> unfollow(@RequestBody FollowModel followModel) {
+        User following = userService.getUserByUsername(followModel.getFollowingUsername());
+        User follower = userService.getUserByUsername(followModel.getFollowerUsername());
+
+        following.removeFollower( follower );
+        follower.removeFollowing( follower );
+
+        userService.update(following);
+        userService.update(follower);
+
+        return ResponseEntity.ok("Successfully unfollowed");
     }
 }
