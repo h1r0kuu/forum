@@ -9,6 +9,7 @@ import com.site.forum.service.UserService;
 import com.site.forum.utils.FileUpload;
 import com.site.forum.utils.JWTUtil;
 import com.site.forum.utils.Mapper;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -79,7 +81,7 @@ public class AuthController {
     }
 
     @GetMapping("/refresh")
-    public ResponseEntity<HashMap<String, Object>> refreshToken(@RequestParam("token") String jwtToken) {
+    public ResponseEntity<HashMap<String, Object>> refreshToken(@NonNull @RequestParam("token") String jwtToken) {
         HashMap<String, Object> res = new HashMap<>();
         String username = jwtUtil.getUsernameFromToken(jwtToken);
         User user = userService.getUserByUsername(username);
