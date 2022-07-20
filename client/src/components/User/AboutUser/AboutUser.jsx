@@ -3,8 +3,22 @@ import "./AboutUserStyles.css"
 import { Link } from "react-router-dom"
 
 import dayjs from "../../../utils/dayjsRelative"
+import { SETTINGS } from "../../../utils/routeConstants"
+import { GetUser } from "../../../utils/authUser"
+import { UserService } from "../../../services/userService"
 
 function AboutUser({user}) {
+
+    const authUserUsername = GetUser().username
+
+    function follow(e) {
+        e.preventDefault()
+        UserService.follow({
+            followingUsername: user.username,
+            followerUsername: authUserUsername
+        })
+    }
+
     return (
         <div className="about-user">
             <div className="user-title">
@@ -13,6 +27,9 @@ function AboutUser({user}) {
                     <Link to={"#"}>user</Link>
                 </span>
                 </h3>
+                {user.username === authUserUsername &&
+                    <Link to={SETTINGS} className="settings-btn">Settings</Link>
+                }
                 <hr/>
             </div>
             <div className="user-image">
@@ -20,25 +37,25 @@ function AboutUser({user}) {
             </div>
             <div className="user-list">
                 <div className="ul-list-user-left">
-                <ul>
-                    <li>
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                        <strong>Registered:</strong> June 4, 2014 {dayjs(user.createdAt).format("MMM DD, YYYY")}
-                    </li>
-                    <li>
-                        <i className="fa fa-map-marker" aria-hidden="true"></i>
-                        <strong>Country:</strong> Egypt
-                    </li>
-                    <li>
-                        <i className="fa fa-heart" aria-hidden="true"></i>
-                        <strong>Age:</strong> 27
-                    </li>
-                    <li>
-                        <i className="fa fa-globe" aria-hidden="true"></i>
-                        <strong>Website:</strong>
-                        <Link to={"#"}>view</Link>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                            <strong>Registered:</strong>{dayjs(user.createdAt).format("MMM DD, YYYY")}
+                        </li>
+                        <li>
+                            <i className="fa fa-map-marker" aria-hidden="true"></i>
+                            <strong>Country:</strong> Egypt
+                        </li>
+                        <li>
+                            <i className="fa fa-heart" aria-hidden="true"></i>
+                            <strong>Age:</strong> 27
+                        </li>
+                        <li>
+                            <i className="fa fa-globe" aria-hidden="true"></i>
+                            <strong>Website:</strong>
+                            <Link to={"#"}>view</Link>
+                        </li>
+                    </ul>
                 </div>
                 <div className="ul-list-user-right">
                 <ul>
@@ -60,7 +77,7 @@ function AboutUser({user}) {
             <div className="user-description">
                 <p>Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur vitae velit in neque dictum blandit.</p>
                 <Link to={"#"}>Send message</Link>
-                <Link to={"#"} style={{marginLeft: "5px"}}>Follow</Link>
+                <Link to={"#"} style={{marginLeft: "5px"}} onClick={follow}>Follow</Link>
             </div>
             <div className="user-social">
                 <p>Follow : <span>
