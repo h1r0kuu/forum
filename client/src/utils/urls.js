@@ -8,6 +8,7 @@ export const NOTIFICATIONS_API_URL = API_URL + "notifications"
 export const CHAT_API_URL = API_URL + "chats"
 export const AUTH_API_URL = API_URL + "auth"
 export const STATS_API_URL = API_URL + "stats"
+export const SEARCH_API_URL = API_URL + "search"
 
 export const MakeUrl = {
     userUrl(username) {

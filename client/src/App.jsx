@@ -4,7 +4,7 @@ import "./assets/css/font-awesome.min.css"
 import "./assets/css/animate.css"
 
 import { Route, Routes } from "react-router-dom";
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Context } from "."
 import { observer } from 'mobx-react-lite'
 
@@ -24,7 +24,8 @@ import {
   ADMIN_FORUMS,
   ADMIN_POSTS,
   ADMIN_USERS,
-  ADMIN_REPORTS
+  ADMIN_REPORTS,
+  SETTINGS
 } from "./utils/routeConstants"
 
 import Home from "./pages/Home/Home"
@@ -34,43 +35,44 @@ import Profile from "./pages/Profile/Profile"
 import Login from "./pages/Login/Login"
 import Signup from "./pages/Signup/Signup"
 import UserChats from "./pages/Chats/UserChats"
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import SearchResult from "./pages/Search/SearchResult";
 
 function App() {
 
   const {store} = useContext(Context);
-  
   useEffect(()=> {
       if(localStorage.getItem("token")) {
         store.checkAuth(localStorage.getItem("token"))
       }
   }, [])
 
-  return (
-    <Routes>
+  return ( 
+      <Routes>
+        <Route path={HOME} element={<Home/>} />
 
-      <Route path={HOME} element={<Home/>} />
+        <Route exact path={CREATE_POST} element={<CreatePost/>} />
+        <Route exact path={POST_DETAILS} element={<PostDetails/>} />
 
-      <Route exact path={CREATE_POST} element={<CreatePost/>} />
-      <Route exact path={POST_DETAILS} element={<PostDetails/>} />
+        <Route exact path={USER} element={<Profile/>} />
+        <Route exact path={SETTINGS} element={<SettingsPage/>} />
+        <Route exact path={USER_COMMENTS} />
+        <Route exact path={USER_HIDDEN_POSTS} />
+        <Route exact path={USER_POSTS} />
 
-      <Route exact path={USER} element={<Profile/>} />
-      <Route exact path={USER_COMMENTS} />
-      <Route exact path={USER_HIDDEN_POSTS} />
-      <Route exact path={USER_POSTS} />
+        <Route exact path={CHATS} element={<UserChats/>} />
 
-      <Route exact path={CHATS} element={<UserChats/>} />
+        <Route exact path={LOGIN} element={<Login/>} />
+        <Route exact path={SIGNUP} element={<Signup/>} />
 
-      <Route exact path={LOGIN} element={<Login/>} />
-      <Route exact path={SIGNUP} element={<Signup/>} />
+        <Route exact path={SEARCH} element={<SearchResult/>} />
 
-      <Route exact path={SEARCH} />
-
-      <Route exact path={ADMIN} />
-      <Route exact path={ADMIN_FORUMS} />
-      <Route exact path={ADMIN_POSTS} />
-      <Route exact path={ADMIN_USERS} />
-      <Route exact path={ADMIN_REPORTS} />
-    </Routes>
+        <Route exact path={ADMIN} />
+        <Route exact path={ADMIN_FORUMS} />
+        <Route exact path={ADMIN_POSTS} />
+        <Route exact path={ADMIN_USERS} />
+        <Route exact path={ADMIN_REPORTS} />
+      </Routes>
   );
 }
 
