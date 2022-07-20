@@ -1,0 +1,11 @@
+export const SETTINGS = {
+    SETTINGS: "PROFILE"
+}
+
+export const PROFILE = {
+    HIDDEN_POSTS: "HIDDEN_POSTS",
+    FOLLOWERS: "FOLLOWERS",
+    FOLLOWING: "FOLLOWING",
+    POSTS: "POSTS",
+    COMMENTS: "COMMENTS"
+}

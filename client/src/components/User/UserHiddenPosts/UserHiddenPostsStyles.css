@@ -1,0 +1,18 @@
+.hidden-post {
+    position: relative;
+}
+
+.remove-item {
+    display: block;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #ff5252;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 3px 12px 0 rgba(255, 82, 82, .5);
+    cursor: pointer;
+}

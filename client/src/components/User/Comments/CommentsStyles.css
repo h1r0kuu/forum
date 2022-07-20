@@ -1,0 +1,4 @@
+.user-comment__comments-list {
+    display: flex;
+    flex-direction: column;
+}
