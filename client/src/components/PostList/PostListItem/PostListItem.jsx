@@ -21,7 +21,7 @@ function PostListItem({post}) {
             <div className="row">
                 <div className="col-md-1">
                     <div className="user-left user-left-repeat">
-                        <Link to={"#"}>
+                        <Link to={MakeUrl.userUrl(post.creator.username)}>
                             <img src={post.creator.imagePath} alt={post.creator.username} />
                         </Link>
                     </div>
@@ -38,7 +38,7 @@ function PostListItem({post}) {
                         </div>
                         <hr/>
                         <div className="icon-action">
-                            <Link to={"#"}>
+                            <Link to={MakeUrl.userUrl(post.creator.username)}>
                                 <i className="fa fa-user" aria-hidden="true">&nbsp;{post.creator.username}</i>
                             </Link>
                             <Link to={"#"}>
