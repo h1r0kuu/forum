@@ -25,7 +25,7 @@ public class Forum {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="forum_id")
     private Set<Forum> subForums;
 
