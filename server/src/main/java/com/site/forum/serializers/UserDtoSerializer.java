@@ -19,7 +19,7 @@ public class UserDtoSerializer extends StdSerializer<UserDto> {
         jsonGenerator.writeStringField("imagePath", value.getImagePath());
         jsonGenerator.writeNumberField("commentsCount", value.getComments().size());
         jsonGenerator.writeNumberField("hiddenPostsCount", value.getHiddenPosts().size());
-        jsonGenerator.writeNumberField("postsCount", value.getPosts().size());
+        jsonGenerator.writeNumberField("postsCount", value.getCreatedPosts().size());
         jsonGenerator.writeStringField("role", value.getRole().name());
         jsonGenerator.writeStringField("createdAt", value.getCreatedAt().toString());
         jsonGenerator.writeStringField("updatedAt", value.getUpdatedAt().toString());

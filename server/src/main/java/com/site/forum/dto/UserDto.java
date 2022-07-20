@@ -27,7 +27,7 @@ public class UserDto {
     private String imagePath;
     private Set<CommentDto> comments;
     private Set<PostDto> hiddenPosts;
-    private Set<PostDto> posts;
+    private Set<PostDto> createdPosts;
     private Set<UserDto> followers;
     private Set<UserDto> following;
     private Set<NotificationDto> notifications;
