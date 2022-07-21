@@ -119,6 +119,9 @@
     border-bottom: 1px solid #E5E5E5;
     overflow: hidden;
     border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .comment-box .comment-head i {

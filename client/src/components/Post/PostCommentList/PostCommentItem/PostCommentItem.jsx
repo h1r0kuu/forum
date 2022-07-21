@@ -52,21 +52,23 @@ function PostCommentItem({postId, comment, authorUsername}) {
                 </div>
                 <div className="comment-box">
                     <div className="comment-head">
-                        <h6 className={"comment-name " + (comment.user.username === authorUsername ? "by-author" : "")}>
-                            <Link to={MakeUrl.userUrl(comment.user.username)}>{comment.user.username}</Link>
-                        </h6>
-                        <span>
-                            <i className="fa fa-clock-o" aria-hidden="true">{dayjs(comment.createdAt).format("MMMM D, YYYY x HH:mm").replace("x", "at")}</i>
-                        </span>
-                        <i className="fa fa-reply" onClick={() => toggleReplyInput()}></i>
-                        <i className="fa fa-heart" onClick={() => like(comment.id)}>
-                            &nbsp;
-                            {comment.likesCount - comment.dislikesCount > 0 ? 
-                                "+" + comment.likesCount - comment.dislikesCount
-                                :
-                                comment.likesCount - comment.dislikesCount
-                            }
-                        </i>
+                        <div className="left">
+                            <h6 className={"comment-name " + (comment.user.username === authorUsername ? "by-author" : "")}>
+                                <Link to={MakeUrl.userUrl(comment.user.username)}>{comment.user.username}</Link>
+                            </h6>
+                            <span>
+                                <i className="fa fa-clock-o" aria-hidden="true">{dayjs(comment.createdAt).format("MMMM D, YYYY x HH:mm").replace("x", "at")}</i>
+                            </span>
+                        </div>
+                        <div className="right">
+                            <button type="button" className="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like" onClick={() => like(comment.id)}>
+                                <i className="fa fa-thumbs-o-up " aria-hidden="true" style={{color: "green"}}>&nbsp;{comment.likesCount}</i>
+                            </button>
+                            <button type="button" className="tolltip-button  thumbs-down2" data-toggle="tooltip" data-placement="bottom" title="Dislike" onClick={() => dislike(comment.id)}>
+                                <i className="fa fa-thumbs-o-down" aria-hidden="true" style={{color: "red"}}>&nbsp;{comment.dislikesCount}</i>
+                            </button>
+                            <i className="fa fa-reply" onClick={() => toggleReplyInput()}></i>
+                        </div>
                     </div>
                     <div className="comment-content">{comment.text}</div>
                     <form className={"reply " + (replyHidden && "hidden")} onSubmit={sendReply}>
@@ -88,21 +90,23 @@ function PostCommentItem({postId, comment, authorUsername}) {
                             </div>
                             <div className="comment-box">
                                 <div className="comment-head">
-                                    <h6 className={"comment-name " + (reply.user.username === authorUsername ? "by-author" : "")}>
-                                        <Link to={MakeUrl.userUrl(reply.user.username)}>{reply.user.username}</Link>
-                                    </h6>
-                                    <span>
-                                    <i className="fa fa-clock-o" aria-hidden="true">{dayjs(reply.createdAt).format("MMMM D, YYYY x HH:mm").replace("x", "at")}</i>
-                                    </span>
-                                    {/* <i className="fa fa-reply"></i> */}
-                                    <i className="fa fa-heart" onClick={() => like(reply.id)}>
-                                        &nbsp;
-                                        {reply.likesCount - reply.dislikesCount > 0 ? 
-                                            "+" + reply.likesCount - reply.dislikesCount
-                                            :
-                                            reply.likesCount - reply.dislikesCount
-                                        }
-                                    </i>
+                                    <div className="left">
+                                        <h6 className={"comment-name " + (reply.user.username === authorUsername ? "by-author" : "")}>
+                                            <Link to={MakeUrl.userUrl(reply.user.username)}>{reply.user.username}</Link>
+                                        </h6>
+                                        <span>
+                                            <i className="fa fa-clock-o" aria-hidden="true">{dayjs(reply.createdAt).format("MMMM D, YYYY x HH:mm").replace("x", "at")}</i>
+                                        </span>
+                                    </div>
+                                    <div className="right">
+                                        <button type="button" className="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like" onClick={() => like(reply.id)}>
+                                            <i className="fa fa-thumbs-o-up " aria-hidden="true" style={{color: "green"}}>&nbsp;{reply.likesCount}</i>
+                                        </button>
+                                        <button type="button" className="tolltip-button  thumbs-down2" data-toggle="tooltip" data-placement="bottom" title="Dislike" onClick={() => dislike(reply.id)}>
+                                            <i className="fa fa-thumbs-o-down" aria-hidden="true" style={{color: "red"}}>&nbsp;{reply.dislikesCount}</i>
+                                        </button>
+                                        <i className="fa fa-reply" onClick={() => toggleReplyInput()}></i>
+                                    </div>
                                 </div>
                                 <div className="comment-content">{reply.text}</div>
                             </div>

@@ -52,18 +52,11 @@ function PostDetail({post}) {
                     </div>
                     <div className="post-likes">
                         <button type="button" className="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like" onClick={like}>
-                            <i className="fa fa-thumbs-o-up " aria-hidden="true"></i>
+                            <i className="fa fa-thumbs-o-up " aria-hidden="true" style={{color: "green"}}>&nbsp;{post.likesCount}</i>
                         </button>
                         <button type="button" className="tolltip-button  thumbs-down2" data-toggle="tooltip" data-placement="bottom" title="Dislike" onClick={dislike}>
-                            <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                            <i className="fa fa-thumbs-o-down" aria-hidden="true" style={{color: "red"}}>&nbsp;{post.dislikesCount}</i>
                         </button>
-                        <span className="single-question-vote-result">
-                            {postRating > 0 ? 
-                                "+" + postRating
-                                :
-                                postRating
-                            }
-                        </span>
                     </div>
                 </div>
             </div>
