@@ -34,7 +34,7 @@ public class Comment {
     @JoinColumn(name = "parent_comment")
     private Comment parentComment;
 
-    @OneToMany(mappedBy = "parentComment")
+    @OneToMany(mappedBy = "parentComment", fetch = FetchType.EAGER)
     private Set<Comment> replies;
 
     @ManyToOne
