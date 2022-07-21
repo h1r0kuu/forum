@@ -5,6 +5,8 @@ import com.site.forum.entity.Report;
 import com.site.forum.enums.ReportEntity;
 import com.site.forum.service.ReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +23,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Report> getAll() {
-        return repository.findAll();
+    public Page<Report> getAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
-    public List<Report> findReportsByEntity(ReportEntity entity) {
-        return repository.getReportsWhereEntity(entity);
+    public Page<Report> findReportsByEntity(ReportEntity entity, Pageable pageable) {
+        return repository.getReportsWhereEntity(entity, pageable);
     }
 }

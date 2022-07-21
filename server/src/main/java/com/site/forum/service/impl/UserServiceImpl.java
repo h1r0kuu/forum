@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Page<User> getAll(Pageable pageable) {return userRepository.findAll(pageable);}
+
+    @Override
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if(Objects.isNull(user)) throw new UsernameNotFoundException("User with this username does`t exist");
@@ -60,19 +63,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<Post> getUserPosts(String username) {
-        return postRepository.findByCreator_Username(username);
-    }
-
-    @Override
     public Page<Post> getUserPosts(String username, Pageable pageable) {
         return postRepository.findByCreator_Username(username, pageable);
     }
 
     @Override
-    public List<Post> getHiddenPosts(String username) {
-        return userRepository.getHiddenPosts(username);
-    }
+    public Page<Post> getHiddenPosts(String username, Pageable pageable) {return userRepository.getHiddenPosts(username, pageable);}
 
     @Override
     public Page<User> searchUserByUsernameLike(String username, Pageable pageable) {

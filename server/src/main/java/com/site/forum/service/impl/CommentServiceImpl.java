@@ -7,6 +7,8 @@ import com.site.forum.entity.User;
 import com.site.forum.exception.PostIsClosedException;
 import com.site.forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,18 +42,18 @@ public class CommentServiceImpl implements CommentService {
         );
     }
 
+    @Override
+    public Page<Comment> getByPostId(Long postId, Pageable pageable) {
+        return commentRepository.findByPost_Id(postId, pageable);
+    }
+
     public Comment update(Comment comment) {
         return commentRepository.save(comment);
     }
 
     @Override
-    public List<Comment> getByPostId(Long postId) {
-        return commentRepository.findByPost_Id(postId);
-    }
-
-    @Override
-    public List<Comment> getByUserUsername(String username) {
-        return commentRepository.findByUser_Username(username);
+    public Page<Comment> getByUserUsername(String username, Pageable pageable) {
+        return commentRepository.findByUser_Username(username, pageable);
     }
 
     @Override

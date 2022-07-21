@@ -41,9 +41,7 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
-    public Post update(Post post) {
-        return postRepository.save(post);
-    }
+    public Post update(Post post) {return create(post);}
 
     @Override
     public Page<Post> getAll(Pageable pageable) {

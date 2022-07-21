@@ -12,12 +12,12 @@ import java.util.List;
 public interface UserService {
     User update(User user);
     List<User> getAll();
+    Page<User> getAll(Pageable pageable);
     User getUserByUsername(String username) throws UsernameNotFoundException;
     User registration(User user);
     List<Forum> getUserForums(String username);
-    List<Post> getUserPosts(String username);
     Page<Post> getUserPosts(String username, Pageable pageable);
-    List<Post> getHiddenPosts(String username);
+    Page<Post> getHiddenPosts(String username, Pageable pageable);
     Page<User> searchUserByUsernameLike(String username, Pageable pageable);
     void hidePost(User user, Post post);
     void unHidePost(User user, Post post);

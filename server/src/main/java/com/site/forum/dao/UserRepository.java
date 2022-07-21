@@ -17,5 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> searchUserByUsernameLike(String username, Pageable pageable);
     @Query("SELECT h FROM User u LEFT JOIN u.hiddenPosts h WHERE u.username = ?1")
     List<Post> getHiddenPosts(String username);
+    @Query("SELECT h FROM User u LEFT JOIN u.hiddenPosts h WHERE u.username = ?1")
+    Page<Post> getHiddenPosts(String username, Pageable pageable);
 
 }

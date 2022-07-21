@@ -4,6 +4,8 @@ import com.site.forum.dao.NotificationRepository;
 import com.site.forum.entity.Notification;
 import com.site.forum.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +33,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> getUserNotifications(String username) {
-        return notificationRepository.findByUser_Username(username);
+    public Page<Notification> getUserNotifications(String username, Pageable pageable) {
+        return notificationRepository.findByUser_Username(username, pageable);
     }
 
     @Override

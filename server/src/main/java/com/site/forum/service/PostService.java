@@ -10,6 +10,7 @@ import java.util.List;
 public interface PostService {
     Post create(Post post);
     void delete(Long id);
+    Post update(Post post);
     List<Post> getAll();
     Page<Post> getAll(Pageable pageable);
     Page<Post> getAll(Pageable pageable, String username);
