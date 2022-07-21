@@ -7,13 +7,13 @@ import com.site.forum.service.NotificationService;
 import com.site.forum.utils.JWTUtil;
 import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/notifications")
@@ -32,13 +32,15 @@ public class NotificationController {
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<NotificationDto>> getUserNotifications(HttpServletRequest request) throws UserNotAuthorized {
+    public ResponseEntity<Page<NotificationDto>> getUserNotifications(@PageableDefault(sort = "createdAt") Pageable pageable,
+                                                                      HttpServletRequest request) throws UserNotAuthorized {
         String token = jwtUtil.extractTokenFromRequest(request);
-        List<Notification> notifications = new ArrayList<>();
+        Page<NotificationDto> notifications = null;
         if (token != null && jwtUtil.validateToken(token)) {
-            notifications = notificationService.getUserNotifications(jwtUtil.extractUserFromToken(token).getUsername());
+            notifications = notificationService.getUserNotifications(jwtUtil.extractUserFromToken(token).getUsername(), pageable)
+                                               .map(n -> mapper.convertTo(n, NotificationDto.class));
         }
-        return ResponseEntity.ok(mapper.listConvertTo(notifications, NotificationDto.class));
+        return ResponseEntity.ok(notifications);
     }
 
     @DeleteMapping("/delete/{id}")

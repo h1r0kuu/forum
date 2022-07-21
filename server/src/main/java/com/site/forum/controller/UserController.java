@@ -9,11 +9,9 @@ import com.site.forum.service.UserService;
 import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +33,10 @@ public class UserController {
 
     private final Mapper mapper;
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAll() {
-        List<User> users = userService.getAll();
-        return ResponseEntity.ok( mapper.listConvertTo(users, UserDto.class) );
+    public ResponseEntity<Page<UserDto>> getAll(@PageableDefault(sort = "createdAt") Pageable pageable) {
+        Page<UserDto> users = userService.getAll(pageable)
+                                         .map(u -> mapper.convertTo(u, UserDto.class));
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/online")
@@ -73,25 +72,26 @@ public class UserController {
 
     @GetMapping("/{username}/posts")
     public ResponseEntity<Page<PostDto>> getUserPosts(@PathVariable("username") String username,
-                                                      @Nullable @RequestParam(value = "order", defaultValue = "createdAt") String orderBy,
-                                                      @RequestParam(defaultValue = "0", value = "page") int page,
-                                                      @RequestParam(defaultValue = "10", value = "size") int size) {
-        Pageable paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, orderBy));
-        Page<Post> postList = userService.getUserPosts(username, paging);
-        Page<PostDto> posts = postList.map(p -> mapper.convertTo(p, PostDto.class));
+                                                      @PageableDefault(sort = "createdAt") Pageable pageable) {
+        Page<PostDto> posts = userService.getUserPosts(username, pageable)
+                                         .map(p -> mapper.convertTo(p, PostDto.class));
         return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/{username}/hidden_posts")
-    public ResponseEntity<List<PostDto>> getHiddenPosts(@PathVariable("username") String username) {
-        List<Post> posts = userService.getHiddenPosts(username);
-        return ResponseEntity.ok( mapper.listConvertTo(posts, PostDto.class) );
+    public ResponseEntity<Page<PostDto>> getHiddenPosts(@PathVariable("username") String username,
+                                                        @PageableDefault(sort = "createdAt") Pageable pageable) {
+        Page<PostDto> posts = userService.getHiddenPosts(username, pageable)
+                                         .map(p -> mapper.convertTo(p, PostDto.class));
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/{username}/comments")
-    public ResponseEntity<List<CommentDto>> getUserComments(@PathVariable("username") String username) {
-        List<Comment> comments = commentService.getByUserUsername(username);
-        return ResponseEntity.ok( mapper.listConvertTo(comments, CommentDto.class) );
+    public ResponseEntity<Page<CommentDto>> getUserComments(@PathVariable("username") String username,
+                                                            @PageableDefault(sort = "createdAt") Pageable pageable) {
+        Page<CommentDto> comments = commentService.getByUserUsername(username, pageable)
+                                                  .map(c -> mapper.convertTo(c, CommentDto.class));
+        return ResponseEntity.ok(comments);
     }
 
     @GetMapping("/{username}/profile_comments")

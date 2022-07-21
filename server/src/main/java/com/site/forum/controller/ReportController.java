@@ -7,12 +7,14 @@ import com.site.forum.service.ReportService;
 import com.site.forum.utils.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -32,13 +34,16 @@ public class ReportController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ReportDto>> getReports(@RequestParam("entity_type") @Nullable ReportEntity entityType) {
-        List<Report> reports;
+    public ResponseEntity<Page<ReportDto>> getReports(@RequestParam("entity_type") @Nullable ReportEntity entityType,
+                                                      @PageableDefault(sort = "createdAt") Pageable pageable) {
+        Page<ReportDto> reports;
         if (Objects.nonNull(entityType)) {
-            reports = reportService.findReportsByEntity(entityType);
+            reports = reportService.findReportsByEntity(entityType, pageable)
+                    .map(r -> mapper.convertTo(r, ReportDto.class));
         } else {
-            reports = reportService.getAll();
+            reports = reportService.getAll(pageable)
+                    .map(r -> mapper.convertTo(r, ReportDto.class));
         }
-        return ResponseEntity.ok( mapper.listConvertTo(reports, ReportDto.class) );
+        return ResponseEntity.ok(reports);
     }
 }

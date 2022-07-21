@@ -60,11 +60,18 @@ public class PostController {
         return ResponseEntity.ok( mapper.convertTo(post, PostDto.class) );
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable("id") Long id) {
         postService.delete(id);
         return ResponseEntity.ok("Successfuly deleted");
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto) {
+        Post updatedPost = postService.update( mapper.convertTo(postDto, Post.class) );
+        return ResponseEntity.ok(mapper.convertTo(updatedPost, PostDto.class) );
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Page<PostDto>> getAll(@PageableDefault(size = 5, sort = "createdAt") Pageable pageable,
                                                 HttpServletRequest request) throws UserNotAuthorized {
@@ -148,20 +155,10 @@ public class PostController {
 
         return ResponseEntity.ok("Success");
     }
+
 //    Comments
-    @GetMapping("/{id}/comments")
-    public ResponseEntity<List<CommentDto>> getPostComments(@PathVariable("id") Long id) {
-        List<Comment> comments = commentService.getByPostId(id);
-        return ResponseEntity.ok(mapper.listConvertTo(comments, CommentDto.class));
-    }
 
-    @DeleteMapping("/{id}/comments/{commentId}/delete")
-    public ResponseEntity<String> deleteComment(@PathVariable("commentId") Long id) {
-        commentService.delete(id);
-        return ResponseEntity.ok("Successfuly deleted");
-    }
-
-    @PostMapping("/{id}/comments/create")
+    @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable("id") Long id,
                                                     @RequestBody CommentDto commentDto) {
         Post post = postService.getById(id);
@@ -173,6 +170,18 @@ public class PostController {
 //            messagingTemplate.convertAndSend("/topic/notifications/" + post.getCreator().getUsername(), notification);
         }
         return ResponseEntity.ok( mapper.convertTo(createdComment, CommentDto.class) );
+    }
+
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<List<CommentDto>> getPostComments(@PathVariable("id") Long id) {
+        List<Comment> comments = commentService.getByPostId(id);
+        return ResponseEntity.ok(mapper.listConvertTo(comments, CommentDto.class));
+    }
+
+    @DeleteMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable("commentId") Long id) {
+        commentService.delete(id);
+        return ResponseEntity.ok("Successfuly deleted");
     }
 
     @PostMapping("/comments/{commentId}/like")
