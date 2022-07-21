@@ -173,9 +173,11 @@ public class PostController {
     }
 
     @GetMapping("/{id}/comments")
-    public ResponseEntity<List<CommentDto>> getPostComments(@PathVariable("id") Long id) {
-        List<Comment> comments = commentService.getByPostId(id);
-        return ResponseEntity.ok(mapper.listConvertTo(comments, CommentDto.class));
+    public ResponseEntity<Page<CommentDto>> getPostComments(@PathVariable("id") Long id,
+                                                            @PageableDefault(sort = "createdAt") Pageable pageable) {
+        Page<CommentDto> comments = commentService.getByPostId(id, pageable)
+                .map(c -> mapper.convertTo(c, CommentDto.class));
+        return ResponseEntity.ok(comments);
     }
 
     @DeleteMapping("/{id}/comments/{commentId}")
