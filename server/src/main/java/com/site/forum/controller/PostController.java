@@ -73,15 +73,19 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<PostDto>> getAll(@PageableDefault(size = 5, sort = "createdAt") Pageable pageable,
+    public ResponseEntity<Page<PostDto>> getAll(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                @RequestParam(name = "size", defaultValue = "5") int size,
+                                                @RequestParam(name = "order", defaultValue = "createdAt") String order,
+                                                @RequestParam(name = "direction", defaultValue = "DESC") Sort.Direction direction,
                                                 HttpServletRequest request) throws UserNotAuthorized {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, order));
+
         String token = null;
         try {
             token = jwtUtil.extractTokenFromRequest(request);
         } catch(UserNotAuthorized ignored) {
 
         }
-
         Page<Post> postList;
         if (token != null && jwtUtil.validateToken(token)) {
             postList = postService.getAll(pageable, jwtUtil.extractUserFromToken(token).getUsername());
