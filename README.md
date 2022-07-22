@@ -5,7 +5,7 @@ Forum developed using Spring boot nad React.js.</br>
 The project is always updated with new features. 
 This template for front-end is used https://github.com/radwan503/AskOnline--Forum
 
-<img src="https://user-images.githubusercontent.com/25689732/179398567-b5e4c968-541b-48a9-ba00-6da235734647.png" alt="Home page" width="900px"/>
+<img src="https://user-images.githubusercontent.com/25689732/180481925-0eb9bd37-a5ce-4038-9f2b-c4c046d2b54b.png" alt="Home page" width="900px"/>
 
 ## Used Technologies:
 * Back-end: Spring (Boot, Data, Security), JPA / Hibernate, PostgreSQL, JUnit, Mockito
