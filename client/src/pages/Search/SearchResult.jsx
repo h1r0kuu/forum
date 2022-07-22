@@ -5,7 +5,7 @@ import FooterSearch from "../../components/FooterSearch/FooterSearch";
 import Header from "../../components/Header/Header";
 import PostList from "../../components/PostList/PostList";
 import SearchInput from "../../components/Search/SearchInput";
-import { DIRECTION } from "../../constants/orderConstants";
+import { DIRECTION } from "../../enums/orderEnums";
 
 import { SearchService } from "../../services/searchService"
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserService } from "../../services/userService";
 
-import { PROFILE } from "../../constants/profileConstants";
+import { PROFILE } from "../../enums/profileEnums";
 
 import AboutUser from "./AboutUser/AboutUser";
 import UserStats from "./UserStats/UserStats";

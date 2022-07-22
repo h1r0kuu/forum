@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { DIRECTION, ORDER } from "../../../constants/orderConstants";
+import { DIRECTION, ORDER } from "../../../enums/orderEnums";
 import { UserService } from "../../../services/userService";
 import PostList from "../../PostList/PostList"
 

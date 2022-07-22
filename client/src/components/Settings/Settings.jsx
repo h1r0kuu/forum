@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { PROFILE } from "../../constants/profileConstants"
+import { PROFILE } from "../../enums/profileEnums"
 import { GetUser } from "../../utils/authUser"
 import Account from "./Account/Account"
 import UserInfo from "./UserInfo/UserInfo"
