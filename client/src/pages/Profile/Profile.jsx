@@ -5,7 +5,7 @@ import FooterSearch from "../../components/FooterSearch/FooterSearch"
 import Header from "../../components/Header/Header"
 import Sidebars from "../../components/Sidebars/Sidebars"
 import User from "../../components/User/User"
-import { HOME } from "../../utils/routeConstants"
+import { HOME } from "../../constants/routeConstants"
 
 function Profile() {
     return (

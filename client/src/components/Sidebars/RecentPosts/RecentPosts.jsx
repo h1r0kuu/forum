@@ -3,7 +3,7 @@ import "./RecentPostsStyles.css"
 import { Link } from "react-router-dom"
 import dayjs from "../../../utils/dayjsRelative"
 import { useEffect, useState } from "react"
-import { PostService } from "../../../services/postService"
+import { PostService } from "../../../services/PostService"
 import { MakeUrl } from "../../../utils/urls"
 import { extractContent } from "../../../utils/textUtil"
 

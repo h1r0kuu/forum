@@ -1,4 +1,4 @@
-import {AuthService} from "../services/authService"
+import {AuthService} from "../services/AuthService"
 import {makeAutoObservable} from "mobx"
 
 class Store {

@@ -117,6 +117,8 @@ public class PostServiceImpl implements PostService {
         views.add(user);
 
         post.setViews(views);
+
+        update(post);
     }
 
     @Override

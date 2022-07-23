@@ -1,7 +1,7 @@
 import "../Login/LoginStyles.css"
 
 import { Link } from "react-router-dom"
-import { AuthService } from "../../services/authService"
+import { AuthService } from "../../services/AuthService"
 import { useState } from "react"
 
 function Signup() {
@@ -15,7 +15,6 @@ function Signup() {
         let password = form.get("password")
         let confirm_password = form.get("confirm_password")
         let image = form.get("image")
-
         if(password !== confirm_password) {
             console.log(password + " !== " + confirm_password)
             errors.push("Passwords don't match")
@@ -60,11 +59,11 @@ function Signup() {
                 </Link>
                 <div class="title">Sign Up</div>
                 <div class="description">Hello there, Sign up Form</div>
-                <form style={{display: "flex", flexDirection: "column"}} onSubmit={onSubmit}>
-                    <input type="text" placeholder="Username*" />
-                    <input type="email" placeholder="E-Mail*" />
-                    <input type="password" placeholder="Password*" />
-                    <input type="con-password" placeholder="Confirm Password*" />
+                <form style={{display: "flex", flexDirection: "column"}} onSubmit={onSubmit} encType={"multipart/form-data"}>
+                    <input type="text" placeholder="Username*" name="username"/>
+                    <input type="file" name="image"/>
+                    <input type="password" placeholder="Password*" name="password"/>
+                    <input type="password" placeholder="Confirm Password*" name="confirm_password"/>
                     <div>
                         <div class="row text-center sign-with">
                             <div>
@@ -79,7 +78,7 @@ function Signup() {
                         </div>
                     </div>
                     <div class="text-center">
-                    <div class="button" style={{marginTop: "15px"}}>Sign Up</div>
+                        <button type="submit" class="button" style={{marginTop: "15px"}}>Sign Up</button>
                     </div>
                 </form>
                 </div>

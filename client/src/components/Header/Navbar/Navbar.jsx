@@ -1,13 +1,13 @@
 import "./NavbarStyles.css"
 
 import { Link } from "react-router-dom"
-import { CHATS, CREATE_POST, HOME, LOGIN, SIGNUP } from "../../../utils/routeConstants"
+import { CHATS, CREATE_POST, HOME, LOGIN, SIGNUP } from "../../../constants/routeConstants"
 import { GetStore, GetUser, IsAuth } from "../../../utils/authUser"
 import { MakeUrl, WEBSOCKET_URL } from "../../../utils/urls"
 import { useEffect, useState } from "react"
 import { Stomp } from "@stomp/stompjs"
 import SockJS from "sockjs-client"
-import { NotificationSevice } from "../../../services/notificationService"
+import { NotificationSevice } from "../../../services/NotificationService"
 
 import Notifications from "../../Notifications/Notifications"
 

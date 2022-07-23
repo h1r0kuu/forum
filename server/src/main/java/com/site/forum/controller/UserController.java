@@ -16,6 +16,7 @@ import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/online")
+    @Transactional
     public ResponseEntity<Set<UserDto>> getOnlineUsers() {
         Set<UserDto> onlineUsers = new HashSet<>();
         List<User> principals = sessionRegistry.getAllPrincipals().stream()

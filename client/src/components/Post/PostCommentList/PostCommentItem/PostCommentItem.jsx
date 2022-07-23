@@ -7,7 +7,7 @@ import { MakeUrl } from "../../../../utils/urls"
 import { useState } from "react"
 
 import { GetStore } from "../../../../utils/authUser"
-import { CommentService } from "../../../../services/commentService"
+import { CommentService } from "../../../../services/CommentService"
 
 function PostCommentItem({postId, comment, authorUsername}) {
     const store = GetStore()

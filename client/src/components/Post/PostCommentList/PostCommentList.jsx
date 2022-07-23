@@ -7,16 +7,20 @@ function PostCommentList({postId, comments, authorUsername}) {
             <div className="container">
                 <div className="row">
                 <div className="comments-container">
-                    <ul id="comments-list" className="comments-list">
-                        {comments.map(comment => (
-                            <PostCommentItem
-                                postId={postId}
-                                comment={comment}
-                                authorUsername={authorUsername}
-                                key={comment.id}
-                            />
-                        ))}
-                    </ul>
+                    {comments.length > 0 ? (
+                        <ul id="comments-list" className="comments-list">
+                            {comments.map(comment => (
+                                <PostCommentItem
+                                    postId={postId}
+                                    comment={comment}
+                                    authorUsername={authorUsername}
+                                    key={comment.id}
+                                />
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>Comment list is empty</p>
+                    )}
                 </div>
                 </div>
             </div>

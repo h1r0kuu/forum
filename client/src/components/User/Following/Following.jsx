@@ -2,7 +2,7 @@ import "./FollowingStyles.css"
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { UserService } from "../../../services/userService"
+import { UserService } from "../../../services/UserService"
 import { MakeUrl } from "../../../utils/urls"
 
 import dayjs from "../../../utils/dayjsRelative"

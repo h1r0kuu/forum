@@ -37,8 +37,10 @@ public class ForumDtoSerializer extends StdSerializer<ForumDto> {
         jsonGenerator.writeEndArray();
 
         jsonGenerator.writeObjectFieldStart("lastPost");
-        PostDto lastPost = new ArrayList<>(value.getPosts()).get(value.getPosts().size() - 1);
-        PostDtoSerializer.defaultSerialize(lastPost, jsonGenerator, provider);
+        if(value.getPosts().size() > 0) {
+            PostDto lastPost = new ArrayList<>(value.getPosts()).get(value.getPosts().size() - 1);
+            PostDtoSerializer.defaultSerialize(lastPost, jsonGenerator, provider);
+        }
         jsonGenerator.writeEndObject();
 
         jsonGenerator.writeEndObject();

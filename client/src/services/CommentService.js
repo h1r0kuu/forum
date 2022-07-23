@@ -4,7 +4,7 @@ import { POST_API_URL } from "../utils/urls"
 
 export const CommentService = {
     async create(postId, payload) {
-        const {data} = await axios.post(`${POST_API_URL}/${postId}/comments/create`, payload)
+        const {data} = await axios.post(`${POST_API_URL}/${postId}/comments`, payload)
         return data
     },
 

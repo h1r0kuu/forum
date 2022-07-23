@@ -9,6 +9,7 @@ export const CHAT_API_URL = API_URL + "chats"
 export const AUTH_API_URL = API_URL + "auth"
 export const STATS_API_URL = API_URL + "stats"
 export const SEARCH_API_URL = API_URL + "search"
+export const IMAGE_API_URL = API_URL + "images"
 
 export const MakeUrl = {
     userUrl(username) {

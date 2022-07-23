@@ -11,17 +11,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Value("${post.image.upload.absolutePath}")
+    @Value("${user.image.upload.path}")
     private String postPath;
-    @Value("${user.image.upload.absolutePath}")
+    @Value("${post.image.upload.path}")
     private String userPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**")
-                .addResourceLocations("classpath:/static/")
-                .addResourceLocations("file://" + postPath + "/")
-                .addResourceLocations("file://" + userPath + "/");
+                .addResourceLocations("classpath:/images/"+ userPath + "/",
+                                      "classpath:/images/"+ postPath + "/");
 
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");

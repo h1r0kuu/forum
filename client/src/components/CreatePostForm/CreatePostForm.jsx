@@ -5,8 +5,9 @@ import { EditorState, convertToRaw } from "draft-js"
 import draftToHtml from "draftjs-to-html"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect, useState } from "react";
-import { PostService } from "../../services/postService";
-import { ForumService } from "../../services/forumService";
+import { PostService } from "../../services/PostService";
+import { ForumService } from "../../services/ForumService";
+import { ImageService } from "../../services/ImageService"
 import { GetUser } from "../../utils/authUser";
 
 function CreatePostForm() {
@@ -26,13 +27,26 @@ function CreatePostForm() {
         
         let title = form.get("title")
         let forumId = form.get("forum")
+
+        let pstText = postText
+
+        for(let img of uploadedImages) {
+            pstText = pstText.replace(img.localSrc, "http://localhost:8080/img/"+img.file.name)
+        }
+
+        let imgArray = uploadedImages.map(i => (i.file))
+
         PostService.create({
             "title": title,
-            "text": postText,
+            "text": pstText,
             "forum": {"id":forumId},
             "creator": {...user}
         }).then(data => {
-            window.location.href = '/posts/' + data.id
+            ImageService.upload({
+                "upload": imgArray
+            }).then(() => {
+                window.location.href = '/posts/' + data.id
+            })
         }).catch(e => {
             const errors = e
             console.log(e)
@@ -62,12 +76,12 @@ function CreatePostForm() {
     }, [])
 
     function uploadImageCallBack(file) {
-        var urlCreator = window.URL || window.webkitURL;
+        let urlCreator = window.URL || window.webkitURL;
         const imageObject = {
           file: file,
           localSrc: urlCreator.createObjectURL(file),
         }
-        setUploadedImages(imageObject => [...uploadedImages, imageObject])
+        setUploadedImages((oldImages) => [...oldImages, imageObject])
         
         return new Promise(
           (resolve, reject) => {

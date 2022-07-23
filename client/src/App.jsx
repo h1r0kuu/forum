@@ -26,7 +26,7 @@ import {
   ADMIN_USERS,
   ADMIN_REPORTS,
   SETTINGS
-} from "./utils/routeConstants"
+} from "./constants/routeConstants"
 
 import Home from "./pages/Home/Home"
 import CreatePost from "./pages/CreatePost/CreatePost"
@@ -46,7 +46,6 @@ function App() {
         store.checkAuth(localStorage.getItem("token"))
       }
   }, [])
-
   return ( 
       <Routes>
         <Route path={HOME} element={<Home/>} />

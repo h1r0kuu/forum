@@ -9,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,10 +29,10 @@ public class Forum {
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name="forum_id")
-    private Set<Forum> subForums;
+    private Set<Forum> subForums = new HashSet<>();
 
     @OneToMany(mappedBy = "forum")
-    private Set<Post> posts;
+    private Set<Post> posts = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name="user_id")

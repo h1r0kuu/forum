@@ -4,7 +4,7 @@ import Footer from "../../components/Footer/Footer"
 import FooterSearch from "../../components/FooterSearch/FooterSearch"
 import Header from "../../components/Header/Header"
 import Chats from "../../components/Chats/Chats"
-import { HOME } from "../../utils/routeConstants"
+import { HOME } from "../../constants/routeConstants"
 
 function UserChats() {
     return (

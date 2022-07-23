@@ -55,6 +55,7 @@ public class PostController {
             if (token != null && jwtUtil.validateToken(token)) {
                 User user = jwtUtil.extractUserFromToken(token);
                 postService.addView(post, user);
+                System.out.println("HERE");
             }
         }
         return ResponseEntity.ok( mapper.convertTo(post, PostDto.class) );
@@ -92,6 +93,7 @@ public class PostController {
         } else {
             postList = postService.getAll(pageable);
         }
+        System.out.println(postList.getContent().get(0).getViews().size());
         Page<PostDto> posts = postList.map(p -> mapper.convertTo(p, PostDto.class));
         return ResponseEntity.ok(posts);
     }

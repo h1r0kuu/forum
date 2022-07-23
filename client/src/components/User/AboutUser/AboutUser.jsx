@@ -3,9 +3,9 @@ import "./AboutUserStyles.css"
 import { Link } from "react-router-dom"
 
 import dayjs from "../../../utils/dayjsRelative"
-import { SETTINGS } from "../../../utils/routeConstants"
+import { SETTINGS } from "../../../constants/routeConstants"
 import { GetUser } from "../../../utils/authUser"
-import { UserService } from "../../../services/userService"
+import { UserService } from "../../../services/UserService"
 
 function AboutUser({user}) {
 

@@ -11,8 +11,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { DIRECTION, ORDER } from "../../enums/orderEnums";
 import { MakeUrl } from "../../utils/urls";
 import { useCallback, useEffect, useState } from "react";
-import { PostService } from "../../services/postService";
-import { HOME } from "../../utils/routeConstants";
+import { PostService } from "../../services/PostService";
+import { HOME } from "../../constants/routeConstants";
 
 function Home() {
 

@@ -1,7 +1,7 @@
 import "./UserHiddenPostsStyles.css"
 
 import { useEffect, useState } from "react"
-import { UserService } from "../../../services/userService"
+import { UserService } from "../../../services/UserService"
 import { GetUser } from "../../../utils/authUser"
 import PostListItem from "../../PostList/PostListItem/PostListItem"
 import UserHiddenPostItem from "./UserHiddenPostItem/UserHiddenPostItem"

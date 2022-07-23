@@ -18,12 +18,12 @@ public class ImageController {
     private String fileUploadPath;
 
     @PostMapping("/upload")
-    public ResponseEntity<HashMap<String, Object>> uploadFile(@RequestParam("upload") MultipartFile file) throws IOException {
-
-        FileUpload.upload(fileUploadPath, file.getOriginalFilename(),file);
+    public ResponseEntity<HashMap<String, Object>> uploadFile(@RequestParam("upload") MultipartFile[] files) throws IOException {
+        for(MultipartFile file : files) {
+            FileUpload.upload(fileUploadPath, file.getOriginalFilename(),file);
+        }
         HashMap<String, Object> result = new HashMap<>();
         result.put("uploaded", true);
-        result.put("url", "http://localhost:8080/img/"+file.getOriginalFilename());
         return ResponseEntity.ok(result);
     }
 }

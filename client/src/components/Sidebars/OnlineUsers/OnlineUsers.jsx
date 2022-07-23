@@ -2,7 +2,7 @@ import "./OnlineUsersStyles.css"
 
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { UserService } from "../../../services/userService"
+import { UserService } from "../../../services/UserService"
 import { MakeUrl } from "../../../utils/urls"
 
 function OnlineUsers() {

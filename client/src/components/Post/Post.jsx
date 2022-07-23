@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { PostService } from "../../services/postService"
+import { PostService } from "../../services/PostService"
 import PostAuthor from "./PostAuthor/PostAuthor"
 import PostCommentList from "./PostCommentList/PostCommentList"
 import PostDetail from "./PostDetail/PostDetail"

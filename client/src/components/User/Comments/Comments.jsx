@@ -1,7 +1,7 @@
 import "./CommentsStyles.css"
 
 import { useEffect, useState } from "react"
-import { UserService } from "../../../services/userService"
+import { UserService } from "../../../services/UserService"
 
 import CommentItem from "./CommentItem/CommentItem"
 

@@ -2,7 +2,7 @@ import "./UserStyles.css"
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { UserService } from "../../services/userService";
+import { UserService } from "../../services/UserService";
 
 import { PROFILE } from "../../enums/profileEnums";
 
@@ -19,7 +19,7 @@ function User() {
     const {username} = useParams()
     const [user, setUser] = useState({})
     const [isLoading, setLoading] = useState(true)
-    const [selectedOption, setSelectedOption] = useState(PROFILE.HIDDEN_POSTS)
+    const [selectedOption, setSelectedOption] = useState(PROFILE.COMMENTS)
 
     const renderSelectedOption = () => {
         if(selectedOption === PROFILE.HIDDEN_POSTS) {

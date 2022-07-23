@@ -5,7 +5,7 @@ import Messages from "./Messages/Messages"
 
 import "./ChatsStyles.css"
 
-import { ChatService } from "../../services/chatService"
+import { ChatService } from "../../services/ChatService"
 
 import { Stomp } from "@stomp/stompjs"
 import SockJS from "sockjs-client"
@@ -23,7 +23,7 @@ function Chats() {
 
     const user = GetUser()
     const username = user.username
-    
+
     useEffect(() => {
         let stompClient = Stomp.over(new SockJS(WEBSOCKET_URL))
         stompClient.debug = () => {};

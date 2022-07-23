@@ -1,6 +1,6 @@
 import { GetUser } from "../../../utils/authUser"
 
-import { CommentService } from "../../../services/commentService"
+import { CommentService } from "../../../services/CommentService"
 
 import "./PostLeaveCommentFormStyles.css"
 

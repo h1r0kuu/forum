@@ -6,7 +6,7 @@ import Header from "../../components/Header/Header"
 import Settings from "../../components/Settings/Settings"
 import Sidebars from "../../components/Sidebars/Sidebars"
 import User from "../../components/User/User"
-import { HOME } from "../../utils/routeConstants"
+import { HOME } from "../../constants/routeConstants"
 
 function SettingsPage() {
     return (

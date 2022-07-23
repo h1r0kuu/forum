@@ -3,7 +3,7 @@ import "./StatsStyles.css"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 
-import { StatsService } from "../../../services/statsService"
+import { StatsService } from "../../../services/StatsService"
 
 function Stats() {
     const [stats, setStats] = useState({})

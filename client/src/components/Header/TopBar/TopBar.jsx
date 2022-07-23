@@ -1,7 +1,7 @@
 import "./TopBarStyles.css"
 
 import { Link } from "react-router-dom"
-import { LOGIN } from "../../../utils/routeConstants"
+import { LOGIN } from "../../../constants/routeConstants"
 import { search } from "../../../functions/search"
 
 function TopBar() {

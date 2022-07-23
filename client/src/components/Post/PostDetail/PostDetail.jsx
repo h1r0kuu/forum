@@ -2,7 +2,7 @@ import "./PostDetailStyles.css"
 
 import { Link } from "react-router-dom"
 import dayjs from "dayjs"
-import { PostService } from "../../../services/postService"
+import { PostService } from "../../../services/PostService"
 import { GetUser } from "../../../utils/authUser"
 
 function PostDetail({post}) {

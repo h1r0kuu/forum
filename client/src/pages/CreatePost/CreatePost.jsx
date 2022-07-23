@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer"
 import FooterSearch from "../../components/FooterSearch/FooterSearch"
 import Header from "../../components/Header/Header"
 import Sidebars from "../../components/Sidebars/Sidebars"
-import { HOME } from "../../utils/routeConstants"
+import { HOME } from "../../constants/routeConstants"
 
 function CreatePost() {
     return (
