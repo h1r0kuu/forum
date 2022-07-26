@@ -17,6 +17,7 @@ public class ForumApplication {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration()
 				.setAmbiguityIgnored(true)
+				.setSkipNullEnabled(true)
 				.setMatchingStrategy(MatchingStrategies.STRICT);
 		return mapper;
 	}

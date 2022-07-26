@@ -12,7 +12,7 @@ function UserHiddenPosts({user}) {
 
     useEffect(() => {
         UserService.getUserHiddenPosts(user.username).then( data => {
-            setHiddenPosts(data)
+            setHiddenPosts(data.content)
             setLoading(false)
         })
     }, [user.username])

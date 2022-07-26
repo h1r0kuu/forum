@@ -84,7 +84,7 @@ public class UserController {
     public ResponseEntity<Page<PostDto>> getHiddenPosts(@PathVariable("username") String username,
                                                         @PageableDefault(sort = "createdAt") Pageable pageable) {
         Page<PostDto> posts = userService.getHiddenPosts(username, pageable)
-                                         .map(p -> mapper.convertTo(p, PostDto.class));
+                                      .map(p -> mapper. convertTo(p, PostDto.class));
         return ResponseEntity.ok(posts);
     }
 
