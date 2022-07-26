@@ -1,7 +1,7 @@
 ## [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=h1r0kuu_forum&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=h1r0kuu_forum)
 
 # Forum
-Forum developed using Spring boot nad React.js.</br>
+Forum developed using Spring boot and React.js.</br>
 The project is always updated with new features. 
 This template for front-end is used https://github.com/radwan503/AskOnline--Forum
 
