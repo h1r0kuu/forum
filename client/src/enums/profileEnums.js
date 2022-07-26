@@ -3,5 +3,9 @@ export const SETTINGS = {
 }
 
 export const PROFILE = {
-
+    POSTS: "POSTS",
+    HIDDEN_POSTS: "HIDDEN_POSTS",
+    COMMENTS: "COMMENTS",
+    FOLLOWERS: "FOLLOWERS",
+    FOLLOWING: "FOLLOWING",
 }

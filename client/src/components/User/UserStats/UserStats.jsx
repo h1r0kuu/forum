@@ -1,7 +1,7 @@
 import "./UserStatsStyles.css"
 
 import { Link } from "react-router-dom"
-import { PROFILE } from "../../../constants/profileConstants"
+import { PROFILE } from "../../../enums/profileEnums"
 
 function UserStats({user,selectedOption, setSelectedOption}) {
     return (
