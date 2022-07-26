@@ -11,10 +11,10 @@ function Comments({user}) {
 
     useEffect(() => {
         UserService.getUserComments(user.username).then(data => {
-            setComments(data)
+            setComments(data.content)
             setLoading(false)
         })
-    }, [])
+    }, [user.username])
     
     return (
         <div className="comments-container">
@@ -23,7 +23,7 @@ function Comments({user}) {
                     <p>Loading</p>
                 ) : (
                     comments.map(comment => (
-                      <CommentItem comment={comment} key={comment.id} />     
+                        <CommentItem comment={comment} key={comment.id}/>
                     ))
                 )}
             </ul>
