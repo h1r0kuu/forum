@@ -1,21 +1,15 @@
 package com.site.forum.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.site.forum.constraints.PasswordConstraint;
-import com.site.forum.entity.User;
 import com.site.forum.enums.UserRole;
-import com.site.forum.model.RegistrationModel;
 import com.site.forum.serializers.UserDtoSerializer;
 import lombok.Data;
 import org.hibernate.Hibernate;
-import org.modelmapper.ModelMapper;
 
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @JsonSerialize(using = UserDtoSerializer.class)
@@ -25,12 +19,12 @@ public class UserDto {
     private String password;
     private UserRole role;
     private String imagePath;
-    private Set<CommentDto> comments;
-    private Set<PostDto> hiddenPosts;
-    private Set<PostDto> createdPosts;
-    private Set<UserDto> followers;
-    private Set<UserDto> following;
-    private Set<NotificationDto> notifications;
+    private Set<CommentDto> comments = new HashSet<>();
+    private Set<PostDto> hiddenPosts = new HashSet<>();
+    private Set<PostDto> createdPosts = new HashSet<>();
+    private Set<UserDto> followers = new HashSet<>();
+    private Set<UserDto> following = new HashSet<>();
+    private Set<NotificationDto> notifications = new HashSet<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

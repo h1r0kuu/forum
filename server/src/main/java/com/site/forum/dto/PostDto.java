@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -26,10 +27,10 @@ public class PostDto {
     private ForumDto forum;
     @NotNull(message = "Creator cannot be null")
     private UserDto creator;
-    private Set<CommentDto> comments;
-    private Set<UserDto> likes;
-    private Set<UserDto> dislikes;
-    private Set<UserDto> views;
+    private Set<CommentDto> comments = new HashSet<>();
+    private Set<UserDto> likes = new HashSet<>();
+    private Set<UserDto> dislikes = new HashSet<>();
+    private Set<UserDto> views = new HashSet<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

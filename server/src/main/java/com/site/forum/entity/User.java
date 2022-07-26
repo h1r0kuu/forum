@@ -39,26 +39,26 @@ public class User implements UserDetails {
     private UserRole role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    private Set<Comment> comments = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             joinColumns = @JoinColumn(name = "followed_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    private Set<User> followers;
+    private Set<User> followers = new HashSet<>();
 
     @ManyToMany(mappedBy = "followers",fetch = FetchType.EAGER)
-    private Set<User> following;
+    private Set<User> following = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<ProfileComment> profileComments;
+    private Set<ProfileComment> profileComments = new HashSet<>();
 
     @ManyToMany(mappedBy = "views")
-    private Set<Post> posts;
+    private Set<Post> posts = new HashSet<>();
 
     @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
-    private Set<Post> createdPosts;
+    private Set<Post> createdPosts = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -66,13 +66,13 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
-    private Set<Post> hiddenPosts;
+    private Set<Post> hiddenPosts = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Notification> notifications;
+    private Set<Notification> notifications = new HashSet<>();
 
     @ManyToMany(mappedBy = "users")
-    private Set<Chat> chats;
+    private Set<Chat> chats = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at")
