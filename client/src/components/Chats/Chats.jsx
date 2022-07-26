@@ -46,7 +46,7 @@ function Chats() {
     }, [username])
 
     const loadMoreMessages = () => {
-        if(chatLoading === false) {
+        if(chatLoading === false && chats.length > 0) {
             ChatService.getChatMessages(selectedChat.id, page).then(data => {
                 setMessages(() => messages.concat(data.content))
 
@@ -79,8 +79,8 @@ function Chats() {
             <div className="left-side">
                 <div className="profile">
                     <div className="wrap">
-                        <img src="http://emilcarlsson.se/assets/mikeross.png" className="online" alt="" />
-                        <p>Mike Ross</p>
+                        <img src={user.imagePath} className="online" alt="" />
+                        <p>{user.username}</p>
                         <i className="fa fa-chevron-down expand-button" aria-hidden="true"></i>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ function Chats() {
                         username={username}
                         setSelectedChat={setSelectedChat}
                         setMessages={setMessages}
-                        selectedChatId={selectedChat.id}
+                        selectedChat={selectedChat}
                         setPage={setPage}
                         setHasMore={setHasMore}
                     />
@@ -115,37 +115,43 @@ function Chats() {
                 </div>
             </div>
             <div className="content">
-                <div className="contact-profile">
-                <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-                <p>Harvey Specter</p>
-                <div className="social-media">
-                    <i className="fa fa-facebook" aria-hidden="true"></i>
-                    <i className="fa fa-twitter" aria-hidden="true"></i>
-                    <i className="fa fa-instagram" aria-hidden="true"></i>
-                </div>
-                </div>
-                {messagesLoading ? (
-                    <p>Loading</p>
-
-                ) : (
-                    <Messages
-                        messages={messages}
-                        username={username}
-                        loadMoreMessages={loadMoreMessages}
-                        hasMore={hasMore}
-                    />
-                )}
-                <div className="message-input">
-                    <div className="wrap">
-                        <form onSubmit={sendMessage}>
-                            <input type="text" placeholder="Write your message..." name="message"/>
-                                <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
-                            <button className="submit" type="submit">
-                                <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                            </button>
-                        </form>
+                {messages.length > 0 ? (
+                    <>
+                    <div className="contact-profile">
+                    <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                    <p>Harvey Specter</p>
+                    <div className="social-media">
+                        <i className="fa fa-facebook" aria-hidden="true"></i>
+                        <i className="fa fa-twitter" aria-hidden="true"></i>
+                        <i className="fa fa-instagram" aria-hidden="true"></i>
                     </div>
-                </div>
+                    </div>
+                    {messagesLoading ? (
+                        <p>Loading</p>
+
+                    ) : (
+                        <Messages
+                            messages={messages}
+                            username={username}
+                            loadMoreMessages={loadMoreMessages}
+                            hasMore={hasMore}
+                        />
+                    )}
+                    <div className="message-input">
+                        <div className="wrap">
+                            <form onSubmit={sendMessage}>
+                                <input type="text" placeholder="Write your message..." name="message"/>
+                                    <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
+                                <button className="submit" type="submit">
+                                    <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    </>
+                ) : (
+                    <p className="text-center mt-70">Messages empty</p>
+                )}
             </div>
         </div>
     )
